@@ -1,0 +1,10 @@
+Tastenfunktionen für Test im Prototyper:
+- Pfeil nach unten: Wechsel zu QA-Ansicht
+- Pfeil nach oben: Wechsel zu Parameter-Ansicht
+- F1: Wechsel zwischen Toggle-Ansicht und nicht-Toggle-Ansicht (und Wechsel zu Parameter-Ansicht)
+- Pfeil nach links oder rechts: Wechsel zu Parameter-Ansicht und
+  in Toggle-Ansicht Durchschalten der großen Bilder
+  in anderer Paramter-Ansicht Durchschalten der kleinen Bilder, Anzeige des Frameindex als Wert mit einer Kommastelle und Änderung der angezeigten Einheit
+- F2 und F3: Durchschalten der großen Bilder in QA-Ansicht (und Wechsel zu QA-Ansicht)
+- F4: Wechsel des Status in QA-Ansicht (und Wechsel zu QA-Ansicht)
+- F5: ValueBar ein-/ausblenden (und Wechsel zu QA-Ansicht)

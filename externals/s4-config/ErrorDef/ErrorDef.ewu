@@ -1,0 +1,657 @@
+$version 11.00
+
+// This file is generated automatically via VisualBasic.
+// Source:        ErrorDef.xlsm
+// Generated:  05.10.2023 14:14:26
+// Excel:        Version 16.0 on Windows (32-bit) NT :.00.
+note legend Note1
+{
+    attr Bounds = <-70,-250,800,-140>;
+}
+$rect <0,-20,200,20>
+
+class UtilsClass
+{
+
+$rect <50,60,300,100>
+  method string GetNameByGEID( arg int32 aId )
+  {
+    switch( aId )
+    {
+
+      case 0 : return "H0";
+      case 1 : return "E31-2";
+      case 2 : return "E31-5";
+      case 3 : return "E1-2";
+      case 4 : return "E27-1";
+      case 5 : return "E27-2";
+      case 6 : return "E31-9";
+      case 7 : return "E30-9";
+      case 8 : return "E8-16";
+      case 9 : return "E31-6";
+      case 10 : return "E1-7";
+      case 11 : return "E1-8";
+      case 12 : return "E5";
+      case 13 : return "H11-1";
+      case 14 : return "H12-1";
+      case 15 : return "H12-2";
+      case 16 : return "E50-1";
+      case 17 : return "E31-8";
+      case 18 : return "E50";
+      case 19 : return "E25";
+      case 20 : return "E4-1";
+      case 21 : return "H4-1";
+      case 22 : return "H50-1";
+      case 23 : return "E51";
+      case 24 : return "E8";
+      case 25 : return "H1";
+      case 26 : return "E30-10";
+      case 27 : return "H30-10";
+      case 28 : return "H30-11";
+      case 29 : return "H100";
+      case 30 : return "H100-1";
+      case 31 : return "H8-1";
+      case 32 : return "H60-1";
+      case 33 : return "E1-11";
+      case 34 : return "E20-1";
+      case 35 : return "E21-1";
+      case 36 : return "E22";
+      case 37 : return "H22";
+      case 38 : return "E8-1";
+      case 39 : return "E8-2";
+      case 40 : return "E8-3";
+      case 41 : return "E8-4";
+      case 42 : return "E8-5";
+      case 43 : return "E8-6";
+      case 44 : return "E8-7";
+      case 45 : return "E8-10";
+      case 46 : return "E8-11";
+      case 47 : return "E8-14";
+      case 48 : return "E1-2";
+      case 49 : return "E1-2";
+      case 50 : return "E1-2";
+      case 51 : return "E2";
+      case 52 : return "E2";
+      case 53 : return "E2-1";
+      case 54 : return "E2-2";
+      case 55 : return "E3";
+      case 56 : return "E13-2";
+      case 57 : return "E14";
+      case 58 : return "E14-1";
+      case 59 : return "E15";
+      case 60 : return "E16";
+      case 61 : return "E22";
+      case 62 : return "E22-3";
+      case 63 : return "E22-4";
+      case 64 : return "E30-1";
+      case 65 : return "E30-6";
+      case 66 : return "E31";
+      case 67 : return "E31-1";
+      case 68 : return "E3";
+      case 69 : return "E3-1";
+      case 70 : return "E6";
+      case 71 : return "E6-1";
+      case 72 : return "E8-14";
+      case 73 : return "E14";
+      case 74 : return "E25-1";
+      case 75 : return "E30";
+      case 76 : return "E32";
+      case 77 : return "H80";
+      case 78 : return "E3";
+      case 79 : return "E32";
+      case 80 : return "E32-1";
+      case 81 : return "E32-2";
+      case 82 : return "E32-3";
+      case 83 : return "E32-4";
+      case 84 : return "E32-5";
+      case 85 : return "E21-2";
+      case 86 : return "H1-1";
+      case 87 : return "H1-2";
+      case 88 : return "E30";
+      case 89 : return "E50";
+      case 90 : return "H50";
+      case 91 : return "H50-1";
+      case 92 : return "E30-1";
+      case 93 : return "H100-2";
+      case 94 : return "E5-1";
+      case 95 : return "E5-2";
+      case 96 : return "E5-3";
+      case 97 : return "E5-4";
+      case 98 : return "E5-5";
+      case 99 : return "E5-6";
+      case 100 : return "E5-7";
+      case 101 : return "E5-8";
+      case 102 : return "E5-9";
+      case 103 : return "E5-10";
+      case 104 : return "E5-11";
+      case 105 : return "H30-5";
+      case 106 : return "E32-6";
+      case 107 : return "E32-7";
+      case 108 : return "E50-3";
+      case 109 : return "H80-10";
+      case 110 : return "H81";
+      case 111 : return "H81-1";
+      case 112 : return "H81-2";
+      case 113 : return "H81-3";
+      default : return string(aId);
+    }
+
+  }
+
+
+$rect <50,100,300,150>
+  method int32 GetText1ByGEID( arg int32 aId )
+  {
+    switch( aId )
+    {
+
+      case 0 : return 0;
+      case 1 : return 0;
+      case 2 : return 0;
+      case 3 : return 0;
+      case 4 : return 0;
+      case 5 : return 0;
+      case 6 : return 0;
+      case 7 : return 0;
+      case 8 : return 0;
+      case 9 : return 0;
+      case 10 : return 0;
+      case 11 : return 0;
+      case 12 : return 0;
+      case 13 : return 0;
+      case 14 : return 0;
+      case 15 : return 0;
+      case 16 : return 0;
+      case 17 : return 0;
+      case 18 : return 0;
+      case 19 : return 0;
+      case 20 : return 0;
+      case 21 : return 0;
+      case 22 : return 0;
+      case 23 : return 0;
+      case 24 : return 0;
+      case 25 : return 0;
+      case 26 : return 0;
+      case 27 : return 0;
+      case 28 : return 0;
+      case 29 : return 0;
+      case 30 : return 0;
+      case 31 : return 0;
+      case 32 : return 0;
+      case 33 : return 0;
+      case 34 : return 0;
+      case 35 : return 0;
+      case 36 : return 0;
+      case 37 : return 0;
+      case 38 : return 0;
+      case 39 : return 0;
+      case 40 : return 0;
+      case 41 : return 0;
+      case 42 : return 0;
+      case 43 : return 0;
+      case 44 : return 0;
+      case 45 : return 0;
+      case 46 : return 0;
+      case 47 : return 0;
+      case 48 : return 0;
+      case 49 : return 0;
+      case 50 : return 0;
+      case 51 : return 0;
+      case 52 : return 0;
+      case 53 : return 0;
+      case 54 : return 0;
+      case 55 : return 0;
+      case 56 : return 0;
+      case 57 : return 0;
+      case 58 : return 0;
+      case 59 : return 0;
+      case 60 : return 0;
+      case 61 : return 0;
+      case 62 : return 0;
+      case 63 : return 0;
+      case 64 : return 0;
+      case 65 : return 0;
+      case 66 : return 0;
+      case 67 : return 0;
+      case 68 : return 0;
+      case 69 : return 0;
+      case 70 : return 0;
+      case 71 : return 0;
+      case 72 : return 0;
+      case 73 : return 0;
+      case 74 : return 0;
+      case 75 : return 0;
+      case 76 : return 0;
+      case 77 : return 1;
+      case 78 : return 0;
+      case 79 : return 0;
+      case 80 : return 0;
+      case 81 : return 0;
+      case 82 : return 0;
+      case 83 : return 0;
+      case 84 : return 0;
+      case 85 : return 0;
+      case 86 : return 0;
+      case 87 : return 0;
+      case 88 : return 0;
+      case 89 : return 0;
+      case 90 : return 0;
+      case 91 : return 0;
+      case 92 : return 0;
+      case 93 : return 0;
+      case 94 : return 0;
+      case 95 : return 0;
+      case 96 : return 0;
+      case 97 : return 0;
+      case 98 : return 0;
+      case 99 : return 0;
+      case 100 : return 0;
+      case 101 : return 0;
+      case 102 : return 0;
+      case 103 : return 0;
+      case 104 : return 0;
+      case 105 : return 0;
+      case 106 : return 0;
+      case 107 : return 0;
+      case 108 : return 0;
+      case 109 : return 0;
+      case 110 : return 0;
+      case 111 : return 0;
+      case 112 : return 0;
+      case 113 : return 0;
+      default : return 0;
+    }
+
+  }
+
+
+$rect <50,150,300,200>
+  method int32 GetText2ByGEID( arg int32 aId )
+  {
+    switch( aId )
+    {
+
+      case 0 : return 0;
+      case 1 : return 0;
+      case 2 : return 0;
+      case 3 : return 0;
+      case 4 : return 0;
+      case 5 : return 0;
+      case 6 : return 0;
+      case 7 : return 0;
+      case 8 : return 0;
+      case 9 : return 0;
+      case 10 : return 0;
+      case 11 : return 0;
+      case 12 : return 0;
+      case 13 : return 0;
+      case 14 : return 0;
+      case 15 : return 0;
+      case 16 : return 0;
+      case 17 : return 0;
+      case 18 : return 0;
+      case 19 : return 0;
+      case 20 : return 0;
+      case 21 : return 0;
+      case 22 : return 0;
+      case 23 : return 0;
+      case 24 : return 0;
+      case 25 : return 0;
+      case 26 : return 0;
+      case 27 : return 0;
+      case 28 : return 0;
+      case 29 : return 0;
+      case 30 : return 0;
+      case 31 : return 0;
+      case 32 : return 0;
+      case 33 : return 0;
+      case 34 : return 0;
+      case 35 : return 0;
+      case 36 : return 0;
+      case 37 : return 0;
+      case 38 : return 0;
+      case 39 : return 0;
+      case 40 : return 0;
+      case 41 : return 0;
+      case 42 : return 0;
+      case 43 : return 0;
+      case 44 : return 0;
+      case 45 : return 0;
+      case 46 : return 0;
+      case 47 : return 0;
+      case 48 : return 0;
+      case 49 : return 0;
+      case 50 : return 0;
+      case 51 : return 0;
+      case 52 : return 0;
+      case 53 : return 0;
+      case 54 : return 0;
+      case 55 : return 0;
+      case 56 : return 0;
+      case 57 : return 0;
+      case 58 : return 0;
+      case 59 : return 0;
+      case 60 : return 0;
+      case 61 : return 0;
+      case 62 : return 0;
+      case 63 : return 0;
+      case 64 : return 0;
+      case 65 : return 0;
+      case 66 : return 0;
+      case 67 : return 0;
+      case 68 : return 0;
+      case 69 : return 0;
+      case 70 : return 0;
+      case 71 : return 0;
+      case 72 : return 0;
+      case 73 : return 0;
+      case 74 : return 0;
+      case 75 : return 0;
+      case 76 : return 0;
+      case 77 : return 0;
+      case 78 : return 0;
+      case 79 : return 0;
+      case 80 : return 0;
+      case 81 : return 0;
+      case 82 : return 0;
+      case 83 : return 0;
+      case 84 : return 0;
+      case 85 : return 0;
+      case 86 : return 0;
+      case 87 : return 0;
+      case 88 : return 0;
+      case 89 : return 0;
+      case 90 : return 0;
+      case 91 : return 0;
+      case 92 : return 0;
+      case 93 : return 0;
+      case 94 : return 0;
+      case 95 : return 0;
+      case 96 : return 0;
+      case 97 : return 0;
+      case 98 : return 0;
+      case 99 : return 0;
+      case 100 : return 0;
+      case 101 : return 0;
+      case 102 : return 0;
+      case 103 : return 0;
+      case 104 : return 0;
+      case 105 : return 0;
+      case 106 : return 0;
+      case 107 : return 0;
+      case 108 : return 0;
+      case 109 : return 0;
+      case 110 : return 0;
+      case 111 : return 0;
+      case 112 : return 0;
+      case 113 : return 0;
+      default : return 0;
+    }
+
+  }
+
+
+$rect <50,200,300,250>
+  method int32 GetText3ByGEID( arg int32 aId )
+  {
+    switch( aId )
+    {
+
+      case 0 : return 0;
+      case 1 : return 0;
+      case 2 : return 0;
+      case 3 : return 0;
+      case 4 : return 0;
+      case 5 : return 0;
+      case 6 : return 0;
+      case 7 : return 0;
+      case 8 : return 0;
+      case 9 : return 0;
+      case 10 : return 0;
+      case 11 : return 0;
+      case 12 : return 0;
+      case 13 : return 0;
+      case 14 : return 0;
+      case 15 : return 0;
+      case 16 : return 0;
+      case 17 : return 0;
+      case 18 : return 0;
+      case 19 : return 0;
+      case 20 : return 0;
+      case 21 : return 0;
+      case 22 : return 0;
+      case 23 : return 0;
+      case 24 : return 0;
+      case 25 : return 0;
+      case 26 : return 0;
+      case 27 : return 0;
+      case 28 : return 0;
+      case 29 : return 0;
+      case 30 : return 0;
+      case 31 : return 0;
+      case 32 : return 0;
+      case 33 : return 0;
+      case 34 : return 0;
+      case 35 : return 0;
+      case 36 : return 0;
+      case 37 : return 0;
+      case 38 : return 0;
+      case 39 : return 0;
+      case 40 : return 0;
+      case 41 : return 0;
+      case 42 : return 0;
+      case 43 : return 0;
+      case 44 : return 0;
+      case 45 : return 0;
+      case 46 : return 0;
+      case 47 : return 0;
+      case 48 : return 0;
+      case 49 : return 0;
+      case 50 : return 0;
+      case 51 : return 0;
+      case 52 : return 0;
+      case 53 : return 0;
+      case 54 : return 0;
+      case 55 : return 0;
+      case 56 : return 0;
+      case 57 : return 0;
+      case 58 : return 0;
+      case 59 : return 0;
+      case 60 : return 0;
+      case 61 : return 0;
+      case 62 : return 0;
+      case 63 : return 0;
+      case 64 : return 0;
+      case 65 : return 0;
+      case 66 : return 0;
+      case 67 : return 0;
+      case 68 : return 0;
+      case 69 : return 0;
+      case 70 : return 0;
+      case 71 : return 0;
+      case 72 : return 0;
+      case 73 : return 0;
+      case 74 : return 0;
+      case 75 : return 0;
+      case 76 : return 0;
+      case 77 : return 0;
+      case 78 : return 0;
+      case 79 : return 0;
+      case 80 : return 0;
+      case 81 : return 0;
+      case 82 : return 0;
+      case 83 : return 0;
+      case 84 : return 0;
+      case 85 : return 0;
+      case 86 : return 0;
+      case 87 : return 0;
+      case 88 : return 0;
+      case 89 : return 0;
+      case 90 : return 0;
+      case 91 : return 0;
+      case 92 : return 0;
+      case 93 : return 0;
+      case 94 : return 0;
+      case 95 : return 0;
+      case 96 : return 0;
+      case 97 : return 0;
+      case 98 : return 0;
+      case 99 : return 0;
+      case 100 : return 0;
+      case 101 : return 0;
+      case 102 : return 0;
+      case 103 : return 0;
+      case 104 : return 0;
+      case 105 : return 0;
+      case 106 : return 0;
+      case 107 : return 0;
+      case 108 : return 0;
+      case 109 : return 0;
+      case 110 : return 0;
+      case 111 : return 0;
+      case 112 : return 0;
+      case 113 : return 0;
+      default : return 0;
+    }
+
+  }
+
+
+$rect <50,250,300,300>
+  method string GetTextOverrideByGEID( arg int32 aId )
+  {
+    switch( aId )
+    {
+
+      case 0 : return "Not Used";
+      case 1 : return "Main: Communication with M4 core missing or disrupted";
+      case 2 : return "Main: CAN messages from Primary module(s) timed out";
+      case 3 : return "Main: Over temperature Primary module(s) (via CAN bus)";
+      case 4 : return "Main: Error reading Welding Program file(s)";
+      case 5 : return "Main: Error copying Welding Program file(s) to M4 core";
+      case 6 : return "Main: Problem with Shared Memory between S4_Main and Backend";
+      case 7 : return "Main: Firmware version mismatch";
+      case 8 : return "Main: Wire Feed unit(s) CAN bus init failure";
+      case 9 : return "Main: Primary module(s) CAN bus init failure";
+      case 10 : return "Main: Over temperature AC01M1";
+      case 11 : return "Main: Over temperature AC01M2";
+      case 12 : return "Main: Water cooling system error";
+      case 13 : return "Main: External CAN bus Init failure";
+      case 14 : return "Main: Supply voltage External CAN bus missing (24V X124)";
+      case 15 : return "Main: Init I2C Communication to PoE chip failed, check X125";
+      case 16 : return "M4: Process automat error";
+      case 17 : return "M4: FPGA communication error";
+      case 18 : return "M4: Process General error";
+      case 19 : return "M4: VRD error";
+      case 20 : return "M4: PE Monitoring";
+      case 21 : return "M4: PE Monitoring (Standby)";
+      case 22 : return "M4: Process General warning";
+      case 23 : return "DRV: Primary module(s) General Error";
+      case 24 : return "Main: CAN messages from Wire feeder timed out";
+      case 25 : return "BE: EventStorage Full Error. older Events were deleted";
+      case 26 : return "Main: Error during Calibration/ Adjustment procedure";
+      case 27 : return "Main: Calibration completed successfully";
+      case 28 : return "Main: Adjustment completed successfully";
+      case 29 : return "BE: new Bundle Update pending";
+      case 30 : return "HMI: new Bundle Update stated";
+      case 31 : return "DMR: ZA Lock not active";
+      case 32 : return "Main: Modbus-TCP Init fail";
+      case 33 : return "Main: Primary: Temp M1/M2 differ.";
+      case 34 : return "Main: Backend gRPC unreachable";
+      case 35 : return "Main: Init file read fail";
+      case 36 : return "Main: unknown error";
+      case 37 : return "Main: unknown warning";
+      case 38 : return "DMR: Wire Feed unit(s) motor overvoltage";
+      case 39 : return "DMR: Wire Feed unit(s) supply/motor undervoltage";
+      case 40 : return "DMR: Wire Feed unit(s) motor 1 overcurrent";
+      case 41 : return "DMR: Wire Feed unit(s) motor 2 overcurrent";
+      case 42 : return "DMR: Wire Feed unit(s) motor 1 tacho error";
+      case 43 : return "DMR: Wire Feed unit(s) motor 2 tacho error";
+      case 44 : return "DMR: Wire Feed unit(s) EEPROM error";
+      case 45 : return "DMR: Wire Feed unit(s) torch connection error";
+      case 46 : return "DMR: Wire Feed unit(s) V/A measuring error";
+      case 47 : return "DMR: Wire Feed unit(s) overtemperature";
+      case 48 : return "DRV: Overtemperature - DC1 Module";
+      case 49 : return "DRV: Overtemperature - DC2 Module";
+      case 50 : return "DRV: Overtemperature - Boost Module";
+      case 51 : return "DRV: Mains overvoltage at startup";
+      case 52 : return "DRV: Mains overvoltage";
+      case 53 : return "DRV: Booster overvoltage";
+      case 54 : return "DRV: Booster overvoltage at startup";
+      case 55 : return "DRV: Overcurrent";
+      case 56 : return "DRV: Tempsensor failed";
+      case 57 : return "DRV: Supplyvoltage 16V";
+      case 58 : return "DRV: Supplyvoltage 16V at startup";
+      case 59 : return "DRV: Currentsensor detection failed";
+      case 60 : return "DRV: Cont. Overcurrent";
+      case 61 : return "DRV: Mains undervoltage / Phaseproblem";
+      case 62 : return "DRV: Mains undervoltage at startup";
+      case 63 : return "DRV: Booster undervoltage";
+      case 64 : return "DRV: HW Config Error";
+      case 65 : return "DRV: SW Config Error";
+      case 66 : return "DRV: Communikation Error";
+      case 67 : return "DRV: CAN Timeout to MaPro";
+      case 68 : return "M4: Overcurrent detect by M4";
+      case 69 : return "M4: Overcurrent detect by FPGA";
+      case 70 : return "M4: Overvoltage detect by M4";
+      case 71 : return "M4: Overvoltage detect by FPGA";
+      case 72 : return "M4: Overtemperatur (>100°C) detect by M4";
+      case 73 : return "M4: 24V-Inputvoltage is too high/low";
+      case 74 : return "M4: VRD short circuit / llgen defekt";
+      case 75 : return "M4: incorrect Software detected";
+      case 76 : return "M4: FPGA General error";
+      case 77 : return "DMR: Wire Feed unit(s) derating of motor power occurred";
+      case 78 : return "DRV: Overcurrent detect by DESAT";
+      case 79 : return "FPGA: Debug/Rsv error";
+      case 80 : return "FPGA: Timeout Rapid Current Shutdown";
+      case 81 : return "FPGA: Overcurrent turnon Rapid Current";
+      case 82 : return "FPGA: Overcurrent turnoff Rapid Current Shutdown";
+      case 83 : return "FPGA: Timeout FastSpi";
+      case 84 : return "FPGA: Primärstromabschaltung (psa_reset)";
+      case 85 : return "Main: ConfigStore data not plausible";
+      case 86 : return "Main: Speed of one of the fans too low";
+      case 87 : return "Main: Temp. sensor AC01 not connected";
+      case 88 : return "BE: Machine Configuration Chip not detected";
+      case 89 : return "BE: Internal error in Backend module";
+      case 90 : return "BE: Device Started";
+      case 91 : return "BE: Device Stopped Powerfail";
+      case 92 : return "BE: MaPro Tempsensor not Ok";
+      case 93 : return "BE: SSH Login/Logout event";
+      case 94 : return "WPK: Pump Leakage";
+      case 95 : return "WPK: 24V Supply Error";
+      case 96 : return "WPK: Pump Malfunction";
+      case 97 : return "WPK: 24V Ext Supply Error";
+      case 98 : return "WPK: FillSensor Value Error";
+      case 99 : return "WPK: FlowSensor Error";
+      case 100 : return "WPK: 5V Supply Error";
+      case 101 : return "WPK: Fan 1 Off ";
+      case 102 : return "WPK: Fan 2 Off";
+      case 103 : return "WPK: Temp Sensor Error / Temp  High";
+      case 104 : return "WPK: Flow Sensor Status Error";
+      case 105 : return "M4: Process issue, Program limits overflow";
+      case 106 : return "FPGA: Soll_phase_shift > 700 for more than 5min";
+      case 107 : return "FPGA: Soll-Current > Register reg_i_soll_max";
+      case 108 : return "BE: Database corrupted";
+      case 109 : return "DMR: Wire Feed unit(s) CAN Torch communication problem";
+      case 110 : return "Backend: Changes detected in Weldprogs";
+      case 111 : return "Backend: Changes detected in the Database";
+      case 112 : return "Backend: Changes detected in the License File";
+      case 113 : return "Backend: the selected welding program is not licensed";
+      default : return 0;
+    }
+
+  }
+
+
+}
+
+
+$rect <200,-20,400,20>
+
+autoobject ErrorDef::UtilsClass Utils
+{
+
+}
+
+
+

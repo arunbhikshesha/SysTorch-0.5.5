@@ -1,0 +1,332 @@
+$version 1.0
+
+attr active = Application::ParamDialog;
+attr callStackMonitor_Show = false;
+attr codeColSelect = false;
+attr codeFirstPos = <0,0>;
+attr codeInspector = Application::ParamDialog.onParamCounter;
+attr codeSelEnd = <0,0>;
+attr codeSelStart = <0,0>;
+attr connectInspectors = false;
+attr debug_TrackUpdates = false;
+attr extractDoc_ClassOverview = true;
+attr extractDoc_DeleteOldFiles = false;
+attr extractDoc_Destination = ./HtmlDoc;
+attr extractDoc_IgnoreAccessors = true;
+attr extractDoc_IgnoreMembers = true;
+attr extractDoc_Navigation = true;
+attr extractDoc_Profiles = false;
+attr extractDoc_Title = Documentation;
+attr extractDoc_Variants = false;
+attr generateClut_ReservedColors = 0;
+attr heapMonitor_Show = false;
+attr language = Default;
+attr profile = SysBrenner;
+attr profilerMonitor_Show = false;
+attr search_CaseSensitive = true;
+attr search_History = Scrollbar.Maximum,Scrollbar,Units_DummyDyn,unit_id,ValueText,0.1,UnitID,IncDecActiveParam,SimulatorKeyEvent,GetUnitStr,Value,Id,Scrollbar.Selected = 0,.Value,.value,* 10,.Id,update_par_from_dev,update_par_from_device,FrameNumber,GetUntitStr,m/min,GetParamTextString,min,BackColor,UpdateCurrentParameter,Animate,Image,OnChangeConfig,OnUpdate_debug,GetValueFormatted,UpdateParamCounter;
+attr search_IgnoreDescription = false;
+attr search_IgnoreMosaic = false;
+attr search_LimitToComposer = false;
+attr search_WholeWords = false;
+attr search_WildCards = false;
+
+view Project
+{
+  attr enableGrid = true;
+  attr enableWireMode = false;
+  attr grid = 10;
+  attr scrollTo = <-60,25>;
+  attr zoom = 1.0;
+}
+
+view unit Simulator
+{
+  attr enableWireMode = false;
+  attr scrollTo = <-11,-6>;
+  attr zoom = 1.0;
+}
+
+view unit Application
+{
+  attr enableWireMode = false;
+  attr scrollTo = <-43,-138>;
+  attr zoom = 0.5;
+}
+
+view unit Res
+{
+  attr enableWireMode = false;
+  attr scrollTo = <8,-48>;
+  attr zoom = 0.5;
+}
+
+view class Application::DeviceClass
+{
+  attr codeColSelect = false;
+  attr codeFirstPos = <0,0>;
+  attr codeInspector = UpdateCurrentParameter;
+  attr codeSelEnd = <0,0>;
+  attr codeSelStart = <0,0>;
+  attr enableWireMode = false;
+  attr scrollTo = <934,-158>;
+  attr zoom = 0.75;
+}
+
+view class Application::ParamValue
+{
+  attr codeColSelect = false;
+  attr codeFirstPos = <0,12>;
+  attr codeInspector = OnChangeConfig;
+  attr codeSelEnd = <28,17>;
+  attr codeSelStart = <28,17>;
+  attr enableWireMode = false;
+  attr scrollTo = <-7,-87>;
+  attr zoom = 1.0;
+}
+
+view class Simulator::SimulatorClass
+{
+  attr codeColSelect = false;
+  attr codeFirstPos = <0,0>;
+  attr codeInspector = InitParameter;
+  attr codeSelEnd = <55,5>;
+  attr codeSelStart = <55,5>;
+  attr enableWireMode = false;
+  attr scrollTo = <304,37>;
+  attr zoom = 0.75;
+}
+
+view class Application::ParamQAIndicator
+{
+  attr codeColSelect = false;
+  attr codeFirstPos = <0,0>;
+  attr codeInspector = Init;
+  attr codeSelEnd = <28,1>;
+  attr codeSelStart = <28,1>;
+  attr enableWireMode = false;
+  attr scrollTo = <-584,-253>;
+  attr zoom = 1.5;
+}
+
+view unit CAN_info
+{
+  attr codeColSelect = false;
+  attr codeFirstPos = <0,0>;
+  attr codeInspector = Inline;
+  attr codeSelEnd = <34,1>;
+  attr codeSelStart = <34,1>;
+  attr enableWireMode = false;
+  attr scrollTo = <-379,-157>;
+  attr zoom = 0.5;
+}
+
+view class CAN_info::CAN_info_UI
+{
+  attr codeColSelect = false;
+  attr codeFirstPos = <0,0>;
+  attr codeInspector = display_update;
+  attr codeSelEnd = <0,0>;
+  attr codeSelStart = <16,0>;
+  attr enableWireMode = false;
+  attr scrollTo = <-7,-58>;
+  attr zoom = 1.0;
+}
+
+view class Application::Application
+{
+  attr codeColSelect = false;
+  attr codeFirstPos = <0,0>;
+  attr codeInspector = OnKeyPress;
+  attr codeSelEnd = <43,7>;
+  attr codeSelStart = <26,7>;
+  attr enableWireMode = false;
+  attr scrollTo = <-7,-113>;
+  attr zoom = 0.75;
+}
+
+view unit Parameter
+{
+  attr codeColSelect = false;
+  attr codeFirstPos = <0,0>;
+  attr codeInspector = Inline;
+  attr codeSelEnd = <12,0>;
+  attr codeSelStart = <12,0>;
+  attr enableWireMode = false;
+  attr scrollTo = <335,329>;
+  attr zoom = 0.75;
+}
+
+view class Application::ParamDialog
+{
+  attr codeColSelect = false;
+  attr codeFirstPos = <0,0>;
+  attr codeInspector = onParamCounter;
+  attr codeSelEnd = <0,0>;
+  attr codeSelStart = <0,0>;
+  attr enableWireMode = false;
+  attr scrollTo = <-467,-216>;
+  attr zoom = 0.5;
+}
+
+view unit Data
+{
+  attr enableWireMode = false;
+  attr scrollTo = <-7,184>;
+  attr zoom = 0.75;
+}
+
+view class Application::ValueBar
+{
+  attr codeColSelect = false;
+  attr codeFirstPos = <0,13>;
+  attr codeInspector = Animate;
+  attr codeSelEnd = <24,6>;
+  attr codeSelStart = <24,6>;
+  attr enableWireMode = false;
+  attr scrollTo = <-7,-7>;
+  attr zoom = 1.0;
+}
+
+view class Application::Scrollbar
+{
+  attr enableWireMode = false;
+  attr scrollTo = <-7,-7>;
+  attr zoom = 1.0;
+}
+
+view class Application::ParamBase
+{
+  attr codeColSelect = false;
+  attr codeFirstPos = <0,0>;
+  attr codeInspector = Init;
+  attr codeSelEnd = <0,0>;
+  attr codeSelStart = <0,0>;
+  attr enableWireMode = false;
+  attr scrollTo = <-7,-7>;
+  attr zoom = 1.0;
+}
+
+view class Application::ParamToggle
+{
+  attr codeColSelect = false;
+  attr codeFirstPos = <0,0>;
+  attr codeInspector = Animate;
+  attr codeSelEnd = <0,0>;
+  attr codeSelStart = <0,0>;
+  attr enableWireMode = false;
+  attr scrollTo = <-7,-7>;
+  attr zoom = 1.0;
+}
+
+view class Application::QADialog
+{
+  attr codeColSelect = false;
+  attr codeFirstPos = <0,0>;
+  attr codeInspector = onQACounter;
+  attr codeSelEnd = <30,24>;
+  attr codeSelStart = <30,24>;
+  attr enableWireMode = false;
+  attr scrollTo = <-7,89>;
+  attr zoom = 1.0;
+}
+
+view class Application::ReceiveDialog
+{
+  attr codeColSelect = false;
+  attr codeFirstPos = <0,0>;
+  attr codeInspector = onReceiveCounter;
+  attr codeSelEnd = <26,2>;
+  attr codeSelStart = <21,2>;
+  attr enableWireMode = false;
+  attr scrollTo = <-7,-7>;
+  attr zoom = 1.0;
+}
+
+view unit Effects
+{
+  attr enableWireMode = false;
+  attr scrollTo = <-7,-55>;
+  attr zoom = 1.0;
+}
+
+view enum Data::TextLineType
+{
+  attr enableWireMode = false;
+  attr scrollTo = <-7,-7>;
+  attr zoom = 1.0;
+}
+
+view class Application::TextLine
+{
+  attr codeColSelect = false;
+  attr codeFirstPos = <0,0>;
+  attr codeInspector = Animate;
+  attr codeSelEnd = <44,1>;
+  attr codeSelStart = <44,1>;
+  attr enableWireMode = false;
+  attr scrollTo = <-503,-125>;
+  attr zoom = 0.75;
+}
+
+view enum Data::ValueBarType
+{
+  attr enableWireMode = false;
+  attr scrollTo = <-7,-7>;
+  attr zoom = 1.0;
+}
+
+view class Application::SplashScreen
+{
+  attr codeColSelect = false;
+  attr codeFirstPos = <0,0>;
+  attr codeInspector = Init;
+  attr codeSelEnd = <18,2>;
+  attr codeSelStart = <27,2>;
+  attr enableWireMode = false;
+  attr scrollTo = <-7,-191>;
+  attr zoom = 1.0;
+}
+
+view class Application::TestDialog
+{
+  attr codeColSelect = false;
+  attr codeFirstPos = <0,0>;
+  attr codeInspector = Init;
+  attr codeSelEnd = <0,0>;
+  attr codeSelStart = <0,0>;
+  attr enableWireMode = false;
+  attr scrollTo = <-7,-7>;
+  attr zoom = 1.0;
+}
+
+view class Parameter::Parameter
+{
+  attr codeColSelect = false;
+  attr codeFirstPos = <0,0>;
+  attr codeInspector = GetValueFormatted;
+  attr codeSelEnd = <34,2>;
+  attr codeSelStart = <34,2>;
+  attr enableWireMode = false;
+  attr scrollTo = <-69,-50>;
+  attr zoom = 0.5;
+}
+
+view class Parameter::DeviceClass
+{
+  attr codeColSelect = false;
+  attr codeFirstPos = <0,0>;
+  attr codeInspector = update_par_from_dev;
+  attr codeSelEnd = <24,1>;
+  attr codeSelStart = <24,1>;
+  attr enableWireMode = false;
+  attr scrollTo = <13,-138>;
+  attr zoom = 0.5;
+}
+
+view enum Parameter::UnitID
+{
+  attr enableWireMode = false;
+  attr scrollTo = <-8,743>;
+  attr zoom = 1.0;
+}

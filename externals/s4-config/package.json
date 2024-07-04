@@ -1,0 +1,8 @@
+{
+    "name": "s4-config",
+    "version": "0.26.18",
+    "license": "UNLICENSED",
+    "description": "Collection of configuration files/ interface definitions for S4 firmware",
+    "repository": "github.com:LorchAW/S4_Config",
+    "private": true
+}

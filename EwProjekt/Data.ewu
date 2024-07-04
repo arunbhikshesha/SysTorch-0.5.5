@@ -1,0 +1,27 @@
+﻿$version 11.00
+
+$rect <730,350,930,390>
+$output false
+enum ValueBarType
+{
+  $rect <10,10,210,50>
+  item Positive;
+
+  $rect <220,10,420,50>
+  item PositiveNegative;
+}
+
+$rect <730,410,930,450>
+$output false
+enum TextLineType
+{
+  $rect <10,10,210,50>
+  item OnlyText;
+
+  $rect <220,10,420,50>
+  item Icon_Unit;
+}
+
+$rect <750,247,950,287>
+$output false
+const rect gScreenSize = <0,0,96,64>;

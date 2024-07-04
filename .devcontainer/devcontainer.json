@@ -1,0 +1,25 @@
+{
+    "image": "manewu/gcc-arm-none-eabi_v7_hard:v1.2.1",
+    // v1.2.1: ubuntu 22.04, yarn 1.22.19, arm-gnu-toolchain-12.3.rel1-x86_64-arm-none-eabi (July 28, 2023) + zip + unzip
+    "runArgs": [
+        "-v",
+        "${localEnv:HOME}/.ssh:/tmp/.ssh:ro"
+    ],
+    "postStartCommand": "git config --global --add safe.directory /workspaces/*",
+    "postAttachCommand": "cp -r /tmp/.ssh /root/ && chown root /root/.ssh/*",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-vscode.cpptools",
+                "twxs.cmake",
+                "ms-vscode.cmake-tools",
+                "hediet.vscode-drawio",
+                "eamodio.gitlens",
+                "tomoki1207.pdf",
+                "wayou.vscode-todo-highlight",
+                "dan-c-underwood.arm",
+                "zixuanwang.linkerscript"
+            ]
+        }
+    }
+}

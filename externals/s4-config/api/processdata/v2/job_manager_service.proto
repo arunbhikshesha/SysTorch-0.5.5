@@ -1,0 +1,118 @@
+syntax = "proto3";
+
+option go_package = "s4backend/proto/jobs";
+package jobs;
+
+message Empty {}
+
+message Job {
+    uint32  id = 1;
+    string name = 2;
+    bool lock_state = 3;
+}
+
+message SaveJobRequest {
+    uint32 job_number = 1;
+    string job_name = 2;
+}
+
+message SaveJobResponse {}
+
+message LoadJobRequest{
+  uint32 job_number = 1;
+}
+message LoadJobResponse{}
+
+message RemoveJobRequest {
+  uint32 job_number = 1;
+}
+
+message RemoveJobResponse {}
+
+message GetAllJobsRequest {
+  uint32 n_elements = 1;
+  uint32 offset = 2;
+}
+
+message GetAllJobsResponse{
+  repeated Job jobs = 1;
+  uint32 total_elements = 2;
+  uint32 n_elements = 3;
+  uint32 offset = 4;
+}
+
+message StatusRequest{}
+
+message StatusResponse {
+  uint32 active_job_id = 1;         // The currentlly loaded job
+  string active_job_name = 2;       // The name of the currentlly loaded job
+  sint32 job_settings_parameter_changed = 3; // Number of settings parameters changed since loading the job; <0 when unknown
+  sint32 job_control_parameter_changed = 4;  // Number of control parameters changed since loading the job; <0 when unknown
+}
+
+message GetChangedJobSettingsParameterRequest{}
+message GetChangedJobControlParameterRequest{}
+
+message GetChangedJobSettingsParameterResponse{
+  sint32 changedParameter = 1;  // returns number of parameters changed; -1 on error
+}
+
+message GetChangedJobControlParameterResponse{
+  sint32 changedParameter = 1;  // returns number of parameters changed; -1 on error
+}
+
+message LockJobRequest{
+  uint32 job_number = 1;
+}
+
+message LockJobResponse{}
+
+message UnlockJobRequest{
+  uint32 job_number = 1;
+}
+
+message UnlockJobResponse{}
+
+message LoadNextJobRequest{}
+
+message LoadNextJobResponse{}
+
+message LoadPreviousJobRequest{}
+
+message LoadPreviousJobResponse{}
+
+message LoadBackgroundJobRequest{
+  uint32 prog_number = 1;
+}
+
+message LoadBackgroundJobResponse{}
+
+service JobManagerService {
+  // Save the current active parameter as a job with the provided number
+  rpc SaveJob(SaveJobRequest) returns (SaveJobResponse);
+  // Load job with the provided number and write values to parameter manager
+  rpc LoadJob(LoadJobRequest) returns (LoadJobResponse);
+  // Remove job with provided job-number
+  rpc RemoveJob(RemoveJobRequest) returns (RemoveJobResponse);
+  // Get a list of available jobs
+  rpc GetAllJobs(GetAllJobsRequest) returns (GetAllJobsResponse);
+  // Get status of the currently loaded job
+  rpc GetStatus(StatusRequest) returns (StatusResponse);
+  // Check if job settings parameter has changed since job was loaded
+  rpc GetChangedJobSettingsParameter(GetChangedJobSettingsParameterRequest) returns (GetChangedJobSettingsParameterResponse);
+  // Check if job contol parameter has changed since job was loaded
+  rpc GetChangedJobControlParameter(GetChangedJobControlParameterRequest) returns (GetChangedJobControlParameterResponse);
+  // Lock job with the provided job number
+  rpc LockJob(LockJobRequest) returns (LockJobResponse);
+  // Unlock job with the provided job number
+  rpc UnlockJob(UnlockJobRequest) returns (UnlockJobResponse);
+  // Load the next job
+  rpc LoadNextJob(LoadNextJobRequest) returns (LoadNextJobResponse);
+  // Load previous job
+  rpc LoadPreviousJob(LoadPreviousJobRequest) returns (LoadPreviousJobResponse);
+  // Load a background-job for the given weldprog-num
+  // If the background-job does not exist an "background-job does not exist" error is returned
+  // as an information for the client. However the background job id of the currently active
+  // bg-job is still updated to the verfGruppeId of the provided weldprog-num
+  rpc LoadBackgroundJob(LoadBackgroundJobRequest) returns (LoadBackgroundJobResponse);
+}

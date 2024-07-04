@@ -1,0 +1,203 @@
+﻿$version 11.00
+
+$rect <-480,230,-280,270>
+inline Inline
+{
+  #include "data_handler_parameter.h"
+
+}
+
+$rect <370,100,570,140>
+$output false
+class CAN_info_UI : Core::Group
+{
+  $rect <0,140,200,180>
+  inherited property Bounds = <0,0,96,64>;
+
+  $rect <267,48,467,88>
+  object Core::Timer Timer
+  {
+    preset OnTrigger = display_update;
+    preset Period = 100;
+    preset Enabled = true;
+  }
+
+  $rect <250,160,450,200>
+  slot display_update
+  {
+    $if !$prototyper
+    var uint32 error_count;
+    var uint8 bus_state;
+    var uint8 ack_err_count;
+    var uint8 bit0_err_count;
+    var uint8 bit1_err_count;
+    var uint8 crc_err_count;
+    var uint8 stuff_err_count;
+    var uint8 form_err_count;
+    native(error_count, bus_state, ack_err_count, bit0_err_count, bit1_err_count, crc_err_count, stuff_err_count, form_err_count)
+    {
+    bus_state = get_can_bus_status();
+    error_count = get_can_error_count();
+    ack_err_count = get_can_ack_error_count();
+    bit0_err_count = get_can_bit0_error_count();
+    bit1_err_count = get_can_bit1_error_count();
+    crc_err_count = get_can_crc_error_count();
+    stuff_err_count = get_can_stuff_error_count();
+    form_err_count = get_can_form_error_count();
+    }
+
+    if(bus_state)
+    {
+    Text_BusState.String = "CAN BUS OFF";
+    }
+    else
+    {
+    Text_BusState.String = "CAN BUS ON";
+    }
+
+    Text_ErrCnt.String = "ErrCnt:" + string(error_count);
+
+    Text_ACK_err.String = "AE:" + string(ack_err_count);
+
+    Text_Bit0_err.String = "B0E:" + string(bit0_err_count);
+
+    Text_Bit1_err.String = "B1E:" + string(bit1_err_count);
+
+    Text_CRC_err.String = "CE:" + string(crc_err_count);
+
+    Text_Stuff_err.String = "SE:" + string(stuff_err_count);
+
+    Text_form_err.String = "FE:" + string(form_err_count);
+
+    $endif
+  }
+
+  $rect <20,20,160,60>
+  object Views::Rectangle Rectangle
+  {
+    preset Bounds = <0,0,96,64>;
+  }
+
+  // can info
+  $rect <20,20,160,60>
+  object Views::Text Text_BusState
+  {
+    preset Bounds = <1,1,94,12>;
+    preset Orientation = Views::Orientation.Normal;
+    preset OnUpdate = null;
+    preset AutoSize = false;
+    preset String = "CAN BUS ";
+    preset Font = Resources::DefaultFont;
+    preset Color = #121212FF;
+  }
+
+  // can info
+  $rect <20,20,160,60>
+  object Views::Text Text_ErrCnt
+  {
+    preset Bounds = <1,14,95,25>;
+    preset Orientation = Views::Orientation.Normal;
+    preset OnUpdate = null;
+    preset AutoSize = false;
+    preset String = "ErrCnt";
+    preset Font = Resources::DefaultFont;
+    preset Color = #121212FF;
+  }
+
+  // can info
+  $rect <20,20,160,60>
+  object Views::Text Text_Stuff_err
+  {
+    preset Bounds = <2,51,50,62>;
+    preset Orientation = Views::Orientation.Normal;
+    preset OnUpdate = null;
+    preset AutoSize = false;
+    preset String = "SE";
+    preset Font = Resources::DefaultFont;
+    preset Color = #121212FF;
+  }
+
+  // can info
+  $rect <20,20,160,60>
+  object Views::Text Text_form_err
+  {
+    preset Bounds = <50,50,94,62>;
+    preset Orientation = Views::Orientation.Normal;
+    preset OnUpdate = null;
+    preset AutoSize = false;
+    preset String = "FE";
+    preset Font = Resources::DefaultFont;
+    preset Color = #121212FF;
+  }
+
+  // can info
+  $rect <20,20,160,60>
+  object Views::Text Text_Bit1_err
+  {
+    preset Bounds = <1,39,49,50>;
+    preset Orientation = Views::Orientation.Normal;
+    preset OnUpdate = null;
+    preset AutoSize = false;
+    preset String = "B1E";
+    preset Font = Resources::DefaultFont;
+    preset Color = #121212FF;
+  }
+
+  // can info
+  $rect <20,20,160,60>
+  object Views::Text Text_CRC_err
+  {
+    preset Bounds = <52,39,94,50>;
+    preset Orientation = Views::Orientation.Normal;
+    preset OnUpdate = null;
+    preset AutoSize = false;
+    preset String = "CE";
+    preset Font = Resources::DefaultFont;
+    preset Color = #121212FF;
+  }
+
+  // can info
+  $rect <20,20,160,60>
+  object Views::Text Text_ACK_err
+  {
+    preset Bounds = <1,27,49,38>;
+    preset Orientation = Views::Orientation.Normal;
+    preset OnUpdate = null;
+    preset AutoSize = false;
+    preset String = "AE";
+    preset Font = Resources::DefaultFont;
+    preset Color = #121212FF;
+  }
+
+  // can info
+  $rect <20,20,160,60>
+  object Views::Text Text_Bit0_err
+  {
+    preset Bounds = <50,27,94,38>;
+    preset Orientation = Views::Orientation.Normal;
+    preset OnUpdate = null;
+    preset AutoSize = false;
+    preset String = "B0E";
+    preset Font = Resources::DefaultFont;
+    preset Color = #121212FF;
+  }
+}
+
+// The class 'CAN_info::DeviceClass' implements the interface between the GUI application \
+// and the device. Within the class you can react to system events sent by the device, \
+// exchange data with the device or send commands to the device. You are completely \
+// free in the design of this interface.
+// 
+// The object 'Device' represents the instance of the device interface. It exists \
+// for your convenience. As an autoobject it is globally available for all GUI components \
+// within your project.
+// 
+// The inline code member allows you to include external header files or add type \
+// definitions needed by the implementation of 'CAN_info::DeviceClass'.
+// 
+// More details inside the members.
+// See also: https://doc.embedded-wizard.de/device-class-and-device-driver
+note legend Note
+{
+  attr Bounds = <-137,19,363,289>;
+}

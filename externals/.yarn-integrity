@@ -1,0 +1,20 @@
+{
+  "systemParams": "win32-x64-115",
+  "modulesFolders": [
+    "externals"
+  ],
+  "flags": [
+    "flat"
+  ],
+  "linkedModules": [],
+  "topLevelPatterns": [
+    "s4-config@ssh://git@github.com:LorchAW/S4_Config#master",
+    "sbsfu-se@ssh://git@github.com:LorchAW/SBSFU-SE#v2.1.2"
+  ],
+  "lockfileEntries": {
+    "s4-config@ssh://git@github.com:LorchAW/S4_Config#master": "ssh://git@github.com:LorchAW/S4_Config#6d40d50887400358184f24bd32ff5c690a6dfb55",
+    "sbsfu-se@ssh://git@github.com:LorchAW/SBSFU-SE#v2.1.2": "ssh://git@github.com:LorchAW/SBSFU-SE#9ade00c13d84eaa3e1f463199d912029c7b938af"
+  },
+  "files": [],
+  "artifacts": {}
+}

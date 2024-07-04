@@ -1,0 +1,96 @@
+{
+	"Info_PID_ProcessIDEnum":[
+		{"Name":"PID_none","No":0},
+		{"Name":"PID_TIG","No":1},
+		{"Name":"PID_MMA","No":2},
+		{"Name":"PID_MigMagMan","No":3},
+		{"Name":"PID_MigMagSyn","No":4}
+		
+	],	
+	"verfdat_id_Map":[
+		{"verfgroup_id": 0,"verfgroup_name":"undef" ,"LimitMapping":"default", "PID_ProcessID":4},
+		{"verfgroup_id": 1,"verfgroup_name":"Synergic(MiMi)" ,"LimitMapping":"default", "PID_ProcessID":4},
+		{"verfgroup_id": 2,"verfgroup_name":"Synergic(RCS)" ,"LimitMapping":"default", "PID_ProcessID":4},
+		{"verfgroup_id": 3,"verfgroup_name":"SpeedArcXT(alt)" ,"LimitMapping":"default", "PID_ProcessID":4},
+		{"verfgroup_id": 4,"verfgroup_name":"SpeedArcRCS" ,"LimitMapping":"default", "PID_ProcessID":4},
+		{"verfgroup_id": 5,"verfgroup_name":"SpeedRoot(alt)" ,"LimitMapping":"default", "PID_ProcessID":4},
+		{"verfgroup_id": 6,"verfgroup_name":"SpeedRootRCS" ,"LimitMapping":"default", "PID_ProcessID":4},
+		{"verfgroup_id": 7,"verfgroup_name":"SpeedCold(alt)" ,"LimitMapping":"default", "PID_ProcessID":4},
+		{"verfgroup_id": 8,"verfgroup_name":"SpeedColdRCS" ,"LimitMapping":"default", "PID_ProcessID":4},
+		{"verfgroup_id": 9,"verfgroup_name":"Puls-II(alt)" ,"LimitMapping":"default", "PID_ProcessID":4},
+		{"verfgroup_id": 10,"verfgroup_name":"Puls-II" ,"LimitMapping":"default", "PID_ProcessID":4},
+		{"verfgroup_id": 11,"verfgroup_name":"SpeedPulse-III(alt)" ,"LimitMapping":"default", "PID_ProcessID":4},
+		{"verfgroup_id": 12,"verfgroup_name":"SpeedPulseXT-IUI(alt)" ,"LimitMapping":"default", "PID_ProcessID":4},
+		{"verfgroup_id": 13,"verfgroup_name":"Puls-IUI" ,"LimitMapping":"default", "PID_ProcessID":4},
+		{"verfgroup_id": 14,"verfgroup_name":"SpeedUp(altS3)" ,"LimitMapping":"default", "PID_ProcessID":4},
+		{"verfgroup_id": 15,"verfgroup_name":"SpeedUp" ,"LimitMapping":"default", "PID_ProcessID":4},
+		{"verfgroup_id": 16,"verfgroup_name":"CyclicRCS(HighLow)" ,"LimitMapping":"default", "PID_ProcessID":4},
+		{"verfgroup_id": 17,"verfgroup_name":"CyclicPulse(SuperTwin)" ,"LimitMapping":"default", "PID_ProcessID":4},
+		{"verfgroup_id": 18,"verfgroup_name":"Puls-UI" ,"LimitMapping":"default", "PID_ProcessID":4},
+		{"verfgroup_id": 19,"verfgroup_name":"Normal CV (S3)" ,"LimitMapping":"default", "PID_ProcessID":4},
+		{"verfgroup_id": 20,"verfgroup_name":"Classic SpeedArc(alt)" ,"LimitMapping":"default", "PID_ProcessID":4},
+		{"verfgroup_id": 21,"verfgroup_name":"TIG" ,"LimitMapping":"TIG", "PID_ProcessID":1},
+		{"verfgroup_id": 22,"verfgroup_name":"MMA" ,"LimitMapping":"MMA", "PID_ProcessID":2},
+		{"verfgroup_id": 23,"verfgroup_name":"MANMIGMAG" ,"LimitMapping":"deafult", "PID_ProcessID":3}
+		]
+	,
+  "LimitMapping": [
+    {
+      "MapName": "default",
+      "Map": [
+        {
+          "InKey": "/ConfigLimits/Imax",
+          "JS_Param": 10,
+          "Type": "Max"
+        },
+        {
+          "InKey": "/ConfigLimits/UMax",
+          "JS_Param": 9,
+          "Type": "Max"
+        },
+        {
+          "InKey": "/ConfigLimits/PMax",
+          "OutKey": "/ActiveLimits/Pmax"
+        }
+      ]
+    },
+    {
+      "MapName": "TIG",
+      "Map": [
+        {
+          "InKey": "/ConfigLimits/ImaxTIG",
+          "JS_Param": 10,
+          "Type": "Max",
+          "OutKey": "/ActiveLimits/Imax"
+        },
+        {
+          "InKey": "/ConfigLimits/PmaxTIG",
+          "OutKey": "/ActiveLimits/Pmax"
+        },
+        {
+          "InKey": "/ConfigLimits/UMax",
+          "JS_Param": 9,
+          "Type": "Max"
+        }
+      ]
+    },
+    {
+      "MapName": "MMA",
+      "Map": [
+        {
+          "InKey": "/ConfigLimits/ImaxMMA",
+          "JS_Param": 10,
+          "Type": "Max",
+          "OutKey": "/ActiveLimits/Imax"
+        },
+        {
+          "InKey": "/ConfigLimits/UMax",
+          "JS_Param": 9,
+          "Type": "Max"
+        }
+      ]
+    }
+  ]
+		
+}
+		

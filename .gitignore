@@ -1,0 +1,88 @@
+# User-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.bak
+*.bkp
+*.dtmp
+*.tmp
+*.html
+
+# User-specific files (MonoDevelop/Xamarin Studio)
+*.userprefs
+
+# Build results
+[Dd]ebug/
+[Bb]inary/
+[Bb]uild/
+[Rr]elease/
+[Rr]eleases/
+[Pp]ruefstand/
+x64/
+x86/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+CodeDB/
+.visualgdb/
+.vscode-*
+.cortex-debug*
+.secrets
+Programm_files/
+VisualGDB/
+EwProjekt/Host/
+EwProjekt/Win32/
+
+# Visual Studio 2017 cache/options directory
+.vs/
+
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+*.rsp
+*.dep
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Executables
+*.out
+*.app
+
+# PCAN
+*.*~
+
+# externals - S4_Config
+/externals/s4-config/.*
+/externals/s4-config/**/*.docx
+/externals/s4-config/**/*.xls*
+/externals/s4-config/**/*.pdf
+/externals/s4-config/**/*.svg
+/externals/s4-config/deploy/wld/
+IPC_A7_M4/
+S4_DiagApp/
+
+externals/sbsfu-se/*
+!externals/sbsfu-se/tools
+!externals/sbsfu-se/Keys
+externals/sbsfu-se/Keys/*
+!externals/sbsfu-se/Keys/TC22_G473MCY6
+!externals/sbsfu-se/CHANGELOG.md
+!externals/sbsfu-se/package.json

@@ -1,0 +1,134 @@
+syntax = "proto3";
+
+option go_package = "s4backend/proto/processdata";
+package processdata;
+
+message ProcessStatusM4 { // definitions see Processdata/ProcessdataM4.h
+  fixed32 stat_bits = 1;    // \@defgroup ps_Flags
+  uint32 err_bits = 2;      // \@defgroup perr_Flags
+  uint32 warn_bits = 3;     // \@defgroup pwarn_Flags
+  uint32 proz_err_no = 4;   // Error number Process ('Irror' numbers)
+  uint32 proz_warn_no = 5;  // Warning number Process (TBD)
+  uint32 pnp_pnv = 6;       // High word = Place number Process automat, Low word = PN 'Verfahrensautomat'
+  fixed32 dig_in = 7;       // \@defgroup DI_Flags
+  fixed32 dig_out = 8;      // \@defgroup DO_Flags
+  float mc_fpga_i_set = 9;  // SPI TX data to FPGA I-Soll
+  uint32 mc_fpga_pd_no = 10;  // SPI TX data to FPGA PD No.
+  uint32 mc_fpga_pd_val = 11; // SPI TX data to FPGA PD Value
+  float fpga_mc_i_act = 12;   // SPI RX data from FPGA I-Ist
+  float fpga_mc_u_act = 13;   // SPI RX data from FPGA U-Ist
+
+  repeated float adin_val_10ms = 20;  // index = \@ref ADC_InputChannels
+  repeated float fpga_mean_values = 21; // index = \@ref ProzStat_FpgaMeanValues_IDs
+  repeated uint32 run_time_mean = 22; // index = \@ref ProzStat_RunTime_IDs
+  repeated uint32 run_time_max = 23;  // index = \@ref ProzStat_RunTime_IDs
+  repeated uint32 err_counts_per_sec = 24;  // index = \@ref ProzInnerErrCounter
+
+  fixed32 seq_number = 100;   // Sequential number, always even (odd numbers are skipped)
+}
+  
+message ProcessStatusMain { // definitions see Processdata/ProcessdataMain.h
+  uint64 err_bits = 1;    // \@ref ErrInternNums
+  uint64 warn_bits = 2;   // \@ref TBD
+  fixed32 pi_bits = 3;    // \@ref PI_Flags
+  fixed32 po_bits = 4;    // \@ref PO_Flags
+  uint32 cntrl_phase = 5; // \@ref StPh_IDs (Processdata/ProcessdataM4.h)
+  fixed32 stat_bits = 6;  // not (yet) used here
+  fixed32 rob_bits = 7;   // \@ref rob_Flags (see Processdata/ProcessdataRemote.h)
+
+  repeated uint32 err_counts_per_sec = 20;  // \@ref ErrCounterNums
+
+  fixed32 seq_number = 100;   // Sequential number, always even (odd numbers are skipped)
+}
+
+message ProcessStatusPrimary { // definitions see Processdata/ProcessdataPrimary.h
+  fixed32 stat_bits_1 = 1;    // Status bits module 1, can be a value of \@ref prS_Flags
+  uint32 err_bits_1 = 2;      // Error Bits module 1, can be a value of \@ref prE_Flags
+  uint32 detected_1 = 3;      // module 1 registered
+  fixed32 stat_bits_2 = 4;    // Status bits module 2, can be a value of \@ref prS_Flags
+  uint32 err_bits_2 = 5;      // Error Bits module 2, can be a value of \@ref prE_Flags
+  uint32 detected_2 = 6;      // module 2 registered
+  
+  repeated float primstat_values_1 = 20;    // module 1 \@ref PrimStatValNums
+  repeated float primstat_values_2 = 21;    // module 2 \@ref PrimStatValNums
+  repeated uint32 primcontrol_values = 22;  // \@ref PrimControlNums
+
+  fixed32 seq_number = 100;   // Sequential number, always even (odd numbers are skipped)
+}
+
+message ProcessStatusDmr { // definitions see Processdata/ProcessdataDmr.h
+  fixed32 in_bits_active = 1;         // Status-Bits Aktiver Drahtvorschub, can be a value of \@ref inC_Flags
+  fixed32 in_bits_inactive = 2;       // Status-Bits Inaktiver Drahtvorschub, can be a value of \@ref inC_Flags
+  uint32 in_bits_zwitri_active = 3;   // Status-Bits Aktiver Zwischentrieb, can be a value of \@ref inC_Flags
+  uint32 in_bits_zwitri_inactive = 4; // Status-Bits Inaktiver Zwischentrieb, can be a value of \@ref inC_Flags
+  fixed32 stat_bits = 5;              // Status-Bits DMR-PP, can be a value of \@ref sm_Flags
+  uint32 err_bits = 6;                // Error-Bits DMR-PP, can be a value of \@ref eDMR_Flags
+  uint32 warn_bits = 7;               // Warning-Bits DMR-PP, can be a value of \@ref wDMR_Flags
+  fixed32 out_bits = 8;               // Control-Bits, can be a value of \@ref outC_Flags
+
+  repeated float dmr_act_values = 20;  // index = \@ref WFeedStatValNums
+
+  fixed32 seq_number = 100;   // Sequential number, always even (odd numbers are skipped)
+}
+  
+message ProcessStatusWpk {  // definitions see Processdata/ProcessdataWpk.h
+  uint32 err_bits = 1;    // \@ref WpkErrNums
+  uint32 warn_bits = 2;   // not (yet) used here
+  fixed32 stat_bits = 3;  // Status bits, can be a value of \@ref sWPK_Flags
+
+  repeated float act_values = 20; // index = \@ref WPKStatValNums
+
+  fixed32 seq_number = 100;   // Sequential number, always even (odd numbers are skipped)
+}
+
+message ProcessStatusFpga {  // definitions see Processdata/ProcessdataFpga.h
+  uint32 err_bits = 1;    // \@ref FpgaErr_Flags
+  uint32 warn_bits = 2;   // not (yet) used here
+  fixed32 stat_bits = 3;  // Status bits, \@ref FpgaStat_Flags
+
+  repeated float act_values = 20; // index = \@ref FpgaStatValNums
+
+  fixed32 seq_number = 100;   // Sequential number, always even (odd numbers are skipped)
+}
+
+message ProcessStatusBackend {
+  uint32 status             = 1;
+  float temperature_mapro   = 2;
+  fixed32 seq_number        = 100;
+}
+  
+message GetProcessStatusM4Request {}
+message GetProcessStatusMainRequest {}
+message GetProcessStatusPrimaryRequest {}
+message GetProcessStatusDmrRequest {}
+message GetProcessStatusWpkRequest {}
+message GetProcessStatusFpgaRequest {}
+message GetProcessStatusBackendRequest{}
+
+message SetProcessStatusPrimaryResponse{}
+
+service ProcessService {
+  // returns M4 core process status data
+  rpc GetProcessStatusM4(GetProcessStatusM4Request) returns(ProcessStatusM4);
+
+  // returns Main process status data
+  rpc GetProcessStatusMain(GetProcessStatusMainRequest) returns(ProcessStatusMain);
+
+  // returns Primary process status data
+  rpc GetProcessStatusPrimary(GetProcessStatusPrimaryRequest) returns(ProcessStatusPrimary);
+
+  // returns DMR process status data
+  rpc GetProcessStatusDmr(GetProcessStatusDmrRequest) returns(ProcessStatusDmr);
+
+  // returns WPK process status data
+  rpc GetProcessStatusWpk(GetProcessStatusWpkRequest) returns(ProcessStatusWpk);
+
+  // returns FPGA process status data
+  rpc GetProcessStatusFpga(GetProcessStatusFpgaRequest) returns(ProcessStatusFpga);
+
+  // returns Backend process status data
+  rpc GetProcessStatusBackend (GetProcessStatusBackendRequest) returns (ProcessStatusBackend);
+
+  // Set Primary process status data
+  rpc SetProcessStatusPrimary(ProcessStatusPrimary) returns (SetProcessStatusPrimaryResponse);
+}

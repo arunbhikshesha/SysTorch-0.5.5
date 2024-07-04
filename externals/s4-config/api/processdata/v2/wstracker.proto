@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+option go_package = "s4backend/proto/wstracker";
+package wstracker;
+
+message Empty {}
+
+message TrackerConfig {
+  uint32 id = 1;
+  optional string text = 2; // description of the Tracker Configuration, can be omitted in Clear()
+}
+
+message TrackerConfigFile {
+  uint32 id = 1;
+  string text = 2; // description of the Tracker Configuration
+  string content = 3;  // Json Configuration File content
+}
+
+message GetTrackerConfigListRequest {}
+
+message GetTrackerConfigListResponse{
+  uint32 count = 1; // number of Tracker Config-list entries
+  repeated TrackerConfig entries = 2;
+}
+
+message GetWeldSeamFileListRequest {}
+
+message GetWeldSeamFileListResponse {
+  uint32 count = 1;   // number of weld-seam files
+  repeated string file_name = 2;  // file names (relative path in dedicated directory)
+}
+
+message DeleteWeldSeamFilesRequest {}
+
+service WsTrackerService {
+  rpc Set(TrackerConfigFile) returns (Empty); // replaces Configuration with same id!
+  rpc Get(TrackerConfig) returns (TrackerConfigFile);
+  rpc Clear(TrackerConfig) returns (Empty);   // removes Configuration with given id
+  rpc GetList(GetTrackerConfigListRequest) returns (GetTrackerConfigListResponse);
+  rpc GetWeldSeamFileList(GetWeldSeamFileListRequest) returns (GetWeldSeamFileListResponse);
+  rpc DeleteWeldSeamFiles(DeleteWeldSeamFilesRequest) returns (Empty); // deletes all weld-seam files in dedicated directory
+}

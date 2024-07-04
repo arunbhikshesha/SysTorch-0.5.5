@@ -1,0 +1,110 @@
+syntax = "proto3";
+
+import "error_manager.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "s4backend/proto/eventlog";
+package eventlog;
+
+message Empty {}
+
+// `TypeErr`` is used to log state-changes of an error and `TypeMessage` is used
+// to log anything not related to a specific error.
+enum LogType {
+  TYPE_UNSPECIFIED  = 0;
+  TYPE_ERR          = 1;
+  TYPE_MESSAGE      = 2;
+}
+
+message EventlogEntry {
+  // when this evnt occured; use time.Now() when creating an entry
+  google.protobuf.Timestamp timestamp = 1;
+  
+  // a message describing this entry. Not used for entries of type ``LogErr``
+  string message                      = 2;
+
+  // the type of the entry; either a state-change of an error or a generic message
+  LogType log_type                    = 3;
+
+  // when type is ``TypeErr`` this field gives the number of the error this entry is related to
+  uint32 error_id                     = 4;
+
+  // Severity of this entry
+  errormanager.LogCategory category                = 5;
+
+  // when type is ``LogError`` this field describes the currend state of the error.
+  errormanager.ErrorStatus status                  = 6;
+
+  // a path to additional information describing this entry on the local filesystem.
+  string attachment                   = 7;
+
+  // how often this error elready occured (if available; count from start of the system).
+  uint32 error_cnt                    = 8;
+
+  // how long the error stayed in the previous state (if available).
+  uint64 duration                     = 9;
+}
+
+// FilterFieldName specifies the field name for a filter-expression
+enum FilterFieldName {
+  FIELD_TIMESTAMP  = 0;
+  FIELD_TYPE       = 1;
+  FIELD_ERROR_ID   = 2;
+  FIELD_CATEGORY   = 3;
+  FIELD_STATUS     = 4;
+}
+
+message FilterExpression {
+  // the field to filter; one of ``FilterFiledName``
+  FilterFieldName field = 1;
+
+  // the filter-expression
+  //   ``x`` to filter a single value
+  //   ``x:y`` to filter a range from x to y
+  //   ``x::y`` (!note two :) to filter a timerange
+  string expression     = 2;
+}
+
+message AddEventlogEntryRequest {
+  EventlogEntry event = 1;
+}
+message AddEventlogEntryResponse {}
+
+message ClearEventlogRequest {}
+message ClearEventlogResponse {}
+
+message GetEventlogRequest{
+  // which entries to return
+  repeated FilterExpression filters = 1;
+
+  // how many entries to return
+  uint32 count                      = 2;
+
+  // at which offset to return; for paging requests
+  uint32 offset                     = 3;
+}
+
+message GetEventlogResponse{
+  // the returned entries
+  repeated EventlogEntry entries = 1;
+
+  // the number of entries returned
+  uint32 count                   = 2;
+
+  // from which offset the entries are returned
+  uint32 offset                  = 3;
+
+  // number of total entries
+  uint32 total_entries           = 4;
+}
+
+service EventlogService {
+  // Adds an event to the eventlog
+  rpc Add(AddEventlogEntryRequest) returns (AddEventlogEntryResponse);
+
+  // Deletes all entries from the eventlog
+  rpc Clear(ClearEventlogRequest) returns (ClearEventlogResponse);
+
+  // Returns entries from the eventlog filtered by ``filters``
+  rpc Get(GetEventlogRequest) returns (GetEventlogResponse);
+}

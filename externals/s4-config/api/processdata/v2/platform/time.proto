@@ -1,0 +1,71 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "s4backend/proto/platform";
+
+package time;
+
+message ResetTimeRequest{ }
+message ResetTimeResponse { }
+
+message SetSystemTimeRequest{
+  google.protobuf.Timestamp time     = 1;
+}
+message SetSystemTimeResponse { }
+
+message SetUserTimeRequest{
+  google.protobuf.Timestamp time     = 1;
+}
+message SetUserTimeResponse { }
+
+message GetUserTimeRequest{ }
+message GetUserTimeResponse {
+  google.protobuf.Timestamp usertime = 1;
+}
+
+message GetTimeOffsetRequest{ }
+message GetTimeOffsetResponse {
+  int32 offset                       = 1;
+}
+
+message EnableNtpRequest{ }
+message EnableNtpResponse { }
+
+message DisableNtpRequest{ }
+message DisableNtpResponse { }
+
+message AddNtpServerRequest{
+  // example: time.google.com
+  string url                         = 1;
+}
+message AddNtpServerResponse { }
+
+message RemoveNtpServerRequest{
+  string url                         = 1;
+}
+message RemoveNtpServerResponse { }
+
+message CheckNtpEnabledRequest{ }
+message CheckNtpEnabledResponse {
+  bool enabled                       = 1;
+}
+
+message GetNtpServerListRequest{ }
+message GetNtpServerListResponse {
+  repeated string servers            = 1;
+}
+
+service TimeManagerService {
+  rpc ResetTime(ResetTimeRequest) returns (ResetTimeResponse) {}
+  rpc SetSystemTime(SetSystemTimeRequest) returns (SetSystemTimeResponse) {}
+  rpc SetUserTime(SetUserTimeRequest) returns (SetUserTimeResponse) {}
+  rpc GetUserTime(GetUserTimeRequest) returns (GetUserTimeResponse) {}
+  rpc GetTimeOffset(GetTimeOffsetRequest) returns (GetTimeOffsetResponse) {}
+  rpc EnableNtp(EnableNtpRequest) returns (EnableNtpResponse) {}
+  rpc DisableNtp(DisableNtpRequest) returns (DisableNtpResponse) {}
+  rpc AddNtpServer(AddNtpServerRequest) returns (AddNtpServerResponse) {}
+  rpc RemoveNtpServer(RemoveNtpServerRequest) returns (RemoveNtpServerResponse) {}
+  rpc CheckNtpEnabled(CheckNtpEnabledRequest) returns (CheckNtpEnabledResponse) {}
+  rpc GetNtpServerList(GetNtpServerListRequest) returns (GetNtpServerListResponse) {}
+}

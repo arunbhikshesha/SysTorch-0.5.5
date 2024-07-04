@@ -1,0 +1,14 @@
+{
+    "recommendations": [
+        "ms-vscode.cpptools",
+        "twxs.cmake",
+        "ms-vscode.cmake-tools",
+        "hediet.vscode-drawio",
+        "eamodio.gitlens",
+        "tomoki1207.pdf",
+        "wayou.vscode-todo-highlight",
+        "marus25.cortex-debug",
+        "dan-c-underwood.arm",
+        "zixuanwang.linkerscript"
+    ]
+}

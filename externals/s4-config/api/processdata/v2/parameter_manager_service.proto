@@ -1,0 +1,228 @@
+syntax = "proto3";
+
+option go_package = "s4backend/proto/parameter";
+package parameter;
+
+message Empty {}
+
+message FloatParameter {
+  uint32 id = 1;
+  float  value = 2;
+}
+
+message Uint32Parameter {
+  uint32 id = 1;
+  uint32 value = 2;
+}
+
+message FloatParameterExtended {
+    uint32 id = 1;
+    float min = 2;
+    float norm = 3;
+    float max = 4;
+    uint32 mask = 5; // Mask ID, Information about stepsize over range Datatype tbd
+    uint32 unit = 6; // Display Unit of Parameter and DisplayFaktor Datatype tbd
+    uint32 attr = 7; // Bitfield zur Identifikation in welchem Kontext ein Parameter genutzt wird. ATTR_Bits
+    float step = 8;
+}
+
+message Uint32ParameterExtended {
+    uint32 id = 1;
+    uint32 min = 2;
+    uint32 norm = 3;
+    uint32 max = 4;
+    uint32 type = 5;	//Parameter is used as Value = 0, Bitfield = 1
+}
+
+message JobParameterSet {
+  repeated FloatParameter settings = 1;
+  repeated Uint32Parameter control = 2;
+}
+
+message JobSettingsParameterExtSet {
+    repeated FloatParameterExtended parameter = 1;
+}
+
+message JobControlParameterSet {
+  repeated Uint32Parameter parameter = 1;
+}
+
+message JobControlParameterExtSet {
+    repeated Uint32ParameterExtended parameter = 1;
+}
+
+message DokuParameterSet {
+  repeated FloatParameter parameter = 1;
+}
+
+message DokuParameterExtSet {
+    repeated FloatParameterExtended parameter = 1;
+}
+
+message JobParameterValueSet {
+  repeated float setting_values = 1;
+  repeated uint32 control_values = 2;
+}
+
+message DokuParameterValueSet {
+  repeated float values = 1;
+}
+
+message FloatParameterLimits {
+  uint32 id = 1;
+  float min = 2;
+  float norm = 3;
+  float max = 4;
+}
+
+message Uint32ParameterLimits {
+  uint32 id = 1;
+  uint32 min = 2;
+  uint32 norm = 3;
+  uint32 max = 4;
+}
+
+message FloatParameterLimitGroup {
+  string group_name = 1;
+  repeated FloatParameterLimits limits = 2;
+}
+
+message Uint32ParameterLimitGroup {
+  string group_name = 1;
+  repeated Uint32ParameterLimits limits = 2;
+}
+
+message GetJobParameterValuesRequest {}
+message GetJobSettingsParameterExtendedRequest {}
+message GetJobControlParameterExtendedRequest {}
+message GetDokuParameterValuesRequest {}
+message GetDokuParameterExtendedRequest {}
+message GetJobParameterValuesChangedRequest {}
+message GetDokuParameterValuesChangedRequest {}
+
+message ShmParameterHandle {
+  string shm_name = 1;                                  // The name of the parameter-out shared memory of the parameter-manager-service.
+                                                        // Can be directly passed to `shm_open()`
+  string shm_write_lock = 2;                            // Name of the write-lock semaphore of the parameter-out shared memory
+  string job_param_changed_semaphore = 3;               // Name of the semaphore that signals changed job-parameter. Can be directly
+                                                        // passed to `sem_open()`
+  string job_settings_param_ext_changed_semaphore = 4;  // Name of the semaphore that signals changed job-settings-parameter-extended. Can be directly
+                                                        // passed to `sem_open()`
+  string job_control_param_ext_changed_semaphore = 5;   // Name of the semaphore that signals changed job-control-parameter. Can be directly
+                                                        // passed to `sem_open()`
+  string doku_param_changed_semaphore = 6;              // Name of the semaphore that signals changed doku-parameter. Can be directly
+                                                        // passed to `sem_open()`
+  string doku_param_ext_changed_semaphore = 7;          // Name of the semaphore that signals changed doku-parameter. Can be directly
+                                                        // passed to `sem_open()`
+}
+
+message GetShmParameterOutRequest {}
+message ReleaseShmParameterOutRequest {
+  ShmParameterHandle  handle = 1;   // The handle returned by a previous call to `GetShmParameterOut`
+}
+
+message GetShmParameterInRequest {}
+message ReleaseShmParameterInRequest {
+  ShmParameterHandle  handle = 1;   // The handle returned by a previous call to `GetShmParameterIn`
+}
+
+message SetJobSettingsParameterLimitsRequest {
+  string limit_group = 1;                   // A unique name chosen by the caller to identify the group of limits (e.g. "torch")
+                                            // When multiple limits are set for the same group they are combined and when
+                                            // clearing limits for a group-name all limits of this group are removed.
+  repeated FloatParameterLimits limits = 2; // A list of limits to be set for parameters
+}
+
+message SetJobControlParameterLimitsRequest {
+  string limit_group = 1;                    // A unique name chosen by the caller to identify the group of limits (e.g. "torch")
+                                             // When multiple limits are set for the same group they are combined and when
+                                             // clearing limits for a group-name all limits of this group are removed.
+  repeated Uint32ParameterLimits limits = 2; // A list of limits to be set for parameters
+}
+
+
+message ClearJobSettingsParameterLimitsRequest {
+  string limit_group = 1;                   // All limits previously set for this group are cleared
+}
+
+message ClearJobControlParameterLimitsRequest {
+  string limit_group = 1;                   // All limits previously set for this group are cleared
+}
+
+message GetAllJobSettingsParameterLimitsRequest {}
+message GetAllJobSettingsParameterLimitsResponse {
+  repeated FloatParameterLimitGroup limit_groups = 1; // A list of job-settings-parameter limit-groups. Parameter corresponding to enum JobSettingIDs (S4_Config -> Parameter/ParaEnums.h)
+}
+
+message GetActiveJobSettingsParameterLimitsRequest {}
+message GetActiveJobSettingsParameterLimitsResponse {
+  repeated FloatParameterLimits limits = 1; // A list of the currently active job-settings-parameter limits. Parameter corresponding to enum JobSettingIDs (S4_Config -> Parameter/ParaEnums.h)
+}
+
+message GetAllJobControlParameterLimitsRequest {}
+message GetAllJobControlParameterLimitsResponse {
+  repeated Uint32ParameterLimitGroup limit_groups = 1;  // A list of job-control-parameter limit groups. Parameter corresponding to enum JobControlIDs (S4_Config -> Parameter/ParaEnums.h)
+}
+
+message GetActiveJobControlParameterLimitsRequest {}
+message GetActiveJobControlParameterLimitsResponse {
+  repeated Uint32ParameterLimits limits = 1;  // A list of the currently active job-control-parameter limits. Parameter corresponding to enum JobControlIDs (S4_Config -> Parameter/ParaEnums.h)
+}
+
+service ParameterManagerService {
+  // returns complete array of Job settings and Job control parameter values, corresponding to enum JobSettingIDs & JobControlIDs (S4_Config -> Parameter/ParaEnums.h)
+  rpc GetJobParameterValues(GetJobParameterValuesRequest) returns (JobParameterValueSet);
+  rpc GetJobSettingsParameterExtended(GetJobSettingsParameterExtendedRequest) returns (JobSettingsParameterExtSet);
+  rpc GetJobControlParameterExtended(GetJobControlParameterExtendedRequest) returns (JobControlParameterExtSet);
+  // returns complete array of DokuPar values, corresponding to enum vout_DokuPars (S4_Config -> Parameter/ParaEnums.h)
+  rpc GetDokuParameterValues(GetDokuParameterValuesRequest) returns (DokuParameterValueSet);
+  rpc GetDokuParameterExtended(GetDokuParameterExtendedRequest) returns (DokuParameterExtSet);
+
+  // sets one or more Job parameters, id in msg. Parameter corresponding to enum JobSettingIDs and enum JobControlIDs (S4_Config -> Parameter/ParaEnums.h)
+  rpc SetJobParameter(JobParameterSet) returns (Empty);
+  // sets one or more DokuPars, id in message Parameter corresponding to enum vout_DokuPars (S4_Config -> Parameter/ParaEnums.h)
+  rpc SetDokuParameter(DokuParameterSet) returns (Empty);
+
+  // sets complete array of DokuPar values, corresponding to enum vout_DokuPars (S4_Config -> Parameter/ParaEnums.h)
+  // (only called by S4_Main)
+  rpc SetDokuParsValues(DokuParameterValueSet) returns (Empty);
+
+  rpc GetJobParsValuesChanged(GetJobParameterValuesChangedRequest) returns (stream JobParameterSet);
+  rpc GetDokuParsValuesChanged(GetDokuParameterValuesChangedRequest) returns (stream DokuParameterSet);
+
+  // Create a semaphore for changed job-parameter and a semaphore for changed doku-parameter of the parameter-out shared-memory
+  // of the prameter-manager-service and return their names (autogenerated), the name of the shared-memory and the name of
+  // the write-lock for the shared-memory. The caller can then open the semaphores with `sem_open()` and gets notified,
+  // when parameters are changed in the output-shared-memory of the parameter-manager. To release the semaphores, the returned
+  // handle can be stored and passed to `ReleaseShmParameterOut`.
+  rpc GetShmParameterOut(GetShmParameterOutRequest) returns (ShmParameterHandle);
+
+  // Release the semaphores requested by a previous call to `GetShmParameterOut`
+  rpc ReleaseShmParameterOut(ReleaseShmParameterOutRequest) returns (Empty);
+
+  // Create a shared memory a client can use to send it's parameters including a write-lock and a semaphore. The
+  // parameter-manager-service will wait on the semaphore and read and process parameters in the shared-memory
+  // when the client posts it. To release all resources the client must call `ReleaseShmParameterIn` whith the handle
+  // returned by this function.
+  rpc GetShmParameterIn(GetShmParameterInRequest) returns (ShmParameterHandle);
+
+  // Release all resources requested by a previous call to `GetShmParameterIn`
+  rpc ReleaseShmParameterIn(ReleaseShmParameterInRequest) returns (Empty);
+
+  // sets constricting Job Settings ParameterLimits for -used- (by selected welding program) job parameters (id->enum JobSettingIDs)
+  // (only called by S4_Main)
+  rpc SetJobSettingsParameterLimits(SetJobSettingsParameterLimitsRequest) returns(Empty);
+  rpc SetJobControlParameterLimits(SetJobControlParameterLimitsRequest) returns(Empty);
+
+  // Clears limits for the given group-name
+  rpc ClearJobSettingsParameterLimits(ClearJobSettingsParameterLimitsRequest) returns(Empty);
+  rpc ClearJobControlParameterLimits(ClearJobControlParameterLimitsRequest) returns(Empty);
+
+  // Return all Limit groups with the corresponding limits
+  rpc GetAllJobSettingsParameterLimits(GetAllJobSettingsParameterLimitsRequest) returns(GetAllJobSettingsParameterLimitsResponse);
+  rpc GetAllJobControlParameterLimits(GetAllJobControlParameterLimitsRequest) returns(GetAllJobControlParameterLimitsResponse);
+
+  // Return all currently active Limits
+  rpc GetActiveJobSettingsParameterLimits(GetActiveJobSettingsParameterLimitsRequest) returns(GetActiveJobSettingsParameterLimitsResponse);
+  rpc GetActiveJobControlParameterLimits(GetActiveJobControlParameterLimitsRequest) returns(GetActiveJobControlParameterLimitsResponse);
+}

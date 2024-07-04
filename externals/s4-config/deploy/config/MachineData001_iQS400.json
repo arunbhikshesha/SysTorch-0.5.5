@@ -1,0 +1,12 @@
+{
+	"ConfId":1,
+	"ConfName":"iQS 400",
+	"ConfVer":"0.0.1",
+	"CSKeys":[
+	{"Key":"/ConfigLimits/Imax","Value":400.0},
+	{"Key":"/ConfigLimits/ImaxMMA","Value":400.0},
+	{"Key":"/ConfigLimits/ImaxTIG","Value":400.0},
+	{"Key":"/ConfigLimits/PMax","Value":12000}
+	]
+}
+		

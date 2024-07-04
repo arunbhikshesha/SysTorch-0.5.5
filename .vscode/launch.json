@@ -1,0 +1,19 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Cortex Debug ST-Link",
+            "request": "launch",
+            "type": "cortex-debug",
+            "interface": "swd",
+            "showDevDebugOutput": "none",
+            "svdFile": "${workspaceRoot}/.vscode/STM32G473xx.svd",
+            "servertype": "stlink",
+            "device": "STM32G473MEYx",
+            "cwd": "${workspaceRoot}",
+            "preLaunchTask": "CubeProg: Build and Flash project (SWD)",
+            "executable": "${command:cmake.launchTargetPath}",
+//            "breakAfterReset": true,
+        }
+    ]
+}

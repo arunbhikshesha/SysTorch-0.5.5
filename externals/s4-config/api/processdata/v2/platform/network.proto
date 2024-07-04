@@ -1,0 +1,67 @@
+syntax = "proto3";
+
+option go_package = "s4backend/proto/platform";
+
+package network;
+
+enum NetworkInfoMode {
+  NETWORK_INFO_MODE_UNSPECIFIED  = 0;
+  NETWORK_INFO_MODE_NOT_EXISTS   = 1;
+  NETWORK_INFO_MODE_DHCP         = 2;
+  NETWORK_INFO_MODE_STATIC       = 3;
+}
+
+enum NetworkInfoInterface {
+  NETWORK_INFO_INTERFACE_UNSPECIFIED  = 0;
+  NETWORK_INFO_INTERFACE_OFFICE       = 1;
+  NETWORK_INFO_INTERFACE_ROBOT        = 2;
+  NETWORK_INFO_INTERFACE_WLAN         = 3;
+}
+
+
+message NetworkInfo{
+    NetworkInfoInterface  Interface        = 1;            // Interface type (robot, office or wlan)
+    NetworkInfoMode       Mode             = 2;            // Interface mode (static or dhcp)
+    string                Ip               = 3;            // Ip address or CIDR address for the interface
+    string                Gateway          = 4;            // Gateway ip address for the interface
+    string                Dns              = 5;            // DNS ip address for the interface
+    string                Mac              = 6;            // MAC address of the interface
+}
+
+message GetNetworkRequest{
+    NetworkInfoInterface Interface        = 1;            // Interface
+}
+
+message SetNetworkResponse{}
+
+message StopInterfaceRequest{
+    NetworkInfoInterface Interface        = 1;            // Ethernet interface
+}
+
+message StopInterfaceResponse{}
+
+message StartInterfaceRequest{
+    NetworkInfoInterface Interface        = 1;            // Ethernet interface
+}
+
+message StartInterfaceResponse{}
+
+message ReloadNetworkConfigRequest {
+    NetworkInfoInterface Interface   = 1;
+}
+
+message ReloadNetworkConfigResponse {}
+
+
+service NetworkManagerService {
+    // Save atomic a new static config file in /etc/systemd/network/
+    rpc SetNetworkConfig(NetworkInfo) returns (SetNetworkResponse) {}
+    // Get ip, gateway and dns from config file in /etc/systemd/network/
+    rpc GetNetworkConfig(GetNetworkRequest) returns (NetworkInfo) {}
+    // Stop ethernet interface with networkctl
+    rpc StopInterface(StopInterfaceRequest) returns (StopInterfaceResponse) {}
+    // Start ethernet interface with networkctl
+    rpc StartInterface(StartInterfaceRequest) returns (StartInterfaceResponse) {}
+    // Load configuration from configstore and setup network
+    rpc ReloadNetworkConfig(ReloadNetworkConfigRequest) returns (ReloadNetworkConfigResponse) {}
+}

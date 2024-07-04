@@ -1,0 +1,2668 @@
+$version 11.00
+
+$rect <-70,-100,130,-60>
+$output false
+enum JS_ID
+{
+    $rect <10,10,170,50>
+    item JS_undef = 0;
+
+    $rect <190,10,350,50>
+    item JS_tPreGas = 1;
+
+    $rect <370,10,530,50>
+    item JS_vWireCreep = 2;
+
+    $rect <550,10,710,50>
+    item JS_Start_Erel = 3;
+
+    $rect <730,10,890,50>
+    item JS_Start_ArcLen = 4;
+
+    $rect <10,60,170,100>
+    item JS_Start_t = 5;
+
+    $rect <190,60,350,100>
+    item JS_Main_tSlope = 6;
+
+    $rect <370,60,530,100>
+    item JS_Main_vWire = 7;
+
+    $rect <550,60,710,100>
+    item JS_Main_vWireRel = 8;
+
+    $rect <730,60,890,100>
+    item JS_Main_U = 9;
+
+    $rect <10,110,170,150>
+    item JS_Main_I = 10;
+
+    $rect <190,110,350,150>
+    item JS_Main_ArcLen = 11;
+
+    $rect <370,110,530,150>
+    item JS_Dynamics = 12;
+
+    $rect <550,110,710,150>
+    item JS_ArcForce = 13;
+
+    $rect <730,110,890,150>
+    item JS_2d_tSlope = 14;
+
+    $rect <10,160,170,200>
+    item JS_2d_Erel = 15;
+
+    $rect <190,160,350,200>
+    item JS_Pulse_f = 16;
+
+    $rect <370,160,530,200>
+    item JS_Pulse_Bal = 17;
+
+    $rect <550,160,710,200>
+    item JS_TwinRange = 18;
+
+    $rect <730,160,890,200>
+    item JS_Twin_f = 19;
+
+    $rect <10,210,170,250>
+    item JS_Twin_Bal = 20;
+
+    $rect <190,210,350,250>
+    item JS_Stwin_Ht = 21;
+
+    $rect <370,210,530,250>
+    item JS_Stwin_Lt = 22;
+
+    $rect <550,210,710,250>
+    item JS_2d_ArcLen = 23;
+
+    $rect <730,210,890,250>
+    item JS_2d_vWireRel = 24;
+
+    $rect <10,260,170,300>
+    item JS_End_tSlope = 25;
+
+    $rect <190,260,350,300>
+    item JS_End_Erel = 26;
+
+    $rect <370,260,530,300>
+    item JS_End_ArcLen = 27;
+
+    $rect <550,260,710,300>
+    item JS_End_vWire = 28;
+
+    $rect <730,260,890,300>
+    item JS_End_U = 29;
+
+    $rect <10,310,170,350>
+    item JS_End_t = 30;
+
+    $rect <190,310,350,350>
+    item JS_WireBurnBack = 31;
+
+    $rect <370,310,530,350>
+    item JS_tPostGas = 32;
+
+    $rect <550,310,710,350>
+    item JS_tPostGas_rel = 33;
+
+    $rect <730,310,890,350>
+    item JS_End_Detection = 34;
+
+    $rect <10,360,170,400>
+    item JS_tSpotOn = 35;
+
+    $rect <190,360,350,400>
+    item JS_tSpotOff = 36;
+
+    $rect <370,360,530,400>
+    item JS_Start_vWire = 37;
+
+    $rect <550,360,710,400>
+    item JS_Start_U = 38;
+
+    $rect <730,360,890,400>
+    item JS_Remote_Imin = 39;
+
+    $rect <10,410,170,450>
+    item JS_Remote_Imax = 40;
+
+    $rect <190,410,350,450>
+    item JS_Start_E = 41;
+
+    $rect <370,410,530,450>
+    item JS_End_E = 42;
+
+    $rect <550,410,710,450>
+    item JS_vWire_toHigh = 43;
+
+    $rect <730,410,890,450>
+    item JS_vWire_toLow = 44;
+
+    $rect <10,460,170,500>
+    item JS_ArcRegSpeed = 45;
+
+    $rect <190,460,350,500>
+    item JS_WeldingSpeed = 46;
+
+    $rect <370,460,530,500>
+    item JS_TwinSlope = 47;
+
+    $rect <550,460,710,500>
+    item JS_Res48 = 48;
+
+    $rect <730,460,890,500>
+    item JS_Res49 = 49;
+
+    $rect <10,510,170,550>
+    item JS_Res50 = 50;
+
+    $rect <190,510,350,550>
+    item JS_Res51 = 51;
+
+    $rect <370,510,530,550>
+    item JS_Res52 = 52;
+
+}
+
+// This file is generated automatically via VisualBasic.
+// Source:        Objects_V4.xlsm
+// Generated:  19.07.2023 17:12:44
+// Excel:        Version 16.0 on Windows (32-bit) NT :.00.
+note legend Note1
+{
+    attr Bounds = <-70,-250,800,-140>;
+}
+$rect <-70,50,100,50>
+$output false
+autoobject MW_ParameterModel::JD_Parameter JS_undef
+{
+    preset Id = MW_ParameterModelObjects::JS_ID.JS_undef;
+    preset Max = 0;
+    preset Min = 0;
+    preset Value = 0;
+    preset Attribute = 0x00000000;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.JobParameter;
+    preset Step = 1;
+}
+$rect <100,50,270,50>
+$output false
+autoobject MW_ParameterModel::JD_Parameter JS_tPreGas
+{
+    preset Id = MW_ParameterModelObjects::JS_ID.JS_tPreGas;
+    preset Max = 10;
+    preset Min = 0;
+    preset Value = 0.1;
+    preset Attribute = 0x00000008;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.JobParameter;
+    preset Step = 0.01;
+}
+$rect <270,50,440,50>
+$output false
+autoobject MW_ParameterModel::JD_Parameter JS_vWireCreep
+{
+    preset Id = MW_ParameterModelObjects::JS_ID.JS_vWireCreep;
+    preset Max = 40;
+    preset Min = 0.1;
+    preset Value = 1;
+    preset Attribute = 0x00000008;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.JobParameter;
+    preset Step = 0.01;
+}
+$rect <440,50,610,50>
+$output false
+autoobject MW_ParameterModel::JD_Parameter JS_Start_Erel
+{
+    preset Id = MW_ParameterModelObjects::JS_ID.JS_Start_Erel;
+    preset Max = 2;
+    preset Min = 0.1;
+    preset Value = 1;
+    preset Attribute = 0x00000008;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.JobParameter;
+    preset Step = 0.001;
+}
+$rect <610,50,780,50>
+$output false
+autoobject MW_ParameterModel::JD_Parameter JS_Start_ArcLen
+{
+    preset Id = MW_ParameterModelObjects::JS_ID.JS_Start_ArcLen;
+    preset Max = 2;
+    preset Min = 0;
+    preset Value = 1;
+    preset Attribute = 0x00000008;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.JobParameter;
+    preset Step = 0.001;
+}
+$rect <-70,100,100,100>
+$output false
+autoobject MW_ParameterModel::JD_Parameter JS_Start_t
+{
+    preset Id = MW_ParameterModelObjects::JS_ID.JS_Start_t;
+    preset Max = 99.9;
+    preset Min = 0;
+    preset Value = 1;
+    preset Attribute = 0x00010008;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.JobParameter;
+    preset Step = 0.01;
+}
+$rect <100,100,270,100>
+$output false
+autoobject MW_ParameterModel::JD_Parameter JS_Main_tSlope
+{
+    preset Id = MW_ParameterModelObjects::JS_ID.JS_Main_tSlope;
+    preset Max = 99.9;
+    preset Min = 0;
+    preset Value = 0.2;
+    preset Attribute = 0x00040001;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.JobParameter;
+    preset Step = 0.01;
+}
+$rect <270,100,440,100>
+$output false
+autoobject MW_ParameterModel::JD_Parameter JS_Main_vWire
+{
+    preset Id = MW_ParameterModelObjects::JS_ID.JS_Main_vWire;
+    preset Max = 40;
+    preset Min = 0;
+    preset Value = 3.5;
+    preset Attribute = 0x00000001;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.JobParameter;
+    preset Step = 0.01;
+}
+$rect <440,100,610,100>
+$output false
+autoobject MW_ParameterModel::JD_Parameter JS_Main_vWireRel
+{
+    preset Id = MW_ParameterModelObjects::JS_ID.JS_Main_vWireRel;
+    preset Max = 2;
+    preset Min = 0.1;
+    preset Value = 1;
+    preset Attribute = 0x00000001;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.JobParameter;
+    preset Step = 0.001;
+}
+$rect <610,100,780,100>
+$output false
+autoobject MW_ParameterModel::JD_Parameter JS_Main_U
+{
+    preset Id = MW_ParameterModelObjects::JS_ID.JS_Main_U;
+    preset Max = 100;
+    preset Min = 0;
+    preset Value = 18;
+    preset Attribute = 0x00000001;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.JobParameter;
+    preset Step = 0.01;
+}
+$rect <-70,150,100,150>
+$output false
+autoobject MW_ParameterModel::JD_Parameter JS_Main_I
+{
+    preset Id = MW_ParameterModelObjects::JS_ID.JS_Main_I;
+    preset Max = 1000;
+    preset Min = 0;
+    preset Value = 100;
+    preset Attribute = 0x00000001;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.JobParameter;
+    preset Step = 0.1;
+}
+$rect <100,150,270,150>
+$output false
+autoobject MW_ParameterModel::JD_Parameter JS_Main_ArcLen
+{
+    preset Id = MW_ParameterModelObjects::JS_ID.JS_Main_ArcLen;
+    preset Max = 2;
+    preset Min = 0;
+    preset Value = 1;
+    preset Attribute = 0x00000001;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.JobParameter;
+    preset Step = 0.001;
+}
+$rect <270,150,440,150>
+$output false
+autoobject MW_ParameterModel::JD_Parameter JS_Dynamics
+{
+    preset Id = MW_ParameterModelObjects::JS_ID.JS_Dynamics;
+    preset Max = 2;
+    preset Min = 0;
+    preset Value = 1;
+    preset Attribute = 0x00000040;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.JobParameter;
+    preset Step = 0.001;
+}
+$rect <440,150,610,150>
+$output false
+autoobject MW_ParameterModel::JD_Parameter JS_ArcForce
+{
+    preset Id = MW_ParameterModelObjects::JS_ID.JS_ArcForce;
+    preset Max = 2;
+    preset Min = 0;
+    preset Value = 1;
+    preset Attribute = 0x00000040;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.JobParameter;
+    preset Step = 0.001;
+}
+$rect <610,150,780,150>
+$output false
+autoobject MW_ParameterModel::JD_Parameter JS_2d_tSlope
+{
+    preset Id = MW_ParameterModelObjects::JS_ID.JS_2d_tSlope;
+    preset Max = 99.9;
+    preset Min = 0;
+    preset Value = 0.2;
+    preset Attribute = 0x00000000;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.JobParameter;
+    preset Step = 0.01;
+}
+$rect <-70,200,100,200>
+$output false
+autoobject MW_ParameterModel::JD_Parameter JS_2d_Erel
+{
+    preset Id = MW_ParameterModelObjects::JS_ID.JS_2d_Erel;
+    preset Max = 2;
+    preset Min = 0.1;
+    preset Value = 0.5;
+    preset Attribute = 0x00000000;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.JobParameter;
+    preset Step = 0.001;
+}
+$rect <100,200,270,200>
+$output false
+autoobject MW_ParameterModel::JD_Parameter JS_Pulse_f
+{
+    preset Id = MW_ParameterModelObjects::JS_ID.JS_Pulse_f;
+    preset Max = 5000;
+    preset Min = 0.1;
+    preset Value = 1;
+    preset Attribute = 0x00200000;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.JobParameter;
+    preset Step = 0.1;
+}
+$rect <270,200,440,200>
+$output false
+autoobject MW_ParameterModel::JD_Parameter JS_Pulse_Bal
+{
+    preset Id = MW_ParameterModelObjects::JS_ID.JS_Pulse_Bal;
+    preset Max = 0.99;
+    preset Min = 0.01;
+    preset Value = 0.5;
+    preset Attribute = 0x00200000;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.JobParameter;
+    preset Step = 0.001;
+}
+$rect <440,200,610,200>
+$output false
+autoobject MW_ParameterModel::JD_Parameter JS_TwinRange
+{
+    preset Id = MW_ParameterModelObjects::JS_ID.JS_TwinRange;
+    preset Max = 0.5;
+    preset Min = 0.05;
+    preset Value = 0.25;
+    preset Attribute = 0x00100000;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.JobParameter;
+    preset Step = 0.001;
+}
+$rect <610,200,780,200>
+$output false
+autoobject MW_ParameterModel::JD_Parameter JS_Twin_f
+{
+    preset Id = MW_ParameterModelObjects::JS_ID.JS_Twin_f;
+    preset Max = 5;
+    preset Min = 0.5;
+    preset Value = 1.5;
+    preset Attribute = 0x00100000;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.JobParameter;
+    preset Step = 0.1;
+}
+$rect <-70,250,100,250>
+$output false
+autoobject MW_ParameterModel::JD_Parameter JS_Twin_Bal
+{
+    preset Id = MW_ParameterModelObjects::JS_ID.JS_Twin_Bal;
+    preset Max = 0.8;
+    preset Min = 0.2;
+    preset Value = 0.5;
+    preset Attribute = 0x00100000;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.JobParameter;
+    preset Step = 0.001;
+}
+$rect <100,250,270,250>
+$output false
+autoobject MW_ParameterModel::JD_Parameter JS_Stwin_Ht
+{
+    preset Id = MW_ParameterModelObjects::JS_ID.JS_Stwin_Ht;
+    preset Max = 1;
+    preset Min = 0.1;
+    preset Value = 0.3;
+    preset Attribute = 0x00100000;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.JobParameter;
+    preset Step = 0.01;
+}
+$rect <270,250,440,250>
+$output false
+autoobject MW_ParameterModel::JD_Parameter JS_Stwin_Lt
+{
+    preset Id = MW_ParameterModelObjects::JS_ID.JS_Stwin_Lt;
+    preset Max = 1;
+    preset Min = 0.1;
+    preset Value = 0.3;
+    preset Attribute = 0x00100000;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.JobParameter;
+    preset Step = 0.01;
+}
+$rect <440,250,610,250>
+$output false
+autoobject MW_ParameterModel::JD_Parameter JS_2d_ArcLen
+{
+    preset Id = MW_ParameterModelObjects::JS_ID.JS_2d_ArcLen;
+    preset Max = 2;
+    preset Min = 0;
+    preset Value = 1;
+    preset Attribute = 0x00100000;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.JobParameter;
+    preset Step = 0.001;
+}
+$rect <610,250,780,250>
+$output false
+autoobject MW_ParameterModel::JD_Parameter JS_2d_vWireRel
+{
+    preset Id = MW_ParameterModelObjects::JS_ID.JS_2d_vWireRel;
+    preset Max = 2;
+    preset Min = 0.1;
+    preset Value = 1;
+    preset Attribute = 0x00100000;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.JobParameter;
+    preset Step = 0.001;
+}
+$rect <-70,300,100,300>
+$output false
+autoobject MW_ParameterModel::JD_Parameter JS_End_tSlope
+{
+    preset Id = MW_ParameterModelObjects::JS_ID.JS_End_tSlope;
+    preset Max = 99.9;
+    preset Min = 0;
+    preset Value = 0.5;
+    preset Attribute = 0x00040010;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.JobParameter;
+    preset Step = 0.01;
+}
+$rect <100,300,270,300>
+$output false
+autoobject MW_ParameterModel::JD_Parameter JS_End_Erel
+{
+    preset Id = MW_ParameterModelObjects::JS_ID.JS_End_Erel;
+    preset Max = 2;
+    preset Min = 0.1;
+    preset Value = 0.5;
+    preset Attribute = 0x000C0010;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.JobParameter;
+    preset Step = 0.001;
+}
+$rect <270,300,440,300>
+$output false
+autoobject MW_ParameterModel::JD_Parameter JS_End_ArcLen
+{
+    preset Id = MW_ParameterModelObjects::JS_ID.JS_End_ArcLen;
+    preset Max = 2;
+    preset Min = 0;
+    preset Value = 1;
+    preset Attribute = 0x000C0010;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.JobParameter;
+    preset Step = 0.001;
+}
+$rect <440,300,610,300>
+$output false
+autoobject MW_ParameterModel::JD_Parameter JS_End_vWire
+{
+    preset Id = MW_ParameterModelObjects::JS_ID.JS_End_vWire;
+    preset Max = 40;
+    preset Min = 0.1;
+    preset Value = 3.5;
+    preset Attribute = 0x000C0010;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.JobParameter;
+    preset Step = 0.01;
+}
+$rect <610,300,780,300>
+$output false
+autoobject MW_ParameterModel::JD_Parameter JS_End_U
+{
+    preset Id = MW_ParameterModelObjects::JS_ID.JS_End_U;
+    preset Max = 100;
+    preset Min = 0;
+    preset Value = 18;
+    preset Attribute = 0x000C0010;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.JobParameter;
+    preset Step = 0.01;
+}
+$rect <-70,350,100,350>
+$output false
+autoobject MW_ParameterModel::JD_Parameter JS_End_t
+{
+    preset Id = MW_ParameterModelObjects::JS_ID.JS_End_t;
+    preset Max = 99.9;
+    preset Min = 0;
+    preset Value = 0.5;
+    preset Attribute = 0x00090010;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.JobParameter;
+    preset Step = 0.01;
+}
+$rect <100,350,270,350>
+$output false
+autoobject MW_ParameterModel::JD_Parameter JS_WireBurnBack
+{
+    preset Id = MW_ParameterModelObjects::JS_ID.JS_WireBurnBack;
+    preset Max = 2;
+    preset Min = 0;
+    preset Value = 1;
+    preset Attribute = 0x00080010;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.JobParameter;
+    preset Step = 0.001;
+}
+$rect <270,350,440,350>
+$output false
+autoobject MW_ParameterModel::JD_Parameter JS_tPostGas
+{
+    preset Id = MW_ParameterModelObjects::JS_ID.JS_tPostGas;
+    preset Max = 99.9;
+    preset Min = 0.1;
+    preset Value = 0.5;
+    preset Attribute = 0x00000010;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.JobParameter;
+    preset Step = 0.01;
+}
+$rect <440,350,610,350>
+$output false
+autoobject MW_ParameterModel::JD_Parameter JS_tPostGas_rel
+{
+    preset Id = MW_ParameterModelObjects::JS_ID.JS_tPostGas_rel;
+    preset Max = 3;
+    preset Min = 0;
+    preset Value = 1;
+    preset Attribute = 0x00000010;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.JobParameter;
+    preset Step = 0.001;
+}
+$rect <610,350,780,350>
+$output false
+autoobject MW_ParameterModel::JD_Parameter JS_End_Detection
+{
+    preset Id = MW_ParameterModelObjects::JS_ID.JS_End_Detection;
+    preset Max = 2;
+    preset Min = 0;
+    preset Value = 1;
+    preset Attribute = 0x00000010;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.JobParameter;
+    preset Step = 0.001;
+}
+$rect <-70,400,100,400>
+$output false
+autoobject MW_ParameterModel::JD_Parameter JS_tSpotOn
+{
+    preset Id = MW_ParameterModelObjects::JS_ID.JS_tSpotOn;
+    preset Max = 99.9;
+    preset Min = 0.01;
+    preset Value = 1;
+    preset Attribute = 0x00C00000;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.JobParameter;
+    preset Step = 0.01;
+}
+$rect <100,400,270,400>
+$output false
+autoobject MW_ParameterModel::JD_Parameter JS_tSpotOff
+{
+    preset Id = MW_ParameterModelObjects::JS_ID.JS_tSpotOff;
+    preset Max = 99.9;
+    preset Min = 0.01;
+    preset Value = 1;
+    preset Attribute = 0x00800000;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.JobParameter;
+    preset Step = 0.01;
+}
+$rect <270,400,440,400>
+$output false
+autoobject MW_ParameterModel::JD_Parameter JS_Start_vWire
+{
+    preset Id = MW_ParameterModelObjects::JS_ID.JS_Start_vWire;
+    preset Max = 40;
+    preset Min = 0.1;
+    preset Value = 3.5;
+    preset Attribute = 0x00040008;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.JobParameter;
+    preset Step = 0.01;
+}
+$rect <440,400,610,400>
+$output false
+autoobject MW_ParameterModel::JD_Parameter JS_Start_U
+{
+    preset Id = MW_ParameterModelObjects::JS_ID.JS_Start_U;
+    preset Max = 100;
+    preset Min = 0;
+    preset Value = 18;
+    preset Attribute = 0x000C0010;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.JobParameter;
+    preset Step = 0.01;
+}
+$rect <610,400,780,400>
+$output false
+autoobject MW_ParameterModel::JD_Parameter JS_Remote_Imin
+{
+    preset Id = MW_ParameterModelObjects::JS_ID.JS_Remote_Imin;
+    preset Max = 1000;
+    preset Min = 0;
+    preset Value = 3;
+    preset Attribute = 0x00000000;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.JobParameter;
+    preset Step = 0.1;
+}
+$rect <-70,450,100,450>
+$output false
+autoobject MW_ParameterModel::JD_Parameter JS_Remote_Imax
+{
+    preset Id = MW_ParameterModelObjects::JS_ID.JS_Remote_Imax;
+    preset Max = 1000;
+    preset Min = 0;
+    preset Value = 600;
+    preset Attribute = 0x00000000;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.JobParameter;
+    preset Step = 0.1;
+}
+$rect <100,450,270,450>
+$output false
+autoobject MW_ParameterModel::JD_Parameter JS_Start_E
+{
+    preset Id = MW_ParameterModelObjects::JS_ID.JS_Start_E;
+    preset Max = 2;
+    preset Min = 0;
+    preset Value = 1;
+    preset Attribute = 0x00000008;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.JobParameter;
+    preset Step = 0.001;
+}
+$rect <270,450,440,450>
+$output false
+autoobject MW_ParameterModel::JD_Parameter JS_End_E
+{
+    preset Id = MW_ParameterModelObjects::JS_ID.JS_End_E;
+    preset Max = 2;
+    preset Min = 0;
+    preset Value = 1;
+    preset Attribute = 0x00000010;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.JobParameter;
+    preset Step = 0.001;
+}
+$rect <440,450,610,450>
+$output false
+autoobject MW_ParameterModel::JD_Parameter JS_vWire_toHigh
+{
+    preset Id = MW_ParameterModelObjects::JS_ID.JS_vWire_toHigh;
+    preset Max = 99;
+    preset Min = -99;
+    preset Value = 0;
+    preset Attribute = 0x00000000;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.JobParameter;
+    preset Step = 1;
+}
+$rect <610,450,780,450>
+$output false
+autoobject MW_ParameterModel::JD_Parameter JS_vWire_toLow
+{
+    preset Id = MW_ParameterModelObjects::JS_ID.JS_vWire_toLow;
+    preset Max = 99;
+    preset Min = -99;
+    preset Value = 0;
+    preset Attribute = 0x00000000;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.JobParameter;
+    preset Step = 1;
+}
+$rect <-70,500,100,500>
+$output false
+autoobject MW_ParameterModel::JD_Parameter JS_ArcRegSpeed
+{
+    preset Id = MW_ParameterModelObjects::JS_ID.JS_ArcRegSpeed;
+    preset Max = 2;
+    preset Min = 0;
+    preset Value = 1;
+    preset Attribute = 0x00000000;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.JobParameter;
+    preset Step = 0.001;
+}
+$rect <100,500,270,500>
+$output false
+autoobject MW_ParameterModel::JD_Parameter JS_WeldingSpeed
+{
+    preset Id = MW_ParameterModelObjects::JS_ID.JS_WeldingSpeed;
+    preset Max = 400;
+    preset Min = 0;
+    preset Value = 10;
+    preset Attribute = 0x00000000;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.JobParameter;
+    preset Step = 0.1;
+}
+$rect <270,500,440,500>
+$output false
+autoobject MW_ParameterModel::JD_Parameter JS_TwinSlope
+{
+    preset Id = MW_ParameterModelObjects::JS_ID.JS_TwinSlope;
+    preset Max = 2;
+    preset Min = 0;
+    preset Value = 1;
+    preset Attribute = 0x00000000;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.JobParameter;
+    preset Step = 0.001;
+}
+$rect <440,500,610,500>
+$output false
+autoobject MW_ParameterModel::JD_Parameter JS_Res48
+{
+    preset Id = MW_ParameterModelObjects::JS_ID.JS_Res48;
+    preset Max = 10000;
+    preset Min = 0;
+    preset Value = 0;
+    preset Attribute = 0x00000000;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.JobParameter;
+    preset Step = 1;
+}
+$rect <610,500,780,500>
+$output false
+autoobject MW_ParameterModel::JD_Parameter JS_Res49
+{
+    preset Id = MW_ParameterModelObjects::JS_ID.JS_Res49;
+    preset Max = 10000;
+    preset Min = 0;
+    preset Value = 0;
+    preset Attribute = 0x00000000;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.JobParameter;
+    preset Step = 1;
+}
+$rect <-70,550,100,550>
+$output false
+autoobject MW_ParameterModel::JD_Parameter JS_Res50
+{
+    preset Id = MW_ParameterModelObjects::JS_ID.JS_Res50;
+    preset Max = 10000;
+    preset Min = 0;
+    preset Value = 0;
+    preset Attribute = 0x00000000;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.JobParameter;
+    preset Step = 1;
+}
+$rect <100,550,270,550>
+$output false
+autoobject MW_ParameterModel::JD_Parameter JS_Res51
+{
+    preset Id = MW_ParameterModelObjects::JS_ID.JS_Res51;
+    preset Max = 10000;
+    preset Min = 0;
+    preset Value = 0;
+    preset Attribute = 0x00000000;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.JobParameter;
+    preset Step = 1;
+}
+$rect <270,550,440,550>
+$output false
+autoobject MW_ParameterModel::JD_Parameter JS_Res52
+{
+    preset Id = MW_ParameterModelObjects::JS_ID.JS_Res52;
+    preset Max = 10000;
+    preset Min = 0;
+    preset Value = 0;
+    preset Attribute = 0x00000000;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.JobParameter;
+    preset Step = 1;
+}
+$rect <150,-100,350,-60>
+$output false
+enum D_ID
+{
+    $rect <10,10,170,50>
+    item vout_SeamTracking = 0;
+
+    $rect <190,10,350,50>
+    item vout_I_Proj = 1;
+
+    $rect <370,10,530,50>
+    item vout_U_Proj = 2;
+
+    $rect <550,10,710,50>
+    item vout_P_Proj = 3;
+
+    $rect <730,10,890,50>
+    item vout_DV_Proj = 4;
+
+    $rect <10,60,170,100>
+    item vout_I_Ist = 5;
+
+    $rect <190,60,350,100>
+    item vout_I_Hold = 6;
+
+    $rect <370,60,530,100>
+    item vout_U_Ist = 7;
+
+    $rect <550,60,710,100>
+    item vout_U_Hold = 8;
+
+    $rect <730,60,890,100>
+    item vout_P_Ist = 9;
+
+    $rect <10,110,170,150>
+    item vout_P_Hold = 10;
+
+    $rect <190,110,350,150>
+    item vout_KS_Prozessinfo = 11;
+
+    $rect <370,110,530,150>
+    item vout_Puls_Prozessinfo = 12;
+
+    $rect <550,110,710,150>
+    item vout_dMat_Empf = 13;
+
+    $rect <730,110,890,150>
+    item vout_d2Mat_Empf = 14;
+
+    $rect <10,160,170,200>
+    item vout_a_Mass_Empf = 15;
+
+    $rect <190,160,350,200>
+    item vout_vWeld_Empf = 16;
+
+    $rect <370,160,530,200>
+    item vout_tWeld_Ist = 17;
+
+    $rect <550,160,710,200>
+    item vout_GasDF_Empf = 18;
+
+    $rect <730,160,890,200>
+    item vout_DV_Einschl_Proj = 19;
+
+    $rect <10,210,170,250>
+    item vout_RauchAbs_Empf = 20;
+
+    $rect <190,210,350,250>
+    item vout_P_Emission_Proj = 21;
+
+    $rect <370,210,530,250>
+    item vout_dv_DMR_Soll = 22;
+
+    $rect <550,210,710,250>
+    item vout_DMR_Soll = 23;
+
+    $rect <730,210,890,250>
+    item vout_BrennKuehl_Empf = 24;
+
+    $rect <10,260,170,300>
+    item vout_UniversalPara1 = 25;
+
+    $rect <190,260,350,300>
+    item vout_UniversalPara2 = 26;
+
+    $rect <370,260,530,300>
+    item vout_UniversalPara3 = 27;
+
+    $rect <550,260,710,300>
+    item vout_UniversalPara4 = 28;
+
+    $rect <730,260,890,300>
+    item vout_UniversalPara5 = 29;
+
+    $rect <10,310,170,350>
+    item vout_fIist_GLV = 30;
+
+    $rect <190,310,350,350>
+    item vout_fUist_GLV = 31;
+
+    $rect <370,310,530,350>
+    item vout_fPist_GLV = 32;
+
+    $rect <550,310,710,350>
+    item vout_fIIist_GLV = 33;
+
+    $rect <730,310,890,350>
+    item vout_fUUist_GLV = 34;
+
+    $rect <10,360,170,400>
+    item vout_fIsollDIist_GLV = 35;
+
+    $rect <190,360,350,400>
+    item vout_Scr_GLV = 36;
+
+    $rect <370,360,530,400>
+    item vout_ScAtP_GLV = 37;
+
+    $rect <550,360,710,400>
+    item vout_rVdv_GLV = 38;
+
+    $rect <730,360,890,400>
+    item vout_rVdv_rGLV = 39;
+
+    $rect <10,410,170,450>
+    item vout_oVdv_GLV = 40;
+
+    $rect <190,410,350,450>
+    item vout_oVdv_rGLV = 41;
+
+    $rect <370,410,530,450>
+    item vout_uVdv_GLV = 42;
+
+    $rect <550,410,710,450>
+    item vout_uVdv_rGLV = 43;
+
+    $rect <730,410,890,450>
+    item vout_dU_wvm_GLV = 44;
+
+    $rect <10,460,170,500>
+    item vout_SP1_GLV = 45;
+
+    $rect <190,460,350,500>
+    item vout_SP2_GLV = 46;
+
+    $rect <370,460,530,500>
+    item vout_SP3_GLV = 47;
+
+    $rect <550,460,710,500>
+    item vout_rsvPara48 = 48;
+
+    $rect <730,460,890,500>
+    item vout_rsvPara49 = 49;
+
+    $rect <10,510,170,550>
+    item vout_rsvPara50 = 50;
+
+}
+
+$rect <840,50,1010,50>
+$output false
+autoobject MW_ParameterModel::JD_Parameter vout_SeamTracking
+{
+    preset Id = MW_ParameterModelObjects::D_ID.vout_SeamTracking;
+    preset Max = 99999;
+    preset Min = 0;
+    preset Value = 0;
+    preset Attribute = 0x00000000;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.DokuParameter;
+    preset Step = 1;
+}
+$rect <1010,50,1180,50>
+$output false
+autoobject MW_ParameterModel::JD_Parameter vout_I_Proj
+{
+    preset Id = MW_ParameterModelObjects::D_ID.vout_I_Proj;
+    preset Max = 99999;
+    preset Min = 0;
+    preset Value = 300;
+    preset Attribute = 0x00000081;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.DokuParameter;
+    preset Step = 0.1;
+}
+$rect <1180,50,1350,50>
+$output false
+autoobject MW_ParameterModel::JD_Parameter vout_U_Proj
+{
+    preset Id = MW_ParameterModelObjects::D_ID.vout_U_Proj;
+    preset Max = 99;
+    preset Min = 0;
+    preset Value = 28;
+    preset Attribute = 0x00000081;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.DokuParameter;
+    preset Step = 0.1;
+}
+$rect <1350,50,1520,50>
+$output false
+autoobject MW_ParameterModel::JD_Parameter vout_P_Proj
+{
+    preset Id = MW_ParameterModelObjects::D_ID.vout_P_Proj;
+    preset Max = 99999;
+    preset Min = 1;
+    preset Value = 8550;
+    preset Attribute = 0x00000081;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.DokuParameter;
+    preset Step = 0.1;
+}
+$rect <1520,50,1690,50>
+$output false
+autoobject MW_ParameterModel::JD_Parameter vout_DV_Proj
+{
+    preset Id = MW_ParameterModelObjects::D_ID.vout_DV_Proj;
+    preset Max = 99999;
+    preset Min = 0;
+    preset Value = 2;
+    preset Attribute = 0x00000081;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.DokuParameter;
+    preset Step = 0.1;
+}
+$rect <840,100,1010,100>
+$output false
+autoobject MW_ParameterModel::JD_Parameter vout_I_Ist
+{
+    preset Id = MW_ParameterModelObjects::D_ID.vout_I_Ist;
+    preset Max = 99999;
+    preset Min = 0;
+    preset Value = 300;
+    preset Attribute = 0x00000004;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.DokuParameter;
+    preset Step = 0.1;
+}
+$rect <1010,100,1180,100>
+$output false
+autoobject MW_ParameterModel::JD_Parameter vout_I_Hold
+{
+    preset Id = MW_ParameterModelObjects::D_ID.vout_I_Hold;
+    preset Max = 99999;
+    preset Min = 0;
+    preset Value = 300;
+    preset Attribute = 0x00000004;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.DokuParameter;
+    preset Step = 0.1;
+}
+$rect <1180,100,1350,100>
+$output false
+autoobject MW_ParameterModel::JD_Parameter vout_U_Ist
+{
+    preset Id = MW_ParameterModelObjects::D_ID.vout_U_Ist;
+    preset Max = 99;
+    preset Min = 0;
+    preset Value = 28;
+    preset Attribute = 0x00000002;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.DokuParameter;
+    preset Step = 0.1;
+}
+$rect <1350,100,1520,100>
+$output false
+autoobject MW_ParameterModel::JD_Parameter vout_U_Hold
+{
+    preset Id = MW_ParameterModelObjects::D_ID.vout_U_Hold;
+    preset Max = 99;
+    preset Min = 0;
+    preset Value = 28;
+    preset Attribute = 0x00000004;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.DokuParameter;
+    preset Step = 0.1;
+}
+$rect <1520,100,1690,100>
+$output false
+autoobject MW_ParameterModel::JD_Parameter vout_P_Ist
+{
+    preset Id = MW_ParameterModelObjects::D_ID.vout_P_Ist;
+    preset Max = 99999;
+    preset Min = 1;
+    preset Value = 8550;
+    preset Attribute = 0x00000002;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.DokuParameter;
+    preset Step = 0.1;
+}
+$rect <840,150,1010,150>
+$output false
+autoobject MW_ParameterModel::JD_Parameter vout_P_Hold
+{
+    preset Id = MW_ParameterModelObjects::D_ID.vout_P_Hold;
+    preset Max = 99999;
+    preset Min = 1;
+    preset Value = 8550;
+    preset Attribute = 0x00000004;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.DokuParameter;
+    preset Step = 0.1;
+}
+$rect <1010,150,1180,150>
+$output false
+autoobject MW_ParameterModel::JD_Parameter vout_KS_Prozessinfo
+{
+    preset Id = MW_ParameterModelObjects::D_ID.vout_KS_Prozessinfo;
+    preset Max = 99999;
+    preset Min = 0;
+    preset Value = 2;
+    preset Attribute = 0x00000020;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.DokuParameter;
+    preset Step = 1;
+}
+$rect <1180,150,1350,150>
+$output false
+autoobject MW_ParameterModel::JD_Parameter vout_Puls_Prozessinfo
+{
+    preset Id = MW_ParameterModelObjects::D_ID.vout_Puls_Prozessinfo;
+    preset Max = 99999;
+    preset Min = 0;
+    preset Value = 2;
+    preset Attribute = 0x00000020;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.DokuParameter;
+    preset Step = 1;
+}
+$rect <1350,150,1520,150>
+$output false
+autoobject MW_ParameterModel::JD_Parameter vout_dMat_Empf
+{
+    preset Id = MW_ParameterModelObjects::D_ID.vout_dMat_Empf;
+    preset Max = 1000;
+    preset Min = 0;
+    preset Value = 1.1;
+    preset Attribute = 0x00000080;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.DokuParameter;
+    preset Step = 0.1;
+}
+$rect <1520,150,1690,150>
+$output false
+autoobject MW_ParameterModel::JD_Parameter vout_d2Mat_Empf
+{
+    preset Id = MW_ParameterModelObjects::D_ID.vout_d2Mat_Empf;
+    preset Max = 1000;
+    preset Min = 0;
+    preset Value = 1.1;
+    preset Attribute = 0x00000100;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.DokuParameter;
+    preset Step = 1;
+}
+$rect <840,200,1010,200>
+$output false
+autoobject MW_ParameterModel::JD_Parameter vout_a_Mass_Empf
+{
+    preset Id = MW_ParameterModelObjects::D_ID.vout_a_Mass_Empf;
+    preset Max = 100;
+    preset Min = 0;
+    preset Value = 50;
+    preset Attribute = 0x00000100;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.DokuParameter;
+    preset Step = 1;
+}
+$rect <1010,200,1180,200>
+$output false
+autoobject MW_ParameterModel::JD_Parameter vout_vWeld_Empf
+{
+    preset Id = MW_ParameterModelObjects::D_ID.vout_vWeld_Empf;
+    preset Max = 199;
+    preset Min = 20;
+    preset Value = 100;
+    preset Attribute = 0x00000100;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.DokuParameter;
+    preset Step = 0.1;
+}
+$rect <1180,200,1350,200>
+$output false
+autoobject MW_ParameterModel::JD_Parameter vout_tWeld_Ist
+{
+    preset Id = MW_ParameterModelObjects::D_ID.vout_tWeld_Ist;
+    preset Max = 199;
+    preset Min = 20;
+    preset Value = 100;
+    preset Attribute = 0x00000002;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.DokuParameter;
+    preset Step = 0.1;
+}
+$rect <1350,200,1520,200>
+$output false
+autoobject MW_ParameterModel::JD_Parameter vout_GasDF_Empf
+{
+    preset Id = MW_ParameterModelObjects::D_ID.vout_GasDF_Empf;
+    preset Max = 300;
+    preset Min = 30;
+    preset Value = 100;
+    preset Attribute = 0x00000100;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.DokuParameter;
+    preset Step = 1;
+}
+$rect <1520,200,1690,200>
+$output false
+autoobject MW_ParameterModel::JD_Parameter vout_DV_Einschl_Proj
+{
+    preset Id = MW_ParameterModelObjects::D_ID.vout_DV_Einschl_Proj;
+    preset Max = 99999;
+    preset Min = 30;
+    preset Value = 100;
+    preset Attribute = 0x00000080;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.DokuParameter;
+    preset Step = 1;
+}
+$rect <840,250,1010,250>
+$output false
+autoobject MW_ParameterModel::JD_Parameter vout_RauchAbs_Empf
+{
+    preset Id = MW_ParameterModelObjects::D_ID.vout_RauchAbs_Empf;
+    preset Max = 99999;
+    preset Min = 50;
+    preset Value = 100;
+    preset Attribute = 0x00000100;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.DokuParameter;
+    preset Step = 1;
+}
+$rect <1010,250,1180,250>
+$output false
+autoobject MW_ParameterModel::JD_Parameter vout_P_Emission_Proj
+{
+    preset Id = MW_ParameterModelObjects::D_ID.vout_P_Emission_Proj;
+    preset Max = 99999;
+    preset Min = 50;
+    preset Value = 100;
+    preset Attribute = 0x00000080;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.DokuParameter;
+    preset Step = 1;
+}
+$rect <1180,250,1350,250>
+$output false
+autoobject MW_ParameterModel::JD_Parameter vout_dv_DMR_Soll
+{
+    preset Id = MW_ParameterModelObjects::D_ID.vout_dv_DMR_Soll;
+    preset Max = 99999;
+    preset Min = 0;
+    preset Value = 10;
+    preset Attribute = 0x00000001;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.DokuParameter;
+    preset Step = 1;
+}
+$rect <1350,250,1520,250>
+$output false
+autoobject MW_ParameterModel::JD_Parameter vout_DMR_Soll
+{
+    preset Id = MW_ParameterModelObjects::D_ID.vout_DMR_Soll;
+    preset Max = 99999;
+    preset Min = 0;
+    preset Value = 10;
+    preset Attribute = 0x00000001;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.DokuParameter;
+    preset Step = 1;
+}
+$rect <1520,250,1690,250>
+$output false
+autoobject MW_ParameterModel::JD_Parameter vout_BrennKuehl_Empf
+{
+    preset Id = MW_ParameterModelObjects::D_ID.vout_BrennKuehl_Empf;
+    preset Max = 99999;
+    preset Min = 0;
+    preset Value = 10;
+    preset Attribute = 0x00000101;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.DokuParameter;
+    preset Step = 1;
+}
+$rect <840,300,1010,300>
+$output false
+autoobject MW_ParameterModel::JD_Parameter vout_UniversalPara1
+{
+    preset Id = MW_ParameterModelObjects::D_ID.vout_UniversalPara1;
+    preset Max = 99999;
+    preset Min = 0;
+    preset Value = 0;
+    preset Attribute = 0x00000001;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.DokuParameter;
+    preset Step = 1;
+}
+$rect <1010,300,1180,300>
+$output false
+autoobject MW_ParameterModel::JD_Parameter vout_UniversalPara2
+{
+    preset Id = MW_ParameterModelObjects::D_ID.vout_UniversalPara2;
+    preset Max = 99999;
+    preset Min = 0;
+    preset Value = 0;
+    preset Attribute = 0x00000001;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.DokuParameter;
+    preset Step = 1;
+}
+$rect <1180,300,1350,300>
+$output false
+autoobject MW_ParameterModel::JD_Parameter vout_UniversalPara3
+{
+    preset Id = MW_ParameterModelObjects::D_ID.vout_UniversalPara3;
+    preset Max = 99999;
+    preset Min = 0;
+    preset Value = 0;
+    preset Attribute = 0x00000001;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.DokuParameter;
+    preset Step = 1;
+}
+$rect <1350,300,1520,300>
+$output false
+autoobject MW_ParameterModel::JD_Parameter vout_UniversalPara4
+{
+    preset Id = MW_ParameterModelObjects::D_ID.vout_UniversalPara4;
+    preset Max = 99999;
+    preset Min = 0;
+    preset Value = 0;
+    preset Attribute = 0x00000001;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.DokuParameter;
+    preset Step = 1;
+}
+$rect <1520,300,1690,300>
+$output false
+autoobject MW_ParameterModel::JD_Parameter vout_UniversalPara5
+{
+    preset Id = MW_ParameterModelObjects::D_ID.vout_UniversalPara5;
+    preset Max = 99999;
+    preset Min = 0;
+    preset Value = 0;
+    preset Attribute = 0x00000001;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.DokuParameter;
+    preset Step = 1;
+}
+$rect <840,350,1010,350>
+$output false
+autoobject MW_ParameterModel::JD_Parameter vout_fIist_GLV
+{
+    preset Id = MW_ParameterModelObjects::D_ID.vout_fIist_GLV;
+    preset Max = 99999;
+    preset Min = 0;
+    preset Value = 0;
+    preset Attribute = 0x00000001;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.DokuParameter;
+    preset Step = 1;
+}
+$rect <1010,350,1180,350>
+$output false
+autoobject MW_ParameterModel::JD_Parameter vout_fUist_GLV
+{
+    preset Id = MW_ParameterModelObjects::D_ID.vout_fUist_GLV;
+    preset Max = 99999;
+    preset Min = 0;
+    preset Value = 0;
+    preset Attribute = 0x00000001;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.DokuParameter;
+    preset Step = 1;
+}
+$rect <1180,350,1350,350>
+$output false
+autoobject MW_ParameterModel::JD_Parameter vout_fPist_GLV
+{
+    preset Id = MW_ParameterModelObjects::D_ID.vout_fPist_GLV;
+    preset Max = 99999;
+    preset Min = 0;
+    preset Value = 0;
+    preset Attribute = 0x00000001;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.DokuParameter;
+    preset Step = 1;
+}
+$rect <1350,350,1520,350>
+$output false
+autoobject MW_ParameterModel::JD_Parameter vout_fIIist_GLV
+{
+    preset Id = MW_ParameterModelObjects::D_ID.vout_fIIist_GLV;
+    preset Max = 99999;
+    preset Min = 0;
+    preset Value = 0;
+    preset Attribute = 0x00000001;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.DokuParameter;
+    preset Step = 1;
+}
+$rect <1520,350,1690,350>
+$output false
+autoobject MW_ParameterModel::JD_Parameter vout_fUUist_GLV
+{
+    preset Id = MW_ParameterModelObjects::D_ID.vout_fUUist_GLV;
+    preset Max = 99999;
+    preset Min = 0;
+    preset Value = 0;
+    preset Attribute = 0x00000001;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.DokuParameter;
+    preset Step = 1;
+}
+$rect <840,400,1010,400>
+$output false
+autoobject MW_ParameterModel::JD_Parameter vout_fIsollDIist_GLV
+{
+    preset Id = MW_ParameterModelObjects::D_ID.vout_fIsollDIist_GLV;
+    preset Max = 99999;
+    preset Min = 0;
+    preset Value = 0;
+    preset Attribute = 0x00000001;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.DokuParameter;
+    preset Step = 1;
+}
+$rect <1010,400,1180,400>
+$output false
+autoobject MW_ParameterModel::JD_Parameter vout_Scr_GLV
+{
+    preset Id = MW_ParameterModelObjects::D_ID.vout_Scr_GLV;
+    preset Max = 99999;
+    preset Min = 0;
+    preset Value = 0;
+    preset Attribute = 0x00000001;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.DokuParameter;
+    preset Step = 1;
+}
+$rect <1180,400,1350,400>
+$output false
+autoobject MW_ParameterModel::JD_Parameter vout_ScAtP_GLV
+{
+    preset Id = MW_ParameterModelObjects::D_ID.vout_ScAtP_GLV;
+    preset Max = 99999;
+    preset Min = 0;
+    preset Value = 0;
+    preset Attribute = 0x00000001;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.DokuParameter;
+    preset Step = 1;
+}
+$rect <1350,400,1520,400>
+$output false
+autoobject MW_ParameterModel::JD_Parameter vout_rVdv_GLV
+{
+    preset Id = MW_ParameterModelObjects::D_ID.vout_rVdv_GLV;
+    preset Max = 99999;
+    preset Min = 0;
+    preset Value = 0;
+    preset Attribute = 0x00000001;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.DokuParameter;
+    preset Step = 1;
+}
+$rect <1520,400,1690,400>
+$output false
+autoobject MW_ParameterModel::JD_Parameter vout_rVdv_rGLV
+{
+    preset Id = MW_ParameterModelObjects::D_ID.vout_rVdv_rGLV;
+    preset Max = 99999;
+    preset Min = 0;
+    preset Value = 0;
+    preset Attribute = 0x00000001;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.DokuParameter;
+    preset Step = 1;
+}
+$rect <840,450,1010,450>
+$output false
+autoobject MW_ParameterModel::JD_Parameter vout_oVdv_GLV
+{
+    preset Id = MW_ParameterModelObjects::D_ID.vout_oVdv_GLV;
+    preset Max = 99999;
+    preset Min = 0;
+    preset Value = 0;
+    preset Attribute = 0x00000001;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.DokuParameter;
+    preset Step = 1;
+}
+$rect <1010,450,1180,450>
+$output false
+autoobject MW_ParameterModel::JD_Parameter vout_oVdv_rGLV
+{
+    preset Id = MW_ParameterModelObjects::D_ID.vout_oVdv_rGLV;
+    preset Max = 99999;
+    preset Min = 0;
+    preset Value = 0;
+    preset Attribute = 0x00000001;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.DokuParameter;
+    preset Step = 1;
+}
+$rect <1180,450,1350,450>
+$output false
+autoobject MW_ParameterModel::JD_Parameter vout_uVdv_GLV
+{
+    preset Id = MW_ParameterModelObjects::D_ID.vout_uVdv_GLV;
+    preset Max = 99999;
+    preset Min = 0;
+    preset Value = 0;
+    preset Attribute = 0x00000001;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.DokuParameter;
+    preset Step = 1;
+}
+$rect <1350,450,1520,450>
+$output false
+autoobject MW_ParameterModel::JD_Parameter vout_uVdv_rGLV
+{
+    preset Id = MW_ParameterModelObjects::D_ID.vout_uVdv_rGLV;
+    preset Max = 99999;
+    preset Min = 0;
+    preset Value = 0;
+    preset Attribute = 0x00000001;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.DokuParameter;
+    preset Step = 1;
+}
+$rect <1520,450,1690,450>
+$output false
+autoobject MW_ParameterModel::JD_Parameter vout_dU_wvm_GLV
+{
+    preset Id = MW_ParameterModelObjects::D_ID.vout_dU_wvm_GLV;
+    preset Max = 99999;
+    preset Min = 0;
+    preset Value = 0;
+    preset Attribute = 0x00000001;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.DokuParameter;
+    preset Step = 1;
+}
+$rect <840,500,1010,500>
+$output false
+autoobject MW_ParameterModel::JD_Parameter vout_SP1_GLV
+{
+    preset Id = MW_ParameterModelObjects::D_ID.vout_SP1_GLV;
+    preset Max = 99999;
+    preset Min = 0;
+    preset Value = 0;
+    preset Attribute = 0x00000001;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.DokuParameter;
+    preset Step = 1;
+}
+$rect <1010,500,1180,500>
+$output false
+autoobject MW_ParameterModel::JD_Parameter vout_SP2_GLV
+{
+    preset Id = MW_ParameterModelObjects::D_ID.vout_SP2_GLV;
+    preset Max = 99999;
+    preset Min = 0;
+    preset Value = 0;
+    preset Attribute = 0x00000001;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.DokuParameter;
+    preset Step = 1;
+}
+$rect <1180,500,1350,500>
+$output false
+autoobject MW_ParameterModel::JD_Parameter vout_SP3_GLV
+{
+    preset Id = MW_ParameterModelObjects::D_ID.vout_SP3_GLV;
+    preset Max = 99999;
+    preset Min = 0;
+    preset Value = 0;
+    preset Attribute = 0x00000001;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.DokuParameter;
+    preset Step = 1;
+}
+$rect <1350,500,1520,500>
+$output false
+autoobject MW_ParameterModel::JD_Parameter vout_rsvPara48
+{
+    preset Id = MW_ParameterModelObjects::D_ID.vout_rsvPara48;
+    preset Max = 99999;
+    preset Min = 0;
+    preset Value = 0;
+    preset Attribute = 0x00000001;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.DokuParameter;
+    preset Step = 1;
+}
+$rect <1520,500,1690,500>
+$output false
+autoobject MW_ParameterModel::JD_Parameter vout_rsvPara49
+{
+    preset Id = MW_ParameterModelObjects::D_ID.vout_rsvPara49;
+    preset Max = 99999;
+    preset Min = 0;
+    preset Value = 0;
+    preset Attribute = 0x00000001;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.DokuParameter;
+    preset Step = 1;
+}
+$rect <840,550,1010,550>
+$output false
+autoobject MW_ParameterModel::JD_Parameter vout_rsvPara50
+{
+    preset Id = MW_ParameterModelObjects::D_ID.vout_rsvPara50;
+    preset Max = 99999;
+    preset Min = 0;
+    preset Value = 0;
+    preset Attribute = 0x00000001;
+    preset ParameterType = MW_ParameterModel::JD_TypeEnum.DokuParameter;
+    preset Step = 1;
+}
+$rect <370,-100,570,-60>
+$output false
+enum JC_ID
+{
+    $rect <10,10,170,50>
+    item JC_undef = 0;
+
+    $rect <190,10,350,50>
+    item JC_ProgNo = 1;
+
+    $rect <370,10,530,50>
+    item JC_ProgRev = 2;
+
+    $rect <550,10,710,50>
+    item JC_ProcessId = 3;
+
+    $rect <730,10,890,50>
+    item JC_WeldMode = 4;
+
+    $rect <10,60,170,100>
+    item JC_Flags = 5;
+
+}
+
+$rect <1750,300,1920,300>
+$output false
+autoobject MW_ParameterModel::JC_Parameter JC_undef
+{
+    preset Id = MW_ParameterModelObjects::JC_ID.JC_undef;
+    preset Max = 4294967295;
+    preset Min = 0;
+    preset Value = 0;
+}
+$rect <1920,300,2090,300>
+$output false
+autoobject MW_ParameterModel::JC_Parameter JC_ProgNo
+{
+    preset Id = MW_ParameterModelObjects::JC_ID.JC_ProgNo;
+    preset Max = 4294967295;
+    preset Min = 0;
+    preset Value = 2003;
+}
+$rect <2090,300,2260,300>
+$output false
+autoobject MW_ParameterModel::JC_Parameter JC_ProgRev
+{
+    preset Id = MW_ParameterModelObjects::JC_ID.JC_ProgRev;
+    preset Max = 4294967295;
+    preset Min = 0;
+    preset Value = 0;
+}
+$rect <2260,300,2430,300>
+$output false
+autoobject MW_ParameterModel::JC_Parameter JC_ProcessId
+{
+    preset Id = MW_ParameterModelObjects::JC_ID.JC_ProcessId;
+    preset Max = 4294967295;
+    preset Min = 0;
+    preset Value = 0;
+}
+$rect <2430,300,2600,300>
+$output false
+autoobject MW_ParameterModel::JC_Parameter JC_WeldMode
+{
+    preset Id = MW_ParameterModelObjects::JC_ID.JC_WeldMode;
+    preset Max = 4294967295;
+    preset Min = 0;
+    preset Value = 196608;
+}
+$rect <1750,350,1920,350>
+$output false
+autoobject MW_ParameterModel::JC_Parameter JC_Flags
+{
+    preset Id = MW_ParameterModelObjects::JC_ID.JC_Flags;
+    preset Max = 4294967295;
+    preset Min = 0;
+    preset Value = 0;
+}
+$rect <0,-20,200,20>
+
+class UtilsClass
+{
+
+$rect <50,0,300,40>
+  method string GetNameById_JSPara( arg MW_ParameterModelObjects::JS_ID aId )
+  {
+
+    switch( aId )
+    {
+
+      case MW_ParameterModelObjects::JS_ID.JS_undef : return "JS_undef";
+
+      case MW_ParameterModelObjects::JS_ID.JS_tPreGas : return "JS_tPreGas";
+
+      case MW_ParameterModelObjects::JS_ID.JS_vWireCreep : return "JS_vWireCreep";
+
+      case MW_ParameterModelObjects::JS_ID.JS_Start_Erel : return "JS_Start_Erel";
+
+      case MW_ParameterModelObjects::JS_ID.JS_Start_ArcLen : return "JS_Start_ArcLen";
+
+      case MW_ParameterModelObjects::JS_ID.JS_Start_t : return "JS_Start_t";
+
+      case MW_ParameterModelObjects::JS_ID.JS_Main_tSlope : return "JS_Main_tSlope";
+
+      case MW_ParameterModelObjects::JS_ID.JS_Main_vWire : return "JS_Main_vWire";
+
+      case MW_ParameterModelObjects::JS_ID.JS_Main_vWireRel : return "JS_Main_vWireRel";
+
+      case MW_ParameterModelObjects::JS_ID.JS_Main_U : return "JS_Main_U";
+
+      case MW_ParameterModelObjects::JS_ID.JS_Main_I : return "JS_Main_I";
+
+      case MW_ParameterModelObjects::JS_ID.JS_Main_ArcLen : return "JS_Main_ArcLen";
+
+      case MW_ParameterModelObjects::JS_ID.JS_Dynamics : return "JS_Dynamics";
+
+      case MW_ParameterModelObjects::JS_ID.JS_ArcForce : return "JS_ArcForce";
+
+      case MW_ParameterModelObjects::JS_ID.JS_2d_tSlope : return "JS_2d_tSlope";
+
+      case MW_ParameterModelObjects::JS_ID.JS_2d_Erel : return "JS_2d_Erel";
+
+      case MW_ParameterModelObjects::JS_ID.JS_Pulse_f : return "JS_Pulse_f";
+
+      case MW_ParameterModelObjects::JS_ID.JS_Pulse_Bal : return "JS_Pulse_Bal";
+
+      case MW_ParameterModelObjects::JS_ID.JS_TwinRange : return "JS_TwinRange";
+
+      case MW_ParameterModelObjects::JS_ID.JS_Twin_f : return "JS_Twin_f";
+
+      case MW_ParameterModelObjects::JS_ID.JS_Twin_Bal : return "JS_Twin_Bal";
+
+      case MW_ParameterModelObjects::JS_ID.JS_Stwin_Ht : return "JS_Stwin_Ht";
+
+      case MW_ParameterModelObjects::JS_ID.JS_Stwin_Lt : return "JS_Stwin_Lt";
+
+      case MW_ParameterModelObjects::JS_ID.JS_2d_ArcLen : return "JS_2d_ArcLen";
+
+      case MW_ParameterModelObjects::JS_ID.JS_2d_vWireRel : return "JS_2d_vWireRel";
+
+      case MW_ParameterModelObjects::JS_ID.JS_End_tSlope : return "JS_End_tSlope";
+
+      case MW_ParameterModelObjects::JS_ID.JS_End_Erel : return "JS_End_Erel";
+
+      case MW_ParameterModelObjects::JS_ID.JS_End_ArcLen : return "JS_End_ArcLen";
+
+      case MW_ParameterModelObjects::JS_ID.JS_End_vWire : return "JS_End_vWire";
+
+      case MW_ParameterModelObjects::JS_ID.JS_End_U : return "JS_End_U";
+
+      case MW_ParameterModelObjects::JS_ID.JS_End_t : return "JS_End_t";
+
+      case MW_ParameterModelObjects::JS_ID.JS_WireBurnBack : return "JS_WireBurnBack";
+
+      case MW_ParameterModelObjects::JS_ID.JS_tPostGas : return "JS_tPostGas";
+
+      case MW_ParameterModelObjects::JS_ID.JS_tPostGas_rel : return "JS_tPostGas_rel";
+
+      case MW_ParameterModelObjects::JS_ID.JS_End_Detection : return "JS_End_Detection";
+
+      case MW_ParameterModelObjects::JS_ID.JS_tSpotOn : return "JS_tSpotOn";
+
+      case MW_ParameterModelObjects::JS_ID.JS_tSpotOff : return "JS_tSpotOff";
+
+      case MW_ParameterModelObjects::JS_ID.JS_Start_vWire : return "JS_Start_vWire";
+
+      case MW_ParameterModelObjects::JS_ID.JS_Start_U : return "JS_Start_U";
+
+      case MW_ParameterModelObjects::JS_ID.JS_Remote_Imin : return "JS_Remote_Imin";
+
+      case MW_ParameterModelObjects::JS_ID.JS_Remote_Imax : return "JS_Remote_Imax";
+
+      case MW_ParameterModelObjects::JS_ID.JS_Start_E : return "JS_Start_E";
+
+      case MW_ParameterModelObjects::JS_ID.JS_End_E : return "JS_End_E";
+
+      case MW_ParameterModelObjects::JS_ID.JS_vWire_toHigh : return "JS_vWire_toHigh";
+
+      case MW_ParameterModelObjects::JS_ID.JS_vWire_toLow : return "JS_vWire_toLow";
+
+      case MW_ParameterModelObjects::JS_ID.JS_ArcRegSpeed : return "JS_ArcRegSpeed";
+
+      case MW_ParameterModelObjects::JS_ID.JS_WeldingSpeed : return "JS_WeldingSpeed";
+
+      case MW_ParameterModelObjects::JS_ID.JS_TwinSlope : return "JS_TwinSlope";
+
+      case MW_ParameterModelObjects::JS_ID.JS_Res48 : return "JS_Res48";
+
+      case MW_ParameterModelObjects::JS_ID.JS_Res49 : return "JS_Res49";
+
+      case MW_ParameterModelObjects::JS_ID.JS_Res50 : return "JS_Res50";
+
+      case MW_ParameterModelObjects::JS_ID.JS_Res51 : return "JS_Res51";
+
+      case MW_ParameterModelObjects::JS_ID.JS_Res52 : return "JS_Res52";
+
+      default : return "Unknown";
+    }
+
+  }
+
+
+$rect <310,0,560,40>
+  method string GetNameById_DPara( arg MW_ParameterModelObjects::D_ID aId )
+  {
+
+    switch( aId )
+    {
+
+      case MW_ParameterModelObjects::D_ID.vout_SeamTracking : return "vout_SeamTracking";
+
+      case MW_ParameterModelObjects::D_ID.vout_I_Proj : return "vout_I_Proj";
+
+      case MW_ParameterModelObjects::D_ID.vout_U_Proj : return "vout_U_Proj";
+
+      case MW_ParameterModelObjects::D_ID.vout_P_Proj : return "vout_P_Proj";
+
+      case MW_ParameterModelObjects::D_ID.vout_DV_Proj : return "vout_DV_Proj";
+
+      case MW_ParameterModelObjects::D_ID.vout_I_Ist : return "vout_I_Ist";
+
+      case MW_ParameterModelObjects::D_ID.vout_I_Hold : return "vout_I_Hold";
+
+      case MW_ParameterModelObjects::D_ID.vout_U_Ist : return "vout_U_Ist";
+
+      case MW_ParameterModelObjects::D_ID.vout_U_Hold : return "vout_U_Hold";
+
+      case MW_ParameterModelObjects::D_ID.vout_P_Ist : return "vout_P_Ist";
+
+      case MW_ParameterModelObjects::D_ID.vout_P_Hold : return "vout_P_Hold";
+
+      case MW_ParameterModelObjects::D_ID.vout_KS_Prozessinfo : return "vout_KS_Prozessinfo";
+
+      case MW_ParameterModelObjects::D_ID.vout_Puls_Prozessinfo : return "vout_Puls_Prozessinfo";
+
+      case MW_ParameterModelObjects::D_ID.vout_dMat_Empf : return "vout_dMat_Empf";
+
+      case MW_ParameterModelObjects::D_ID.vout_d2Mat_Empf : return "vout_d2Mat_Empf";
+
+      case MW_ParameterModelObjects::D_ID.vout_a_Mass_Empf : return "vout_a_Mass_Empf";
+
+      case MW_ParameterModelObjects::D_ID.vout_vWeld_Empf : return "vout_vWeld_Empf";
+
+      case MW_ParameterModelObjects::D_ID.vout_tWeld_Ist : return "vout_tWeld_Ist";
+
+      case MW_ParameterModelObjects::D_ID.vout_GasDF_Empf : return "vout_GasDF_Empf";
+
+      case MW_ParameterModelObjects::D_ID.vout_DV_Einschl_Proj : return "vout_DV_Einschl_Proj";
+
+      case MW_ParameterModelObjects::D_ID.vout_RauchAbs_Empf : return "vout_RauchAbs_Empf";
+
+      case MW_ParameterModelObjects::D_ID.vout_P_Emission_Proj : return "vout_P_Emission_Proj";
+
+      case MW_ParameterModelObjects::D_ID.vout_dv_DMR_Soll : return "vout_dv_DMR_Soll";
+
+      case MW_ParameterModelObjects::D_ID.vout_DMR_Soll : return "vout_DMR_Soll";
+
+      case MW_ParameterModelObjects::D_ID.vout_BrennKuehl_Empf : return "vout_BrennKuehl_Empf";
+
+      case MW_ParameterModelObjects::D_ID.vout_UniversalPara1 : return "vout_UniversalPara1";
+
+      case MW_ParameterModelObjects::D_ID.vout_UniversalPara2 : return "vout_UniversalPara2";
+
+      case MW_ParameterModelObjects::D_ID.vout_UniversalPara3 : return "vout_UniversalPara3";
+
+      case MW_ParameterModelObjects::D_ID.vout_UniversalPara4 : return "vout_UniversalPara4";
+
+      case MW_ParameterModelObjects::D_ID.vout_UniversalPara5 : return "vout_UniversalPara5";
+
+      case MW_ParameterModelObjects::D_ID.vout_fIist_GLV : return "vout_fIist_GLV";
+
+      case MW_ParameterModelObjects::D_ID.vout_fUist_GLV : return "vout_fUist_GLV";
+
+      case MW_ParameterModelObjects::D_ID.vout_fPist_GLV : return "vout_fPist_GLV";
+
+      case MW_ParameterModelObjects::D_ID.vout_fIIist_GLV : return "vout_fIIist_GLV";
+
+      case MW_ParameterModelObjects::D_ID.vout_fUUist_GLV : return "vout_fUUist_GLV";
+
+      case MW_ParameterModelObjects::D_ID.vout_fIsollDIist_GLV : return "vout_fIsollDIist_GLV";
+
+      case MW_ParameterModelObjects::D_ID.vout_Scr_GLV : return "vout_Scr_GLV";
+
+      case MW_ParameterModelObjects::D_ID.vout_ScAtP_GLV : return "vout_ScAtP_GLV";
+
+      case MW_ParameterModelObjects::D_ID.vout_rVdv_GLV : return "vout_rVdv_GLV";
+
+      case MW_ParameterModelObjects::D_ID.vout_rVdv_rGLV : return "vout_rVdv_rGLV";
+
+      case MW_ParameterModelObjects::D_ID.vout_oVdv_GLV : return "vout_oVdv_GLV";
+
+      case MW_ParameterModelObjects::D_ID.vout_oVdv_rGLV : return "vout_oVdv_rGLV";
+
+      case MW_ParameterModelObjects::D_ID.vout_uVdv_GLV : return "vout_uVdv_GLV";
+
+      case MW_ParameterModelObjects::D_ID.vout_uVdv_rGLV : return "vout_uVdv_rGLV";
+
+      case MW_ParameterModelObjects::D_ID.vout_dU_wvm_GLV : return "vout_dU_wvm_GLV";
+
+      case MW_ParameterModelObjects::D_ID.vout_SP1_GLV : return "vout_SP1_GLV";
+
+      case MW_ParameterModelObjects::D_ID.vout_SP2_GLV : return "vout_SP2_GLV";
+
+      case MW_ParameterModelObjects::D_ID.vout_SP3_GLV : return "vout_SP3_GLV";
+
+      case MW_ParameterModelObjects::D_ID.vout_rsvPara48 : return "vout_rsvPara48";
+
+      case MW_ParameterModelObjects::D_ID.vout_rsvPara49 : return "vout_rsvPara49";
+
+      case MW_ParameterModelObjects::D_ID.vout_rsvPara50 : return "vout_rsvPara50";
+
+      default : return "Unknown";
+    }
+
+  }
+
+
+$rect <570,0,820,40>
+  method string GetNameById_JCPara( arg MW_ParameterModelObjects::JC_ID aId )
+  {
+
+    switch( aId )
+    {
+
+      case MW_ParameterModelObjects::JC_ID.JC_undef : return "JC_undef";
+
+      case MW_ParameterModelObjects::JC_ID.JC_ProgNo : return "JC_ProgNo";
+
+      case MW_ParameterModelObjects::JC_ID.JC_ProgRev : return "JC_ProgRev";
+
+      case MW_ParameterModelObjects::JC_ID.JC_ProcessId : return "JC_ProcessId";
+
+      case MW_ParameterModelObjects::JC_ID.JC_WeldMode : return "JC_WeldMode";
+
+      case MW_ParameterModelObjects::JC_ID.JC_Flags : return "JC_Flags";
+
+      default : return "Unknown";
+    }
+
+  }
+
+
+$rect <50,60,300,100>
+  method MW_ParameterModel::JD_Parameter GetObjectById_JSPara( arg int32 aId )
+  {
+    switch( aId )
+    {
+
+      case 0 : return MW_ParameterModelObjects::JS_undef ;
+      case 1 : return MW_ParameterModelObjects::JS_tPreGas ;
+      case 2 : return MW_ParameterModelObjects::JS_vWireCreep ;
+      case 3 : return MW_ParameterModelObjects::JS_Start_Erel ;
+      case 4 : return MW_ParameterModelObjects::JS_Start_ArcLen ;
+      case 5 : return MW_ParameterModelObjects::JS_Start_t ;
+      case 6 : return MW_ParameterModelObjects::JS_Main_tSlope ;
+      case 7 : return MW_ParameterModelObjects::JS_Main_vWire ;
+      case 8 : return MW_ParameterModelObjects::JS_Main_vWireRel ;
+      case 9 : return MW_ParameterModelObjects::JS_Main_U ;
+      case 10 : return MW_ParameterModelObjects::JS_Main_I ;
+      case 11 : return MW_ParameterModelObjects::JS_Main_ArcLen ;
+      case 12 : return MW_ParameterModelObjects::JS_Dynamics ;
+      case 13 : return MW_ParameterModelObjects::JS_ArcForce ;
+      case 14 : return MW_ParameterModelObjects::JS_2d_tSlope ;
+      case 15 : return MW_ParameterModelObjects::JS_2d_Erel ;
+      case 16 : return MW_ParameterModelObjects::JS_Pulse_f ;
+      case 17 : return MW_ParameterModelObjects::JS_Pulse_Bal ;
+      case 18 : return MW_ParameterModelObjects::JS_TwinRange ;
+      case 19 : return MW_ParameterModelObjects::JS_Twin_f ;
+      case 20 : return MW_ParameterModelObjects::JS_Twin_Bal ;
+      case 21 : return MW_ParameterModelObjects::JS_Stwin_Ht ;
+      case 22 : return MW_ParameterModelObjects::JS_Stwin_Lt ;
+      case 23 : return MW_ParameterModelObjects::JS_2d_ArcLen ;
+      case 24 : return MW_ParameterModelObjects::JS_2d_vWireRel ;
+      case 25 : return MW_ParameterModelObjects::JS_End_tSlope ;
+      case 26 : return MW_ParameterModelObjects::JS_End_Erel ;
+      case 27 : return MW_ParameterModelObjects::JS_End_ArcLen ;
+      case 28 : return MW_ParameterModelObjects::JS_End_vWire ;
+      case 29 : return MW_ParameterModelObjects::JS_End_U ;
+      case 30 : return MW_ParameterModelObjects::JS_End_t ;
+      case 31 : return MW_ParameterModelObjects::JS_WireBurnBack ;
+      case 32 : return MW_ParameterModelObjects::JS_tPostGas ;
+      case 33 : return MW_ParameterModelObjects::JS_tPostGas_rel ;
+      case 34 : return MW_ParameterModelObjects::JS_End_Detection ;
+      case 35 : return MW_ParameterModelObjects::JS_tSpotOn ;
+      case 36 : return MW_ParameterModelObjects::JS_tSpotOff ;
+      case 37 : return MW_ParameterModelObjects::JS_Start_vWire ;
+      case 38 : return MW_ParameterModelObjects::JS_Start_U ;
+      case 39 : return MW_ParameterModelObjects::JS_Remote_Imin ;
+      case 40 : return MW_ParameterModelObjects::JS_Remote_Imax ;
+      case 41 : return MW_ParameterModelObjects::JS_Start_E ;
+      case 42 : return MW_ParameterModelObjects::JS_End_E ;
+      case 43 : return MW_ParameterModelObjects::JS_vWire_toHigh ;
+      case 44 : return MW_ParameterModelObjects::JS_vWire_toLow ;
+      case 45 : return MW_ParameterModelObjects::JS_ArcRegSpeed ;
+      case 46 : return MW_ParameterModelObjects::JS_WeldingSpeed ;
+      case 47 : return MW_ParameterModelObjects::JS_TwinSlope ;
+      case 48 : return MW_ParameterModelObjects::JS_Res48 ;
+      case 49 : return MW_ParameterModelObjects::JS_Res49 ;
+      case 50 : return MW_ParameterModelObjects::JS_Res50 ;
+      case 51 : return MW_ParameterModelObjects::JS_Res51 ;
+      case 52 : return MW_ParameterModelObjects::JS_Res52 ;
+      default : return null;
+    }
+
+  }
+
+
+$rect <310,60,560,100>
+  method MW_ParameterModel::JD_Parameter GetObjectById_DPara( arg int32 aId )
+  {
+    switch( aId )
+    {
+
+      case 0 : return MW_ParameterModelObjects::vout_SeamTracking ;
+      case 1 : return MW_ParameterModelObjects::vout_I_Proj ;
+      case 2 : return MW_ParameterModelObjects::vout_U_Proj ;
+      case 3 : return MW_ParameterModelObjects::vout_P_Proj ;
+      case 4 : return MW_ParameterModelObjects::vout_DV_Proj ;
+      case 5 : return MW_ParameterModelObjects::vout_I_Ist ;
+      case 6 : return MW_ParameterModelObjects::vout_I_Hold ;
+      case 7 : return MW_ParameterModelObjects::vout_U_Ist ;
+      case 8 : return MW_ParameterModelObjects::vout_U_Hold ;
+      case 9 : return MW_ParameterModelObjects::vout_P_Ist ;
+      case 10 : return MW_ParameterModelObjects::vout_P_Hold ;
+      case 11 : return MW_ParameterModelObjects::vout_KS_Prozessinfo ;
+      case 12 : return MW_ParameterModelObjects::vout_Puls_Prozessinfo ;
+      case 13 : return MW_ParameterModelObjects::vout_dMat_Empf ;
+      case 14 : return MW_ParameterModelObjects::vout_d2Mat_Empf ;
+      case 15 : return MW_ParameterModelObjects::vout_a_Mass_Empf ;
+      case 16 : return MW_ParameterModelObjects::vout_vWeld_Empf ;
+      case 17 : return MW_ParameterModelObjects::vout_tWeld_Ist ;
+      case 18 : return MW_ParameterModelObjects::vout_GasDF_Empf ;
+      case 19 : return MW_ParameterModelObjects::vout_DV_Einschl_Proj ;
+      case 20 : return MW_ParameterModelObjects::vout_RauchAbs_Empf ;
+      case 21 : return MW_ParameterModelObjects::vout_P_Emission_Proj ;
+      case 22 : return MW_ParameterModelObjects::vout_dv_DMR_Soll ;
+      case 23 : return MW_ParameterModelObjects::vout_DMR_Soll ;
+      case 24 : return MW_ParameterModelObjects::vout_BrennKuehl_Empf ;
+      case 25 : return MW_ParameterModelObjects::vout_UniversalPara1 ;
+      case 26 : return MW_ParameterModelObjects::vout_UniversalPara2 ;
+      case 27 : return MW_ParameterModelObjects::vout_UniversalPara3 ;
+      case 28 : return MW_ParameterModelObjects::vout_UniversalPara4 ;
+      case 29 : return MW_ParameterModelObjects::vout_UniversalPara5 ;
+      case 30 : return MW_ParameterModelObjects::vout_fIist_GLV ;
+      case 31 : return MW_ParameterModelObjects::vout_fUist_GLV ;
+      case 32 : return MW_ParameterModelObjects::vout_fPist_GLV ;
+      case 33 : return MW_ParameterModelObjects::vout_fIIist_GLV ;
+      case 34 : return MW_ParameterModelObjects::vout_fUUist_GLV ;
+      case 35 : return MW_ParameterModelObjects::vout_fIsollDIist_GLV ;
+      case 36 : return MW_ParameterModelObjects::vout_Scr_GLV ;
+      case 37 : return MW_ParameterModelObjects::vout_ScAtP_GLV ;
+      case 38 : return MW_ParameterModelObjects::vout_rVdv_GLV ;
+      case 39 : return MW_ParameterModelObjects::vout_rVdv_rGLV ;
+      case 40 : return MW_ParameterModelObjects::vout_oVdv_GLV ;
+      case 41 : return MW_ParameterModelObjects::vout_oVdv_rGLV ;
+      case 42 : return MW_ParameterModelObjects::vout_uVdv_GLV ;
+      case 43 : return MW_ParameterModelObjects::vout_uVdv_rGLV ;
+      case 44 : return MW_ParameterModelObjects::vout_dU_wvm_GLV ;
+      case 45 : return MW_ParameterModelObjects::vout_SP1_GLV ;
+      case 46 : return MW_ParameterModelObjects::vout_SP2_GLV ;
+      case 47 : return MW_ParameterModelObjects::vout_SP3_GLV ;
+      case 48 : return MW_ParameterModelObjects::vout_rsvPara48 ;
+      case 49 : return MW_ParameterModelObjects::vout_rsvPara49 ;
+      case 50 : return MW_ParameterModelObjects::vout_rsvPara50 ;
+      default : return null;
+    }
+
+  }
+
+
+$rect <570,60,820,100>
+  method MW_ParameterModel::JC_Parameter GetObjectById_JCPara( arg int32 aId )
+  {
+    switch( aId )
+    {
+
+      case 0 : return MW_ParameterModelObjects::JC_undef ;
+      case 1 : return MW_ParameterModelObjects::JC_ProgNo ;
+      case 2 : return MW_ParameterModelObjects::JC_ProgRev ;
+      case 3 : return MW_ParameterModelObjects::JC_ProcessId ;
+      case 4 : return MW_ParameterModelObjects::JC_WeldMode ;
+      case 5 : return MW_ParameterModelObjects::JC_Flags ;
+      default : return null;
+    }
+
+  }
+
+
+$rect <50,120,300,160>
+  method void GetSimulationObject_JSPara( arg int32 aId )
+  {
+    switch( aId )
+    {
+
+      case 0 : 
+      {
+           MW_ParameterModelObjects::JS_undef.UpdateExtended(0,0,0,0,0,1,0x00000000,0);
+           MW_ParameterModelObjects::JS_undef.UpdateValue(0);
+      }
+      case 1 : 
+      {
+           MW_ParameterModelObjects::JS_tPreGas.UpdateExtended(0,10,0.1,2,2,0.01,0x00000008,0.1);
+           MW_ParameterModelObjects::JS_tPreGas.UpdateValue(0.1);
+      }
+      case 2 : 
+      {
+           MW_ParameterModelObjects::JS_vWireCreep.UpdateExtended(0.1,40,1,8,7,0.01,0x00000008,1);
+           MW_ParameterModelObjects::JS_vWireCreep.UpdateValue(1);
+      }
+      case 3 : 
+      {
+           MW_ParameterModelObjects::JS_Start_Erel.UpdateExtended(0.1,2,1,11,21,0.001,0x00000008,1);
+           MW_ParameterModelObjects::JS_Start_Erel.UpdateValue(1);
+      }
+      case 4 : 
+      {
+           MW_ParameterModelObjects::JS_Start_ArcLen.UpdateExtended(0,2,1,6,22,0.001,0x00000008,1);
+           MW_ParameterModelObjects::JS_Start_ArcLen.UpdateValue(1);
+      }
+      case 5 : 
+      {
+           MW_ParameterModelObjects::JS_Start_t.UpdateExtended(0,99.9,1,2,2,0.01,0x00010008,1);
+           MW_ParameterModelObjects::JS_Start_t.UpdateValue(1);
+      }
+      case 6 : 
+      {
+           MW_ParameterModelObjects::JS_Main_tSlope.UpdateExtended(0,99.9,0.2,2,2,0.01,0x00040001,0.2);
+           MW_ParameterModelObjects::JS_Main_tSlope.UpdateValue(0.2);
+      }
+      case 7 : 
+      {
+           MW_ParameterModelObjects::JS_Main_vWire.UpdateExtended(0,40,3.5,8,7,0.01,0x00000001,3.5);
+           MW_ParameterModelObjects::JS_Main_vWire.UpdateValue(3.5);
+      }
+      case 8 : 
+      {
+           MW_ParameterModelObjects::JS_Main_vWireRel.UpdateExtended(0.1,2,1,3,21,0.001,0x00000001,1);
+           MW_ParameterModelObjects::JS_Main_vWireRel.UpdateValue(1);
+      }
+      case 9 : 
+      {
+           MW_ParameterModelObjects::JS_Main_U.UpdateExtended(0,100,18,2,8,0.01,0x00000001,18);
+           MW_ParameterModelObjects::JS_Main_U.UpdateValue(18);
+      }
+      case 10 : 
+      {
+           MW_ParameterModelObjects::JS_Main_I.UpdateExtended(0,1000,100,1,1,0.1,0x00000001,100);
+           MW_ParameterModelObjects::JS_Main_I.UpdateValue(100);
+      }
+      case 11 : 
+      {
+           MW_ParameterModelObjects::JS_Main_ArcLen.UpdateExtended(0,2,1,6,22,0.001,0x00000001,1);
+           MW_ParameterModelObjects::JS_Main_ArcLen.UpdateValue(1);
+      }
+      case 12 : 
+      {
+           MW_ParameterModelObjects::JS_Dynamics.UpdateExtended(0,2,1,5,24,0.001,0x00000040,1);
+           MW_ParameterModelObjects::JS_Dynamics.UpdateValue(1);
+      }
+      case 13 : 
+      {
+           MW_ParameterModelObjects::JS_ArcForce.UpdateExtended(0,2,1,1,21,0.001,0x00000040,1);
+           MW_ParameterModelObjects::JS_ArcForce.UpdateValue(1);
+      }
+      case 14 : 
+      {
+           MW_ParameterModelObjects::JS_2d_tSlope.UpdateExtended(0,99.9,0.2,2,2,0.01,0x00000000,0.2);
+           MW_ParameterModelObjects::JS_2d_tSlope.UpdateValue(0.2);
+      }
+      case 15 : 
+      {
+           MW_ParameterModelObjects::JS_2d_Erel.UpdateExtended(0.1,2,0.5,11,21,0.001,0x00000000,0.5);
+           MW_ParameterModelObjects::JS_2d_Erel.UpdateValue(0.5);
+      }
+      case 16 : 
+      {
+           MW_ParameterModelObjects::JS_Pulse_f.UpdateExtended(0.1,5000,1,10,3,0.1,0x00200000,1);
+           MW_ParameterModelObjects::JS_Pulse_f.UpdateValue(1);
+      }
+      case 17 : 
+      {
+           MW_ParameterModelObjects::JS_Pulse_Bal.UpdateExtended(0.01,0.99,0.5,1,21,0.001,0x00200000,0.5);
+           MW_ParameterModelObjects::JS_Pulse_Bal.UpdateValue(0.5);
+      }
+      case 18 : 
+      {
+           MW_ParameterModelObjects::JS_TwinRange.UpdateExtended(0.05,0.5,0.25,1,21,0.001,0x00100000,0.25);
+           MW_ParameterModelObjects::JS_TwinRange.UpdateValue(0.25);
+      }
+      case 19 : 
+      {
+           MW_ParameterModelObjects::JS_Twin_f.UpdateExtended(0.5,5,1.5,2,3,0.1,0x00100000,1.5);
+           MW_ParameterModelObjects::JS_Twin_f.UpdateValue(1.5);
+      }
+      case 20 : 
+      {
+           MW_ParameterModelObjects::JS_Twin_Bal.UpdateExtended(0.2,0.8,0.5,1,21,0.001,0x00100000,0.5);
+           MW_ParameterModelObjects::JS_Twin_Bal.UpdateValue(0.5);
+      }
+      case 21 : 
+      {
+           MW_ParameterModelObjects::JS_Stwin_Ht.UpdateExtended(0.1,1,0.3,4,2,0.01,0x00100000,0.3);
+           MW_ParameterModelObjects::JS_Stwin_Ht.UpdateValue(0.3);
+      }
+      case 22 : 
+      {
+           MW_ParameterModelObjects::JS_Stwin_Lt.UpdateExtended(0.1,1,0.3,4,2,0.01,0x00100000,0.3);
+           MW_ParameterModelObjects::JS_Stwin_Lt.UpdateValue(0.3);
+      }
+      case 23 : 
+      {
+           MW_ParameterModelObjects::JS_2d_ArcLen.UpdateExtended(0,2,1,6,22,0.001,0x00100000,1);
+           MW_ParameterModelObjects::JS_2d_ArcLen.UpdateValue(1);
+      }
+      case 24 : 
+      {
+           MW_ParameterModelObjects::JS_2d_vWireRel.UpdateExtended(0.1,2,1,6,22,0.001,0x00100000,1);
+           MW_ParameterModelObjects::JS_2d_vWireRel.UpdateValue(1);
+      }
+      case 25 : 
+      {
+           MW_ParameterModelObjects::JS_End_tSlope.UpdateExtended(0,99.9,0.5,2,2,0.01,0x00040010,0.5);
+           MW_ParameterModelObjects::JS_End_tSlope.UpdateValue(0.5);
+      }
+      case 26 : 
+      {
+           MW_ParameterModelObjects::JS_End_Erel.UpdateExtended(0.1,2,0.5,11,21,0.001,0x000C0010,0.5);
+           MW_ParameterModelObjects::JS_End_Erel.UpdateValue(0.5);
+      }
+      case 27 : 
+      {
+           MW_ParameterModelObjects::JS_End_ArcLen.UpdateExtended(0,2,1,6,22,0.001,0x000C0010,1);
+           MW_ParameterModelObjects::JS_End_ArcLen.UpdateValue(1);
+      }
+      case 28 : 
+      {
+           MW_ParameterModelObjects::JS_End_vWire.UpdateExtended(0.1,40,3.5,8,7,0.01,0x000C0010,3.5);
+           MW_ParameterModelObjects::JS_End_vWire.UpdateValue(3.5);
+      }
+      case 29 : 
+      {
+           MW_ParameterModelObjects::JS_End_U.UpdateExtended(0,100,18,2,8,0.01,0x000C0010,18);
+           MW_ParameterModelObjects::JS_End_U.UpdateValue(18);
+      }
+      case 30 : 
+      {
+           MW_ParameterModelObjects::JS_End_t.UpdateExtended(0,99.9,0.5,2,2,0.01,0x00090010,0.5);
+           MW_ParameterModelObjects::JS_End_t.UpdateValue(0.5);
+      }
+      case 31 : 
+      {
+           MW_ParameterModelObjects::JS_WireBurnBack.UpdateExtended(0,2,1,11,21,0.001,0x00080010,1);
+           MW_ParameterModelObjects::JS_WireBurnBack.UpdateValue(1);
+      }
+      case 32 : 
+      {
+           MW_ParameterModelObjects::JS_tPostGas.UpdateExtended(0.1,99.9,0.5,2,2,0.01,0x00000010,0.5);
+           MW_ParameterModelObjects::JS_tPostGas.UpdateValue(0.5);
+      }
+      case 33 : 
+      {
+           MW_ParameterModelObjects::JS_tPostGas_rel.UpdateExtended(0,3,1,1,21,0.001,0x00000010,1);
+           MW_ParameterModelObjects::JS_tPostGas_rel.UpdateValue(1);
+      }
+      case 34 : 
+      {
+           MW_ParameterModelObjects::JS_End_Detection.UpdateExtended(0,2,1,11,21,0.001,0x00000010,1);
+           MW_ParameterModelObjects::JS_End_Detection.UpdateValue(1);
+      }
+      case 35 : 
+      {
+           MW_ParameterModelObjects::JS_tSpotOn.UpdateExtended(0.01,99.9,1,9,2,0.01,0x00C00000,1);
+           MW_ParameterModelObjects::JS_tSpotOn.UpdateValue(1);
+      }
+      case 36 : 
+      {
+           MW_ParameterModelObjects::JS_tSpotOff.UpdateExtended(0.01,99.9,1,9,2,0.01,0x00800000,1);
+           MW_ParameterModelObjects::JS_tSpotOff.UpdateValue(1);
+      }
+      case 37 : 
+      {
+           MW_ParameterModelObjects::JS_Start_vWire.UpdateExtended(0.1,40,3.5,8,7,0.01,0x00040008,3.5);
+           MW_ParameterModelObjects::JS_Start_vWire.UpdateValue(3.5);
+      }
+      case 38 : 
+      {
+           MW_ParameterModelObjects::JS_Start_U.UpdateExtended(0,100,18,0,8,0.01,0x000C0010,18);
+           MW_ParameterModelObjects::JS_Start_U.UpdateValue(18);
+      }
+      case 39 : 
+      {
+           MW_ParameterModelObjects::JS_Remote_Imin.UpdateExtended(0,1000,3,0,1,0.1,0x00000000,3);
+           MW_ParameterModelObjects::JS_Remote_Imin.UpdateValue(3);
+      }
+      case 40 : 
+      {
+           MW_ParameterModelObjects::JS_Remote_Imax.UpdateExtended(0,1000,600,0,1,0.1,0x00000000,600);
+           MW_ParameterModelObjects::JS_Remote_Imax.UpdateValue(600);
+      }
+      case 41 : 
+      {
+           MW_ParameterModelObjects::JS_Start_E.UpdateExtended(0,2,1,6,22,0.001,0x00000008,1);
+           MW_ParameterModelObjects::JS_Start_E.UpdateValue(1);
+      }
+      case 42 : 
+      {
+           MW_ParameterModelObjects::JS_End_E.UpdateExtended(0,2,1,6,22,0.001,0x00000010,1);
+           MW_ParameterModelObjects::JS_End_E.UpdateValue(1);
+      }
+      case 43 : 
+      {
+           MW_ParameterModelObjects::JS_vWire_toHigh.UpdateExtended(-99,99,0,0,6,1,0x00000000,0);
+           MW_ParameterModelObjects::JS_vWire_toHigh.UpdateValue(0);
+      }
+      case 44 : 
+      {
+           MW_ParameterModelObjects::JS_vWire_toLow.UpdateExtended(-99,99,0,0,6,1,0x00000000,0);
+           MW_ParameterModelObjects::JS_vWire_toLow.UpdateValue(0);
+      }
+      case 45 : 
+      {
+           MW_ParameterModelObjects::JS_ArcRegSpeed.UpdateExtended(0,2,1,6,22,0.001,0x00000000,1);
+           MW_ParameterModelObjects::JS_ArcRegSpeed.UpdateValue(1);
+      }
+      case 46 : 
+      {
+           MW_ParameterModelObjects::JS_WeldingSpeed.UpdateExtended(0,400,10,0,17,0.1,0x00000000,10);
+           MW_ParameterModelObjects::JS_WeldingSpeed.UpdateValue(10);
+      }
+      case 47 : 
+      {
+           MW_ParameterModelObjects::JS_TwinSlope.UpdateExtended(0,2,1,6,22,0.001,0x00000000,1);
+           MW_ParameterModelObjects::JS_TwinSlope.UpdateValue(1);
+      }
+      case 48 : 
+      {
+           MW_ParameterModelObjects::JS_Res48.UpdateExtended(0,10000,0,0,0,1,0x00000000,0);
+           MW_ParameterModelObjects::JS_Res48.UpdateValue(0);
+      }
+      case 49 : 
+      {
+           MW_ParameterModelObjects::JS_Res49.UpdateExtended(0,10000,0,0,0,1,0x00000000,0);
+           MW_ParameterModelObjects::JS_Res49.UpdateValue(0);
+      }
+      case 50 : 
+      {
+           MW_ParameterModelObjects::JS_Res50.UpdateExtended(0,10000,0,0,0,1,0x00000000,0);
+           MW_ParameterModelObjects::JS_Res50.UpdateValue(0);
+      }
+      case 51 : 
+      {
+           MW_ParameterModelObjects::JS_Res51.UpdateExtended(0,10000,0,0,0,1,0x00000000,0);
+           MW_ParameterModelObjects::JS_Res51.UpdateValue(0);
+      }
+      case 52 : 
+      {
+           MW_ParameterModelObjects::JS_Res52.UpdateExtended(0,10000,0,0,0,1,0x00000000,0);
+           MW_ParameterModelObjects::JS_Res52.UpdateValue(0);
+      }
+      default : return ;
+    }
+
+  }
+
+
+$rect <310,120,560,160>
+  method void GetSimulationObject_DPara( arg int32 aId )
+  {
+    switch( aId )
+    {
+
+      case 0 : 
+      {
+           MW_ParameterModelObjects::vout_SeamTracking.UpdateExtended(0,99999,0,0,0,1,0x00000000,0);
+           MW_ParameterModelObjects::vout_SeamTracking.UpdateValue(0);
+      }
+      case 1 : 
+      {
+           MW_ParameterModelObjects::vout_I_Proj.UpdateExtended(0,99999,300,0,1,0.1,0x00000081,300);
+           MW_ParameterModelObjects::vout_I_Proj.UpdateValue(300);
+      }
+      case 2 : 
+      {
+           MW_ParameterModelObjects::vout_U_Proj.UpdateExtended(0,99,28,0,8,0.1,0x00000081,28);
+           MW_ParameterModelObjects::vout_U_Proj.UpdateValue(28);
+      }
+      case 3 : 
+      {
+           MW_ParameterModelObjects::vout_P_Proj.UpdateExtended(1,99999,8550,0,12,0.1,0x00000081,8550);
+           MW_ParameterModelObjects::vout_P_Proj.UpdateValue(8550);
+      }
+      case 4 : 
+      {
+           MW_ParameterModelObjects::vout_DV_Proj.UpdateExtended(0,99999,2,0,7,0.1,0x00000081,2);
+           MW_ParameterModelObjects::vout_DV_Proj.UpdateValue(2);
+      }
+      case 5 : 
+      {
+           MW_ParameterModelObjects::vout_I_Ist.UpdateExtended(0,99999,300,0,1,0.1,0x00000004,300);
+           MW_ParameterModelObjects::vout_I_Ist.UpdateValue(300);
+      }
+      case 6 : 
+      {
+           MW_ParameterModelObjects::vout_I_Hold.UpdateExtended(0,99999,300,0,1,0.1,0x00000004,300);
+           MW_ParameterModelObjects::vout_I_Hold.UpdateValue(300);
+      }
+      case 7 : 
+      {
+           MW_ParameterModelObjects::vout_U_Ist.UpdateExtended(0,99,28,0,8,0.1,0x00000002,28);
+           MW_ParameterModelObjects::vout_U_Ist.UpdateValue(28);
+      }
+      case 8 : 
+      {
+           MW_ParameterModelObjects::vout_U_Hold.UpdateExtended(0,99,28,0,8,0.1,0x00000004,28);
+           MW_ParameterModelObjects::vout_U_Hold.UpdateValue(28);
+      }
+      case 9 : 
+      {
+           MW_ParameterModelObjects::vout_P_Ist.UpdateExtended(1,99999,8550,0,12,0.1,0x00000002,8550);
+           MW_ParameterModelObjects::vout_P_Ist.UpdateValue(8550);
+      }
+      case 10 : 
+      {
+           MW_ParameterModelObjects::vout_P_Hold.UpdateExtended(1,99999,8550,0,12,0.1,0x00000004,8550);
+           MW_ParameterModelObjects::vout_P_Hold.UpdateValue(8550);
+      }
+      case 11 : 
+      {
+           MW_ParameterModelObjects::vout_KS_Prozessinfo.UpdateExtended(0,99999,2,0,21,1,0x00000020,2);
+           MW_ParameterModelObjects::vout_KS_Prozessinfo.UpdateValue(2);
+      }
+      case 12 : 
+      {
+           MW_ParameterModelObjects::vout_Puls_Prozessinfo.UpdateExtended(0,99999,2,0,21,1,0x00000020,2);
+           MW_ParameterModelObjects::vout_Puls_Prozessinfo.UpdateValue(2);
+      }
+      case 13 : 
+      {
+           MW_ParameterModelObjects::vout_dMat_Empf.UpdateExtended(0,1000,1.1,0,4,0.1,0x00000080,1.1);
+           MW_ParameterModelObjects::vout_dMat_Empf.UpdateValue(1.1);
+      }
+      case 14 : 
+      {
+           MW_ParameterModelObjects::vout_d2Mat_Empf.UpdateExtended(0,1000,1.1,0,4,1,0x00000100,1.1);
+           MW_ParameterModelObjects::vout_d2Mat_Empf.UpdateValue(1.1);
+      }
+      case 15 : 
+      {
+           MW_ParameterModelObjects::vout_a_Mass_Empf.UpdateExtended(0,100,50,0,4,1,0x00000100,50);
+           MW_ParameterModelObjects::vout_a_Mass_Empf.UpdateValue(50);
+      }
+      case 16 : 
+      {
+           MW_ParameterModelObjects::vout_vWeld_Empf.UpdateExtended(20,199,100,0,17,0.1,0x00000100,100);
+           MW_ParameterModelObjects::vout_vWeld_Empf.UpdateValue(100);
+      }
+      case 17 : 
+      {
+           MW_ParameterModelObjects::vout_tWeld_Ist.UpdateExtended(20,199,100,0,2,0.1,0x00000002,100);
+           MW_ParameterModelObjects::vout_tWeld_Ist.UpdateValue(100);
+      }
+      case 18 : 
+      {
+           MW_ParameterModelObjects::vout_GasDF_Empf.UpdateExtended(30,300,100,0,10,1,0x00000100,100);
+           MW_ParameterModelObjects::vout_GasDF_Empf.UpdateValue(100);
+      }
+      case 19 : 
+      {
+           MW_ParameterModelObjects::vout_DV_Einschl_Proj.UpdateExtended(30,99999,100,0,7,1,0x00000080,100);
+           MW_ParameterModelObjects::vout_DV_Einschl_Proj.UpdateValue(100);
+      }
+      case 20 : 
+      {
+           MW_ParameterModelObjects::vout_RauchAbs_Empf.UpdateExtended(50,99999,100,0,18,1,0x00000100,100);
+           MW_ParameterModelObjects::vout_RauchAbs_Empf.UpdateValue(100);
+      }
+      case 21 : 
+      {
+           MW_ParameterModelObjects::vout_P_Emission_Proj.UpdateExtended(50,99999,100,0,12,1,0x00000080,100);
+           MW_ParameterModelObjects::vout_P_Emission_Proj.UpdateValue(100);
+      }
+      case 22 : 
+      {
+           MW_ParameterModelObjects::vout_dv_DMR_Soll.UpdateExtended(0,99999,10,0,19,1,0x00000001,10);
+           MW_ParameterModelObjects::vout_dv_DMR_Soll.UpdateValue(10);
+      }
+      case 23 : 
+      {
+           MW_ParameterModelObjects::vout_DMR_Soll.UpdateExtended(0,99999,10,0,7,1,0x00000001,10);
+           MW_ParameterModelObjects::vout_DMR_Soll.UpdateValue(10);
+      }
+      case 24 : 
+      {
+           MW_ParameterModelObjects::vout_BrennKuehl_Empf.UpdateExtended(0,99999,10,0,12,1,0x00000101,10);
+           MW_ParameterModelObjects::vout_BrennKuehl_Empf.UpdateValue(10);
+      }
+      case 25 : 
+      {
+           MW_ParameterModelObjects::vout_UniversalPara1.UpdateExtended(0,99999,0,0,0,1,0x00000001,0);
+           MW_ParameterModelObjects::vout_UniversalPara1.UpdateValue(0);
+      }
+      case 26 : 
+      {
+           MW_ParameterModelObjects::vout_UniversalPara2.UpdateExtended(0,99999,0,0,0,1,0x00000001,0);
+           MW_ParameterModelObjects::vout_UniversalPara2.UpdateValue(0);
+      }
+      case 27 : 
+      {
+           MW_ParameterModelObjects::vout_UniversalPara3.UpdateExtended(0,99999,0,0,0,1,0x00000001,0);
+           MW_ParameterModelObjects::vout_UniversalPara3.UpdateValue(0);
+      }
+      case 28 : 
+      {
+           MW_ParameterModelObjects::vout_UniversalPara4.UpdateExtended(0,99999,0,0,0,1,0x00000001,0);
+           MW_ParameterModelObjects::vout_UniversalPara4.UpdateValue(0);
+      }
+      case 29 : 
+      {
+           MW_ParameterModelObjects::vout_UniversalPara5.UpdateExtended(0,99999,0,0,0,1,0x00000001,0);
+           MW_ParameterModelObjects::vout_UniversalPara5.UpdateValue(0);
+      }
+      case 30 : 
+      {
+           MW_ParameterModelObjects::vout_fIist_GLV.UpdateExtended(0,99999,0,0,1,1,0x00000001,0);
+           MW_ParameterModelObjects::vout_fIist_GLV.UpdateValue(0);
+      }
+      case 31 : 
+      {
+           MW_ParameterModelObjects::vout_fUist_GLV.UpdateExtended(0,99999,0,0,8,1,0x00000001,0);
+           MW_ParameterModelObjects::vout_fUist_GLV.UpdateValue(0);
+      }
+      case 32 : 
+      {
+           MW_ParameterModelObjects::vout_fPist_GLV.UpdateExtended(0,99999,0,0,12,1,0x00000001,0);
+           MW_ParameterModelObjects::vout_fPist_GLV.UpdateValue(0);
+      }
+      case 33 : 
+      {
+           MW_ParameterModelObjects::vout_fIIist_GLV.UpdateExtended(0,99999,0,0,1,1,0x00000001,0);
+           MW_ParameterModelObjects::vout_fIIist_GLV.UpdateValue(0);
+      }
+      case 34 : 
+      {
+           MW_ParameterModelObjects::vout_fUUist_GLV.UpdateExtended(0,99999,0,0,8,1,0x00000001,0);
+           MW_ParameterModelObjects::vout_fUUist_GLV.UpdateValue(0);
+      }
+      case 35 : 
+      {
+           MW_ParameterModelObjects::vout_fIsollDIist_GLV.UpdateExtended(0,99999,0,0,1,1,0x00000001,0);
+           MW_ParameterModelObjects::vout_fIsollDIist_GLV.UpdateValue(0);
+      }
+      case 36 : 
+      {
+           MW_ParameterModelObjects::vout_Scr_GLV.UpdateExtended(0,99999,0,0,0,1,0x00000001,0);
+           MW_ParameterModelObjects::vout_Scr_GLV.UpdateValue(0);
+      }
+      case 37 : 
+      {
+           MW_ParameterModelObjects::vout_ScAtP_GLV.UpdateExtended(0,99999,0,0,0,1,0x00000001,0);
+           MW_ParameterModelObjects::vout_ScAtP_GLV.UpdateValue(0);
+      }
+      case 38 : 
+      {
+           MW_ParameterModelObjects::vout_rVdv_GLV.UpdateExtended(0,99999,0,0,8,1,0x00000001,0);
+           MW_ParameterModelObjects::vout_rVdv_GLV.UpdateValue(0);
+      }
+      case 39 : 
+      {
+           MW_ParameterModelObjects::vout_rVdv_rGLV.UpdateExtended(0,99999,0,0,8,1,0x00000001,0);
+           MW_ParameterModelObjects::vout_rVdv_rGLV.UpdateValue(0);
+      }
+      case 40 : 
+      {
+           MW_ParameterModelObjects::vout_oVdv_GLV.UpdateExtended(0,99999,0,0,8,1,0x00000001,0);
+           MW_ParameterModelObjects::vout_oVdv_GLV.UpdateValue(0);
+      }
+      case 41 : 
+      {
+           MW_ParameterModelObjects::vout_oVdv_rGLV.UpdateExtended(0,99999,0,0,8,1,0x00000001,0);
+           MW_ParameterModelObjects::vout_oVdv_rGLV.UpdateValue(0);
+      }
+      case 42 : 
+      {
+           MW_ParameterModelObjects::vout_uVdv_GLV.UpdateExtended(0,99999,0,0,8,1,0x00000001,0);
+           MW_ParameterModelObjects::vout_uVdv_GLV.UpdateValue(0);
+      }
+      case 43 : 
+      {
+           MW_ParameterModelObjects::vout_uVdv_rGLV.UpdateExtended(0,99999,0,0,8,1,0x00000001,0);
+           MW_ParameterModelObjects::vout_uVdv_rGLV.UpdateValue(0);
+      }
+      case 44 : 
+      {
+           MW_ParameterModelObjects::vout_dU_wvm_GLV.UpdateExtended(0,99999,0,0,8,1,0x00000001,0);
+           MW_ParameterModelObjects::vout_dU_wvm_GLV.UpdateValue(0);
+      }
+      case 45 : 
+      {
+           MW_ParameterModelObjects::vout_SP1_GLV.UpdateExtended(0,99999,0,0,0,1,0x00000001,0);
+           MW_ParameterModelObjects::vout_SP1_GLV.UpdateValue(0);
+      }
+      case 46 : 
+      {
+           MW_ParameterModelObjects::vout_SP2_GLV.UpdateExtended(0,99999,0,0,0,1,0x00000001,0);
+           MW_ParameterModelObjects::vout_SP2_GLV.UpdateValue(0);
+      }
+      case 47 : 
+      {
+           MW_ParameterModelObjects::vout_SP3_GLV.UpdateExtended(0,99999,0,0,0,1,0x00000001,0);
+           MW_ParameterModelObjects::vout_SP3_GLV.UpdateValue(0);
+      }
+      case 48 : 
+      {
+           MW_ParameterModelObjects::vout_rsvPara48.UpdateExtended(0,99999,0,0,0,1,0x00000001,0);
+           MW_ParameterModelObjects::vout_rsvPara48.UpdateValue(0);
+      }
+      case 49 : 
+      {
+           MW_ParameterModelObjects::vout_rsvPara49.UpdateExtended(0,99999,0,0,0,1,0x00000001,0);
+           MW_ParameterModelObjects::vout_rsvPara49.UpdateValue(0);
+      }
+      case 50 : 
+      {
+           MW_ParameterModelObjects::vout_rsvPara50.UpdateExtended(0,99999,0,0,0,1,0x00000001,0);
+           MW_ParameterModelObjects::vout_rsvPara50.UpdateValue(0);
+      }
+      default : return ;
+    }
+
+  }
+
+
+$rect <570,120,820,160>
+  method void GetSimulationObject_JCPara( arg int32 aId )
+  {
+    switch( aId )
+    {
+
+      case 0 : 
+      {
+           MW_ParameterModelObjects::JC_undef.UpdateExtended(0,4294967295,0,0);
+           MW_ParameterModelObjects::JC_undef.UpdateValue(0);
+      }
+      case 1 : 
+      {
+           MW_ParameterModelObjects::JC_ProgNo.UpdateExtended(0,4294967295,2003,2003);
+           MW_ParameterModelObjects::JC_ProgNo.UpdateValue(2003);
+      }
+      case 2 : 
+      {
+           MW_ParameterModelObjects::JC_ProgRev.UpdateExtended(0,4294967295,0,0);
+           MW_ParameterModelObjects::JC_ProgRev.UpdateValue(0);
+      }
+      case 3 : 
+      {
+           MW_ParameterModelObjects::JC_ProcessId.UpdateExtended(0,4294967295,0,0);
+           MW_ParameterModelObjects::JC_ProcessId.UpdateValue(0);
+      }
+      case 4 : 
+      {
+           MW_ParameterModelObjects::JC_WeldMode.UpdateExtended(0,4294967295,196608,196608);
+           MW_ParameterModelObjects::JC_WeldMode.UpdateValue(196608);
+      }
+      case 5 : 
+      {
+           MW_ParameterModelObjects::JC_Flags.UpdateExtended(0,4294967295,0,0);
+           MW_ParameterModelObjects::JC_Flags.UpdateValue(0);
+      }
+      default : return ;
+    }
+
+  }
+
+
+}
+
+
+$rect <200,-20,400,20>
+
+autoobject MW_ParameterModelObjects::UtilsClass Utils
+{
+
+}
+
+
+

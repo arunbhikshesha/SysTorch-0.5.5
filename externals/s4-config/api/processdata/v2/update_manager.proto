@@ -1,0 +1,143 @@
+syntax = "proto3";
+
+option go_package = "s4backend/proto/update";
+
+package proto;
+
+enum DeviceStateType {
+	DEV_STATE_UNKNOWN                            = 0;
+	DEV_STATE_ERROR                              = 1;
+	DEV_STATE_OFFLINE                            = 2;
+	DEV_STATE_READY                              = 3;
+	DEV_STATE_UPDATE_REQUIRED                    = 4;
+	DEV_STATE_UPDATE_IN_PROGRESS                 = 5;
+	DEV_STATE_GET_VERSION_IN_PROGRESS            = 6;
+	DEV_STATE_MAX                                = 7;
+}
+
+message GetDeviceStatusRequest {
+	string DeviceName = 1;
+}
+
+message GetDeviceStatusResponse {
+	int32 DeviceIndex          = 1;
+	string DeviceName          = 2;
+	string Error	           = 3;
+	string ActiveVersion       = 4;
+	string AvailableVersion    = 5;
+	DeviceStateType State      = 6;
+	DeviceStateType OldState   = 7;
+}
+
+message GetAllDeviceStatusRequest {
+}
+message GetAllDeviceStatusResponse {
+    repeated GetDeviceStatusResponse StatusList = 1;
+}
+
+message ResetRequest {
+	string DeviceName = 1;
+}
+message ResetResponse {
+}
+
+message UpdateRequest {
+	string DeviceName = 1;
+}
+message UpdateResponse {
+}
+
+message UpdateOverrideRequest {
+	string DeviceName = 1;
+	string Filename = 2;
+}
+message UpdateOverrideResponse {
+}
+
+message NotifyConnectRequest {
+	string DeviceName = 1;
+}
+message NotifyConnectResponse {
+}
+
+message NotifyDisconnectRequest {
+	string DeviceName = 1;
+}
+message NotifyDisconnectResponse {
+}
+
+message CancelUpdateRequest {
+	string DeviceName = 1;
+}
+message CancelUpdateResponse {
+}
+
+message ResetAndUpdateAllRequest {
+}
+message ResetAndUpdateAllResponse {
+}
+
+message RefreshAvailableVersionRequest{
+  string device = 1;
+}
+
+message RefreshAvailableVersionResponse{
+}
+
+service UpdateService {
+  /**
+   * Returns status of a device. Includes version of firmware available to install, version the device is running, current state and last error
+   */
+  rpc GetDeviceStatus(GetDeviceStatusRequest) returns (GetDeviceStatusResponse) {}
+
+  /**
+   * Returns a list of all known devices an their status.
+   */
+  rpc GetAllDeviceStatus(GetAllDeviceStatusRequest) returns (GetAllDeviceStatusResponse) {}
+
+  /**
+   * Reset device and reload the firmware manifest. Depending on the manifest the device name may change. This operation can be used to clean errors
+   * before performing any other actions on the device.
+   * NOTE: After a reset the device is considered offline.
+   */
+  rpc Reset(ResetRequest) returns (ResetResponse) {}
+
+  /**
+   * Check if the specified device is running a version older than the saved firmware and if so try to update it.
+   * This function returns immediately and the update status has to be polled by calling GetUpdateStatus.
+   */
+  rpc Update(UpdateRequest) returns (UpdateResponse) {}
+
+  /**
+   * Force the firmware file at given path on to the device. Does not compare firmware currently running on the
+   * device with the file. This function returns immediately and the update status has to be polled by calling GetUpdateStatus.
+   */
+  rpc UpdateOverride(UpdateOverrideRequest) returns (UpdateOverrideResponse) {}
+
+  /**
+   * Notify that new device is connected. This will get the version of the device and update status, but not directly update version.
+   * To refresh the device version call NotifyDisconnect and NotifyConnect afterwards.
+   */
+  rpc NotifyConnect(NotifyConnectRequest) returns (NotifyConnectResponse) {}
+
+  /**
+   * Sets the device status to disconnected and clears the current device version.
+   */
+  rpc NotifyDisconnect(NotifyDisconnectRequest) returns (NotifyDisconnectResponse) {}
+
+  /**
+   * Cancels the current get_version or update operation performed by the update tool. Canceling causes a device to enter an error state. To perform
+   * other operations afterwards the device must be reset.
+   */
+  rpc CancelUpdate(CancelUpdateRequest) returns (CancelUpdateResponse) {}
+
+  /**
+   * Triggers a reset for all devices and tries to connect and update them afterwards. This is the same behavior as on service startup.
+   */
+  rpc ResetAndUpdateAll(ResetAndUpdateAllRequest) returns (ResetAndUpdateAllResponse) {}
+
+  /**
+   * Triggers a refresh of the available verison for a given device.
+   */
+  rpc RefreshAvailableVersion(RefreshAvailableVersionRequest) returns (RefreshAvailableVersionResponse) {}
+}

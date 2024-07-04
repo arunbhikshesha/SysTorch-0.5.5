@@ -1,0 +1,25 @@
+{
+    "git.pullTags": false,
+    "git.followTagsWhenSync": true,
+    "terminal.integrated.defaultProfile.windows": "Command Prompt",
+    "editor.formatOnPaste": false,
+    "editor.formatOnType": true,
+    "editor.formatOnSave": true,
+    "editor.formatOnSaveMode": "file",
+    "editor.renderWhitespace": "trailing",
+    "editor.acceptSuggestionOnEnter": "off",
+    "debug.console.closeOnEnd": true,
+    "cmake.exportCompileCommandsFile": true,
+    "cmake.configureOnOpen": true,
+    "files.associations": {
+        "stm32g4xx_hal.h": "c",
+        "stm32g4xx_it.h": "c",
+        "testboard.h": "c",
+        "stdint.h": "c",
+        "softwareenums.h": "c",
+        "stm32g4xx_ll_bus.h": "c",
+        "main.h": "c",
+        "ds2484.h": "c",
+        "types.h": "c"
+    },
+}

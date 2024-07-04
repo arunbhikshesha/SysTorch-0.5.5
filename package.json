@@ -1,0 +1,11 @@
+{
+    "name": "system-torch",
+    "license": "UNLICENSED",
+    "description": "SystemTorch firmware",
+    "repository": "https://github.com/LorchAW/SysTorch.git",
+    "dependencies": {
+        "s4-config": "ssh://git@github.com:LorchAW/S4_Config#master",
+        "sbsfu-se": "ssh://git@github.com:LorchAW/SBSFU-SE#v2.1.2"
+    },
+    "private": true
+}

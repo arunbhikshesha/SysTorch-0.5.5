@@ -1,0 +1,151 @@
+syntax = "proto3";
+
+option go_package = "s4backend/proto/configmanager";
+package configmanager;
+
+message Empty {}
+
+message SetRequest {
+    string key = 1;
+    bytes value = 2;
+}
+
+message SetResponse {}
+
+message GetRequest{
+    string key = 1;
+}
+
+message GetResponse {
+    bytes value = 1;
+}
+
+message RemoveRequest{
+    string key = 1;
+}
+
+message RemoveResponse{}
+
+message GetAllKeysRequest{}
+
+message GetAllKeysResponse{
+    repeated string keys = 1;
+}
+
+message IdRequest{}
+
+message IdResponse{
+    uint32 id = 1;
+}
+
+message SubscribeRequest{
+    uint32 id = 1;
+    repeated string keys = 2;
+    bool sendInitialValues = 3;
+}
+
+message SubscribeResponse {
+    string key = 1;
+    bytes value = 2;
+}
+
+message UnsubscribeRequest {
+    uint32 id = 1;
+}
+
+message UnsubscribeResponse {}
+
+message ExportRequest{
+    string filename = 1;
+}
+
+message ExportResponse{}
+
+message ImportRequest{
+    string filename = 1;
+}
+
+message ImportResponse{}
+
+message FactoryResetRequest{}
+
+message FactoryResetResponse{}
+
+// The config-manager is a key-value-store used on the mapro to store
+// configuration-data of the lorch-applications. Keys are strings and
+// can have a hierarchy by separating keys with a '/'; e.g. 'key1/subkey1'.
+// Values are byte-arrays and can contain any data; applications are responsible
+// for interpreting the data.
+// The config-manager uses a journaled database stored on the data-partition of
+// the emmc (can be configured in the application-config).
+service ConfigManagerService {
+    // Set a value for a given key. Max. lenght of a key is 256 characters and max.
+    // length of a value is 64kB.
+    //
+    //   Example: s4-configstore-cli config set -k "key1/subkey1" -v "value1"
+    //
+    rpc Set(SetRequest) returns (SetResponse);
+
+    // Get the value for the provided key.
+    //
+    //    Example: s4-configstore-cli config get -k "key1/subkey1"
+    //
+    rpc Get(GetRequest) returns (GetResponse);
+
+    // Remove a key from the store. This also removes the value.
+    //
+    //    Example: s4-configstore-cli config remove -k "key1/subkey1"
+    //
+    rpc Remove(RemoveRequest) returns (RemoveResponse);
+
+    // Returns a list of all keys currentlly in use in the config-manager. Values must
+    // be retrieved separatelly using ``Get()``.
+    //
+    //    Example: s4-configstore-cli config allkeys
+    //
+    rpc GetAllKeys(GetAllKeysRequest) returns (GetAllKeysResponse);
+
+    // Request a unique id from the config-manager to be used to subscribe for changes.
+    // This key must me used in subsequent calls to ``Subscribe`` and ``Unsubscribe``.
+    //
+    //    Example: The cli-tools handles subsciption-ids automatically when calling subscribe
+    //             and there is no separate command for this.
+    rpc GetIDToSubscribe(IdRequest) returns (IdResponse);
+
+    // Subscribe and wait for value-changes on specific keys. You must pass the id returned
+    // from ``GetIDToSubcsribe()``, the sendInitialValues-flag and a list of keys you are interested in.
+    // If sendInitialValues is set (call ``Subscribe``with the '-v'-flag), the config-manager will return
+    // the passed keys and their values once at ``Subscribe`` and after that in case of change.
+    // Otherwise, keys and values are sent in case of change or deletion
+    // For the passed keys regular expressions can be used to select specific entries; e.g. "^key1/.*/subsubkey123"
+    // for all keys that start with "key1/" and contain "/subsubkey123". If any value matching
+    // one of the passed keys changes or is deleted the config-manager will sent the new value including its key on
+    // the returned stream.
+    //
+    //    Example:
+    //      On one terminal run a subscribe command:
+    //           s4-configstore-cli config subscribe -k "key1/.*/sub1" -v
+    //
+    //      On a second terminal run a set command to get a notification on the first teminal:
+    //           s4-configstore-cli config set -k "key1/something/sub1/other" -v "value11"
+    //
+    rpc Subscribe(SubscribeRequest) returns (stream SubscribeResponse);
+
+    // Unsubscribe to all keys previouslly subcribed to with the given id.
+    rpc Unsubscribe(UnsubscribeRequest) returns (UnsubscribeResponse);
+
+    // Export all available keys to the given file. This produces a json-file containing
+    // a list of all keys as string and all values in a quoted binary format; values are
+    // not human readeable. Main purpose of this file is to create a backup of the config-store
+    // and to import it on another machine. To prevent exporting sinsitive or machine-specific
+    // values, import- and export-filters can be defined in the config-file of the application
+    // to exclude specific keys.
+    rpc Export(ExportRequest) returns (ExportResponse);
+
+    // Import a file previouslly created by calling ``Export()`` (maybe on another machine).
+    rpc Import(ImportRequest) returns (ImportResponse);
+
+	// Removing all keys in the configstore-db, except those specified in ingore_on_reset in 'DefaultValues.json'
+	// That way, at the next reboot, they are set to the default values
+    rpc FactoryReset(FactoryResetRequest) returns (FactoryResetResponse);
+}

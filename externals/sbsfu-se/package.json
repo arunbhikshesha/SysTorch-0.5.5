@@ -1,0 +1,11 @@
+{
+    "name": "SBSFU-Secure-Engine",
+    "license": "UNLICENSED",
+    "version": "2.0.0",
+    "description": "Secure Engine Library and Key Storage",
+    "repository": "https://github.com/LorchAW/SBSFU-SE.git",
+    "dependencies": {
+        "s4-config": "ssh://git@github.com:LorchAW/S4_Config#master"
+    },
+    "private": true
+}

@@ -1,0 +1,13 @@
+[
+  {
+    "name": "Lorch GCC ARM-Cortex-M",
+    "toolchainFile": "cross.cmake",
+    "preferredGenerator": {
+      "name": "Ninja"
+    },
+    "cmakeSettings": {
+      "buildTask": false,
+      "buildBeforeRun": true
+    }
+  }
+]

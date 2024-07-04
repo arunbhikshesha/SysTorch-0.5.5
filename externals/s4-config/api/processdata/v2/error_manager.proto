@@ -1,0 +1,159 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "s4backend/internal/gen/go/proto/errormanager";
+package errormanager;
+
+message Empty{}
+
+// LogCategory defines the severity of an entry
+enum LogCategory {
+  // Debug-messages
+  CATEGORY_DEBUG         = 0;
+
+  // Errors, that are not shown to the user, only saved in the background
+  CATEGORY_ENTRY         = 1;
+
+  // Newsletter-like notifications (may be used for advertising)
+  CATEGORY_SMART_INFO    = 2;
+
+  // Notifications, that must be acknowledged by the user, but do not
+  // interfear with the operation of the system
+  CATEGORY_NOTIFICATION  = 3;
+
+  // Errors, that do not stop the current weld-process, but block the start of
+  // a new weld-process, until the user acknowledges it
+  CATEGORY_FAILURE        = 4;
+
+  // Errors, that could lead to damages on the device and therefore
+  // stop the current weld-process regularly
+  CATEGORY_ERROR_LITE     = 5;
+
+  // Errors, that put at risk the life of the user or could cause serious damage
+  // for the device. Therefore, the weld-process is stopped immediately
+  CATEGORY_ERROR          = 6;
+}
+
+// ErrorReact defines the reaction caused by a certain error
+enum ErrorReact {
+  // No reaction
+  REACT_NO_REACTION                = 0;
+
+  // If the criteria for the error no longer exists, the error is resetted
+  REACT_SELF_RESETTING             = 1;
+
+  // The user must acknowledge the error
+  REACT_ACK_BY_USER                = 2;
+
+  // The user is prompted to perform a quick-system-restart
+  REACT_QUICK_SYSTEM_RESTART       = 3;
+
+  // The user is prompted to perform a complete system-restart
+  REACT_SYSTEM_RESTART              = 4;
+
+  // The user is prompted to hit the main power button
+  // or to remove the device from power supply
+  REACT_REMOVE_FROM_MAINS           = 5;
+
+  // The user is prompted to perform a system-update (re-installation)
+  REACT_NEW_INSTALLATION_NESSASARY  = 6;
+}
+
+// ErrorStatus defines the state, an error is currently in
+enum ErrorStatus {
+	// The error is currentlly inactive
+  STATUS_ERROR_INACTIVE         = 0;
+
+	// The error is currentlly active and not acknowleded
+	// (only reached when the error requires akknowledge)
+  STATUS_ERROR_ACTIVE_NO_ACK     = 1;
+
+	// The error is still active but already ackknowledged by a user
+	// Selfresetting errors enter this state directlly when the error is raised
+  STATUS_ERROR_ACTIVE_ACK        = 2;
+
+	// The error was first raised and then disapears but it is not ackknowledged yet.
+	// (only reached when the error requires akknowledge)
+  STATUS_ERROR_INACTIVE_NO_ACK   = 3;
+
+	// Used by non-error eventlogentries
+  STATUS_ERROR_INVALID           = 4;
+}
+
+message Error {
+  // Timestamp when the last state change ocurred
+  google.protobuf.Timestamp timestamp = 1;
+  // Error-Id
+  uint32 id                           = 2;
+  // Error-Name
+  string name                         = 3;
+  // Error-Category
+  LogCategory category                = 4;
+  // Reaction required to resolve the error
+  ErrorReact react                    = 5;
+  // Text
+  string txt                          = 6;
+  // Status of the error
+  ErrorStatus status                  = 7;
+  // String Attachment with specific information or a path to a file with additional information
+  string attachment                   = 8;
+}
+
+message SetErrorRequest {
+  // Id of the error, that will be set
+    uint32 id          = 1;
+    // Attachment for the error
+    string attachment  = 2;
+}
+
+message SetErrorResponse{}
+
+message GetErrorsRequest {
+  // A list of error-states. Errors with that state will be returned
+    repeated ErrorStatus states = 1;
+}
+
+message GetErrorsResponse {
+  // A list of errors from error-manager
+    repeated Error errors = 1;
+}
+
+message ClearErrorRequest {
+  // Id of the error, that will be cleared
+    uint32 id = 1;
+}
+
+message ClearErrorResponse {}
+
+message AcknowledgeErrorRequest {
+  // Id of the error, that will be acknowledged
+    uint32 id = 1;
+}
+
+message AcknowledgeErrorResponse {}
+
+message AckAllErrorsRequest {}
+
+message AckAllErrorsResponse {}
+
+service ErrorManagerService {
+	// SetError changes the state of an error to ``ActiveAck``, or ``ActiveNoAck`, depending on wether or not acknowledge
+	// is required. It also incrementes the error.Count by 1 and updates the error.Timestamp with time.Now()
+  rpc SetError (SetErrorRequest) returns (SetErrorResponse);
+
+  // GetErrors returns a list with errors. It takes as argument
+	// a list of error-states and returns errors that match this state.
+	// If no state is passed, all errors are returned.
+	rpc GetErrors (GetErrorsRequest) returns (GetErrorsResponse);
+
+  // ClearError changes the state of an error to ``Inactive``, or ``InactiveNoAck``, depending on
+	// wether or not acknowledge is required
+  rpc ClearError(ClearErrorRequest) returns (ClearErrorResponse);
+
+	// AcknowledgeError changes the state of an error from ``ActiveNoAck`` to ``ActiveAck``, or from ``InactiveNoAck` to ``Inactive`
+	rpc AcknowledgeError(AcknowledgeErrorRequest) returns (AcknowledgeErrorResponse);
+
+  // AckAllErrors acknowledges all active errors at once
+  rpc AckAllErrors(AckAllErrorsRequest) returns (AckAllErrorsResponse);
+}

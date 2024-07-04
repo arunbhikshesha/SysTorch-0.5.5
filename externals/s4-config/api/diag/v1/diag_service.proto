@@ -1,0 +1,186 @@
+syntax = "proto3";
+package s4_main.api.diag.v1;
+
+option go_package = "github.com/LorchAW/S4_Main/api/diag/v1";
+
+service Fpga {
+  rpc GetFpgaInValues(GetFpgaInValuesRequest) returns (GetFpgaInValuesResponse);
+  rpc GetFpgaOutValues(GetFpgaOutValuesRequest) returns (GetFpgaOutValuesResponse);
+  rpc SetFpgaOutValue(SetFpgaOutValueRequest) returns (Empty);
+}
+
+//data 'slow' SPI S4_Main -> FPGA
+message GetFpgaOutValuesRequest {
+}
+message GetFpgaOutValuesResponse {
+  repeated uint32 out32_values = 1;   // \@ref I_REG32_FPGA_ENUM
+  repeated uint32 out16_values = 2;   // \@ref I_REG16_FPGA_ENUM
+}
+
+//data 'slow' SPI FPGA -> S4_Main
+message GetFpgaInValuesRequest {
+}
+message GetFpgaInValuesResponse {
+  repeated uint32 in32_values = 1;      // \@ref O_REG32_FPGA_ENUM
+  repeated uint32 in16_values = 2;      // \@ref O_REG16_FPGA_ENUM
+  repeated uint32 mean_values = 3;      // \@ref SumNumMeanFPGA_IDs
+}
+//write single data value for 'slow' SPI S4_Main -> FPGA
+message SetFpgaOutValueRequest {
+  uint32 out_index = 1; //index in 32- or 16-bit array
+  uint32 out_value = 2;
+  bool out_32bit = 3; //true: write to 32-bit array, false: write to 16-bit array
+}
+
+service Primary {
+  rpc GetProcessStatusPrimary(GetProcessStatusPrimaryRequest) returns(ProcessStatusPrimary);
+  rpc SetPrimaryOutValue(SetPrimaryOutValueRequest) returns (Empty);
+  rpc SetPrimaryFlexOutValues(SetPrimaryFlexOutValuesRequest) returns (Empty);
+}
+message GetProcessStatusPrimaryRequest {}
+message ProcessStatusPrimary { // definitions see Processdata/ProcessdataPrimary.h
+  fixed32 stat_bits_1 = 1;    // Status bits module 1, can be a value of \@ref prS_Flags
+  uint32 err_bits_1 = 2;      // Error Bits module 1, can be a value of \@ref prE_Flags
+  uint32 detected_1 = 3;      // module 1 registered
+  fixed32 stat_bits_2 = 4;    // Status bits module 2, can be a value of \@ref prS_Flags
+  uint32 err_bits_2 = 5;      // Error Bits module 2, can be a value of \@ref prE_Flags
+  uint32 detected_2 = 6;      // module 2 registered
+  
+  repeated float primstat_values_1 = 20;    // module 1 \@ref PrimStatValNums
+  repeated float primstat_values_2 = 21;    // module 2 \@ref PrimStatValNums
+  repeated uint32 primcontrol_values = 22;  // \@ref PrimControlNums
+}
+//Write single setpoint for Primary modules
+message SetPrimaryOutValueRequest {
+  uint32 out_value = 1;
+  uint32 out_index = 2; //index in PrimControlValues array
+}
+//Write 2 flex setpoints for Primary modules
+message SetPrimaryFlexOutValuesRequest {
+  uint32 out_index = 1;     // \@ref PrimFlexParaNums
+  uint32 out_value1 = 2;
+  uint32 out_value2 = 3;
+  uint32 out_debug = 4;
+}
+
+service Process {
+  rpc GetGlobStatus(GetGlobStatusRequest) returns (GetGlobStatusResponse);
+  rpc GetStatus(GetProcessStatusRequest) returns (GetProcessStatusResponse);
+  rpc GetDocuPars(GetDocuParsRequest) returns (GetDocuParsResponse);
+  rpc GetJobParLimits(GetJobParLimitsRequest) returns (GetJobParLimitsResponse);
+  rpc GetJobPars(GetJobParsRequest) returns (GetJobParsResponse);
+  rpc SetJobParSetting(SetJobParSettingRequest) returns (Empty);
+  rpc SetJobParControl(SetJobParControlRequest) returns (Empty);
+  rpc SetSpecialPar(SetSpecialParRequest) returns (Empty);
+}
+
+message GetGlobStatusRequest {
+}
+message GetGlobStatusResponse {
+  uint64 glob_err_bits = 1;   // Index = \@ref ErrInternNums
+  uint64 glob_warn_bits = 2;  // Index = \@ref WarnInternNums
+  repeated uint32 err_counts_per_sec = 3; // Errors / s, Index = \@ref ErrCounterNums
+  fixed32 pi_bits = 4;         // \@ref PI_Flags
+  fixed32 po_bits = 5;         // \@ref PO_Flags
+  uint32 cntrl_phase = 6;      // \@ref StPh_IDs (see Processdata/ProcessdataM4.h)
+  fixed32 rob_bits = 7;        // \@ref rob_Flags (see Processdata/ProcessdataRemote.h)
+  repeated string m4_log_msgs = 101;  //accumulated new log messages from M4 core
+  repeated string s4_main_log_msgs = 102;  //accumulated new log messages from S4_Main app
+}
+
+message GetProcessStatusRequest {
+}
+message GetProcessStatusResponse {
+  uint32 stat_bits = 1;     // \@defgroup ps_Flags
+  uint32 err_bits = 2;      // \@defgroup perr_Flags
+  uint32 warn_bits = 3;     // \@defgroup pwarn_Flags
+  uint32 cntrl_phase = 4;   // \@ref StPh_IDs
+  uint32 pnp_pnv = 5; //High word = Platznummer Prozessautomat, Low word = PN Verfahrensautomat
+  uint32 dig_in = 6;        // \@defgroup DI_Flags
+  uint32 dig_out = 7;       // \@defgroup DO_Flags
+  float mc_fpga_i_set = 8;  // SPI TX data to FPGA I-Soll
+  uint32 mc_fpga_pd_no = 9; // SPI TX data to FPGA PD-Nr.
+  uint32 mc_fpga_pd_val = 10; // SPI TX data to FPGA PD-Wert
+  float fpga_mc_i_act = 11; // SPI RX data from FPGA I-Ist
+  float fpga_mc_u_act = 12; // SPI RX data from FPGA U-Ist  
+  repeated float adin_val_10ms = 20;   //index = \@ref ADC_InputChannels
+  repeated uint32 run_time_mean = 21;  //index = \@ref ProzStat_RunTime_IDs
+  repeated uint32 run_time_max = 22;   //index = \@ref ProzStat_RunTime_IDs
+  repeated uint32 err_counter = 23;    //index = \@ref ProzInnerErrCounter
+  repeated float fpga_mean_values = 24;//index = TBD, similar to SumNumMeanFPGA_IDs
+  uint32 proz_err_no = 25;  // Error no. Process ('Irror' No.)
+  uint32 proz_warn_no = 26; // Warn no. Process
+  uint32 vrd_mode = 27;     // index = \@ref Leerlauf_IDs
+  uint32 version = 100;   //diag_service Interface version
+}
+
+message GetDocuParsRequest {
+}
+//value of \@ref vout_DokuPars
+message GetDocuParsResponse {
+  repeated float docu_pars = 1;
+}
+
+//j_par_nr = value of \@ref JobParIDs
+message JobParLimit {
+  uint32 j_par_nr = 1;
+  float par_min = 2;
+  float par_norm = 3;
+  float par_max = 4;
+}
+message GetJobParLimitsRequest {
+}
+//j_par_nr = value of \@ref JobParIDs
+message GetJobParLimitsResponse {
+  repeated JobParLimit job_par_limits = 1;
+}
+
+//actual Job settings
+message GetJobParsRequest {
+}
+message GetJobParsResponse {
+  repeated float para_settings = 1;
+  repeated uint32 para_controls = 2;
+}
+//Write single Job setting
+message SetJobParSettingRequest {
+  uint32 index = 1; //index in Job settings array, value of \@ref JS_PAR_N
+  float value = 2;
+}
+//Write single Job Control value
+message SetJobParControlRequest {
+  uint32 index = 1; //index in Job Control array, value of \@ref JC_PAR_N
+  uint32 value = 2;
+}
+
+message SetSpecialParRequest {
+  uint32 index = 1; //index tbd, #1 = vrd_mode
+  uint32 value = 2;
+}
+
+service Dmr {
+  rpc GetDmrValues(GetDmrValuesRequest) returns (GetDmrValuesResponse);
+}
+
+//get DMR and WPK data:
+message GetDmrValuesRequest {
+}
+message GetDmrValuesResponse {
+  fixed32 in_bits_active = 1;           // Status-Bits Aktiver Drahtvorschub, can be a value of \@ref inC_Flags
+  fixed32 in_bits_inactive = 2;         // Status-Bits Inaktiver Drahtvorschub, can be a value of \@ref inC_Flags
+  fixed32 in_bits_zwitri_active = 3;    // Status-Bits Aktiver Zwischentrieb, can be a value of \@ref inC_Flags
+  fixed32 in_bits_zwitri_inactive = 4;  // Status-Bits Inaktiver Zwischentrieb, can be a value of \@ref inC_Flags
+  fixed32 stat_bits = 5;                // Status-Bits DMR-PP, can be a value of \@ref sm_Flags
+  uint32 err_bits = 6;                  // Error-Bits DMR-PP, can be a value of \@ref eDMR_Flags
+  uint32 warn_bits = 7;                 // Warning-Bits DMR-PP, can be a value of \@ref wDMR_Flags
+  fixed32 out_bits = 8;                 // Control-Bits, can be a value of \@ref outC_Flags
+  repeated float dmr_act_values = 9;    // index = \@ref WFeedStatValNums
+
+  uint32 wpk_err_bits = 20;    // \@ref WpkErrNums
+  uint32 wpk_warn_bits = 21;   // not (yet) used here
+  fixed32 wpk_stat_bits = 22;  // Status bits, can be a value of \@ref sWPK_Flags
+  repeated float wpk_act_values = 23; // index = \@ref WPKStatValNums
+}
+
+message Empty {  
+}

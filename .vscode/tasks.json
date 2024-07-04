@@ -1,0 +1,74 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "cppbuild",
+            "label": "Build project",
+            "command": "cmake",
+            "args": [
+                "--build",
+                "${command:cmake.buildDirectory}",
+                "--target",
+                "build",
+                "-j",
+                "8"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "type": "shell",
+            "label": "CubeProg: Build and Flash project (SWD)",
+            "command": "%STM32CubeProgrammerCLI%",
+            "args": [
+                "--connect",
+                "port=swd",
+                "--download",
+                "${command:cmake.launchTargetPath}.bin",
+                "0x08000000",
+                "--start",
+                "0x08000000",
+                "-hardRst",
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+            },
+            "dependsOn": [
+                "Build project"
+            ]
+        },
+        {
+            "type": "shell",
+            "label": "CubeProg: Flash Bootloader (SWD)",
+            "command": "%STM32CubeProgrammerCLI%",
+            "args": [
+                "--connect",
+                "port=swd",
+                "--erase",
+                "all",
+                "--download",
+                ".github/tools/sbsfu/BL_SBSFU.elf",
+                "-hardRst",
+                "--start"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": []
+        }
+    ]
+}

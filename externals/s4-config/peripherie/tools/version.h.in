@@ -1,0 +1,14 @@
+#pragma once
+// clang-format off
+
+#define VERSION_PREFIX              "R1"
+#define VERSION_MAJOR               @PROJECT_VERSION_MAJOR@U
+#define VERSION_MINOR               @PROJECT_VERSION_MINOR@U
+#define VERSION_PATCHLEVEL          @PROJECT_VERSION_PATCH@U
+
+#define VERSION            "@CMAKE_PROJECT_VERSION@"
+#define VERSION_POSTFIX    "@APP_VERSION_POSTFIX@"
+#define FULL_VERSION       VERSION_PREFIX "-" VERSION "-" VERSION_POSTFIX
+
+// now Build (CMake configure) date + time in format: YYMMDDHHMM
+#define K_VERSION          @VERSION_DATE_TIME_UINT32@UL

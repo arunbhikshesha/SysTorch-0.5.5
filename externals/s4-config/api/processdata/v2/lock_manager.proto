@@ -1,0 +1,75 @@
+syntax = "proto3";
+
+option go_package = "s4backend/proto/lockmanager";
+package lockmanager;
+
+message Empty {}
+
+// ClientType indicates if a client requested
+// a soft-lock or an immediate lock
+enum ClientType {
+	TYPE_SOFT       = 0;
+	TYPE_IMMEDIATE  = 1;
+}
+
+message LockManagerClient {
+	uint32 id = 1;
+	ClientType client_type = 2;
+}
+
+message SoftLockRequest {}
+
+message SoftLockResponse {
+    uint32 id = 1;
+}
+
+message WaitForLockRequest {
+    uint32 id = 1;
+}
+
+message WaitForLockResponse {}
+
+message UnlockRequest {
+    uint32 id = 1;
+}
+
+message UnlockResponse {}
+
+message ImmediateLockRequest {}
+
+message ImmediateLockResponse {
+    uint32 id = 1;
+}
+
+message GetStatusRequest {}
+
+message GetStatusResponse {
+	repeated LockManagerClient clients  = 1;
+	bool device_locked                  = 2;
+}
+
+service LockManagerService {
+    // ``SoftLock`` unsets the 'WeldEnable'-flag in Shared Memory and returns an id to the caller
+	// This id is used later on to identify the same caller for ``WaitForLock`` and ``Unlock``-calls
+    // The id is added to a list of subscribers in the LockManager
+	rpc SoftLock (SoftLockRequest) returns (SoftLockResponse);
+
+    // ``WaitForLock`` blocks until the device is locked (no weld-process running)
+	// The passed id must be retrieved from a previous call to ``SoftLock``
+	// If the id is unknown to the LockManager, WaitForLock returns an error of type 'Id not found'
+	rpc WaitForLock (WaitForLockRequest) returns (WaitForLockResponse);
+
+    // ``Unlock`` resets the 'WeldEnable'-flag or 'WeldStop'-flag in Shared Memory
+	// (depending on the client-type), if not more then one client is subscribed in the LockManager.
+	// It also removes the client witth the passed id from the list of subscribers
+	rpc Unlock (UnlockRequest) returns (UnlockResponse);
+
+    // ``ImmediateLock`` sets the 'WeldStop'-flag in Shared Memory and returns an id
+    // ImmediateLock triggers an immediate, but regular stop of the current weld-process
+	// This id is used later on to identify the same caller for ``Unlock``-calls
+	// The id is added to a list of subscribers in the LockManager
+	rpc ImmediateLock (ImmediateLockRequest) returns (ImmediateLockResponse);
+
+	// ``GetStatus`` returns the lock-status of the device and a list of all currently active locks
+	rpc GetStatus(GetStatusRequest) returns (GetStatusResponse);
+}

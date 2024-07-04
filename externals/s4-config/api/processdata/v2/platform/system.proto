@@ -1,0 +1,71 @@
+syntax = "proto3";
+
+option go_package = "s4backend/proto/platform";
+
+package system;
+
+message FullFactoryResetRequest{ }
+message FullFactoryResetResponse {
+  //Status "success"
+  string Status               = 1;
+}
+
+message PartialFactoryResetRequest{ }
+message PartialFactoryResetResponse {
+  //Status "success"
+  string Status               = 1;
+}
+
+message CollectDebugInfoRequest {}
+message CollectDebugInfoResponse {}
+
+message OSVersionRequest {}
+
+message OSVersionResponse {
+  // e.g.: lorch-distro
+  string ID           = 1;
+  // e.g.: Lorch Linux (A Yocto Project Based Distro)
+  string Name         = 2;
+  // e.g.: 3.1 (dunfell)
+  string Version      = 3;
+  // e.g.: 3.1
+  string VersionID    = 4;
+  // e.g.: Lorch Linux (A Yocto Project Based Distro) 3.1 (dunfell)
+  string PrettyName   = 5;
+  // e.g.: 20220310170305
+  string BuildID      = 6;
+  // e.g.: 0.14.3
+  string ImageVersion = 7;
+}
+
+message RaucVersionRequest {}
+message RaucVersionResponse {
+  // e.g. MaPro S4
+  string Compatible   = 1;
+  // e.g. 0.14.3
+  string Version      = 2;
+  // e.g. 20220310195943
+  string BuildID      = 3;
+  // e.g. lorch-bundle-dev 0.14.3
+  string Description  = 4;
+}
+
+service SystemManagerService {
+  // Returns OS version from osversion file (default /etc/os-release)
+  rpc GetOSVersion(OSVersionRequest) returns (OSVersionResponse) {}
+
+  // Returns Rauc version from active rauc bundle
+  rpc GetRaucVersion(RaucVersionRequest) returns (RaucVersionResponse) {}
+
+    // Delete /data/etc_overlay/work|root and reboot
+  rpc FullFactoryReset(FullFactoryResetRequest) returns (FullFactoryResetResponse) {}
+
+  // Delete /data/etc_overlay/work|root without predefined directorys and reboot
+  // Excluded paths can be defined in platform-service configs. When using
+  // default settings this means a full-factory-reset while network-configs are kept.
+  rpc PartialFactoryReset(PartialFactoryResetRequest) returns (PartialFactoryResetResponse) {}
+
+  // Collect data like logs, states and other to be used for
+	// further debugging in case of unexpected behaviour.
+  rpc CollectDebugInfo (CollectDebugInfoRequest) returns (CollectDebugInfoResponse) {}
+}

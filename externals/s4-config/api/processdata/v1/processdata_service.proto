@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+package processdata;
+
+option go_package = "github.com/LorchAW/s4-backend-processdata/api/processdata/v1";
+
+service ProcessData{
+  rpc GetJobParsValues(GetJobParsValuesRequest) returns (GetJobParsValuesResponse);
+  rpc SetJobParValue(SetJobParValueRequest) returns (SetJobParValueResponse);
+  rpc SetDokuParsValues(SetDokuParsValuesRequest) returns (SetDokuParsValuesResponse);
+  rpc SetDokuParValue(SetDokuParValueRequest) returns (SetDokuParValueResponse);
+}
+
+// Job parameter values
+message GetJobParsValuesRequest {
+}
+message GetJobParsValuesResponse {
+  repeated float jobpars_values = 1;
+}
+// Write single Job parameter value
+message SetJobParValueRequest {
+  float jobpar_value = 1;
+  uint32 jobpar_index = 2; // index in JobParsValues array, Index = \@ref JobParIDs
+}
+message SetJobParValueResponse {  
+  float jobpar_value = 1; // 'corrected' value after applying limits/ access restrictions
+}
+
+// Write DokuPars values
+message SetDokuParsValuesRequest {
+  repeated float dokupars_values = 1; // Index = \@ref vout_DokuPars
+}
+message SetDokuParsValuesResponse {
+}
+// Write single DokuPar value
+message SetDokuParValueRequest {
+  float dokupar_value = 1;
+  uint32 dokupar_index = 2; // index in DokuParsValues array, \@ref vout_DokuPars
+}
+message SetDokuParValueResponse {
+}

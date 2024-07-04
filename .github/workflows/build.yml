@@ -1,0 +1,77 @@
+name: Lorch Build and Release
+
+on:
+  push:
+    branches: [ master ]
+    tags:
+    - "v[0-9]+.[0-9]+.[0-9]+"  
+  pull_request:
+    branches: [ master ]
+
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN  }}
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    container: 
+      image: manewu/gcc-arm-none-eabi_v7_hard:v1.2.1
+    steps:
+    - name: checkout
+      uses: actions/checkout@v3    
+
+    - name: Build Project Series
+      env: 
+        TC22_G473MCY6_ZIP: ${{ secrets.SBSFU_SE_TC22_G473MCY6_ZIP }}
+      run: |
+        chmod 777 ./externals/s4-config/peripherie/tools/*
+        chmod 777 ./externals/sbsfu-se/tools/*
+        ./externals/s4-config/peripherie/tools/build.sh
+        . ./build/setEnv.sh
+        echo "TARGET_NAME=$TARGET_NAME" >> "$GITHUB_ENV"
+
+    - name: Upload Firmware package
+      uses: actions/upload-artifact@v3
+      with:
+        name: ${{ env.TARGET_NAME }}
+        path: |
+          build/${{ env.TARGET_NAME }}_Release/
+          build/${{ env.TARGET_NAME }}_Dummy/
+        retention-days: 45
+
+  enforce-changelog:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-22.04
+    steps:
+    - uses: actions/checkout@v3
+    - uses: dangoslen/changelog-enforcer@v3
+      with:
+        skipLabels: 'skip changelog,Skip Changelog,skip-changelog,Skip-Changelog'
+        missingUpdateErrorMessage: >
+          Changelog Enforcer: No update to CHANGELOG.md found!
+          Please read the ReleaseWorkflow.md (https://github.com/LorchAW/S4_Config/peripherie/tools/ReleaseWorkflow.md).
+
+  release:
+    if: | 
+      github.event_name == 'push' &&
+      startsWith(github.ref, 'refs/tags/v')
+    needs: build
+    runs-on: ubuntu-22.04
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+    - uses: actions/download-artifact@v3
+      with:
+        path: download
+    - name: Zip artifact directories
+      working-directory: ${{ github.workspace }}/download
+      run: |
+        for i in */; do zip -r "${i%/}.zip" "$i"; done
+    - name: Release
+      uses: docker://antonyurchenko/git-release:v5
+      env:
+        PRE_RELEASE: false
+        DRAFT_RELEASE: false
+      with:
+        args: download/*.zip

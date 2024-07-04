@@ -1,0 +1,191 @@
+﻿$version 11.00
+
+$rect <275,118,475,158>
+$output false
+class SimulatorClass
+{
+  $rect <920,80,1120,120>
+  inherited method Init()
+  {
+    InitParameter();
+
+    Timer.Enabled = true;
+  }
+
+  $rect <388,162,588,202>
+  array Parameter::Parameter Parameter[ 16 ];
+
+  $rect <930,160,1130,200>
+  method void InitParameter()
+  {
+    //               ( aID, aValue, aMax, aMin, aUnit,                              atype,                                aimage, atext )
+    this.AddParameter( 1,   12.5 ,  25,   0.5,  Parameter::UnitID.Units_mpmin,      0,                                    1,      0 );
+    this.AddParameter( 2,   2 ,     10,   0.5,  Parameter::UnitID.Units_mm,         0,                                    3,      0 );
+    this.AddParameter( 3,   17.4,   30,   0.5,  Parameter::UnitID.Units_V,          0,                                    0,      0 );
+    this.AddParameter( 4,   1 ,     2,    0,    Parameter::UnitID.Units_DummyLBL,   Parameter::Type[TypeBit_Relative],    2,      0 ); //LBL
+    this.AddParameter( 5,   1 ,     2,    0,    Parameter::UnitID.Units_DummyDyn,   Parameter::Type[TypeBit_Relative],    0,      1 ); //Dynamic ohne image id
+    this.AddParameter( 6,   0 ,     1,    0,    0,                                  Parameter::Type[ TypeBit_Toggle],     4,      1 ); //Toggle 
+    this.AddParameter( 7,   1 ,     1,    0,    0,                                  Parameter::Type[ TypeBit_Toggle],     8,      1 ); //Toggle 
+    this.AddParameter( 8,   0,      0,    0,    0,                                  Parameter::Type[ TypeBit_QAInd],      0,      0 ); //Type 0x80 = QA Einsprungpunkt
+
+    Application::Device.UpdateCurrentParameter( 0 );
+    Application::Device.UpdateNoOfParameter( NoOfParameter );
+    UpdateActiveParameter();
+
+  }
+
+  $rect <960,200,1160,240>
+  method void AddParameter( arg int32 aID, arg float aValue, arg float aMax, arg float aMin, arg uint8 aUnit, arg uint8 atype, arg uint8 aimage, arg uint8 atext )
+  {
+    var Parameter::Parameter temp;
+    temp = new Parameter::Parameter;
+
+
+    temp.UpdateParameterSim( aID, aValue, aMax, aMin, aUnit, atype, aimage, atext );
+
+    if (NoOfParameter < Parameter.size )
+    {
+      Parameter[NoOfParameter] = temp;
+      NoOfParameter++;
+    }
+  }
+
+  $rect <930,390,1130,430>
+  method void SimulatorKeyEvent( arg Core::KeyCode key )
+  {
+    var float temp;
+
+
+
+    switch (key)
+    {
+      case Core::KeyCode.Up:
+      {
+        if(Parameter[ActiveParameter].QAIndicator)
+        {
+          //Activate QA
+          return;
+        }
+        IncDecActiveParam(+1);
+        //temp = Parameter[ActiveParameter].Value + 1;
+        //Parameter[ActiveParameter].UpdateValueBounds( temp);
+        //Parameter::ActiveParameter.UpdateValueBounds( Parameter::ActiveParameter.Value + 1 );
+      }
+      case Core::KeyCode.Down:
+      {
+        IncDecActiveParam (-1);
+        //Parameter[ActiveParameter].UpdateValueBounds( Parameter[ActiveParameter].Value - 1);
+        //Parameter::ActiveParameter.UpdateValueBounds( Parameter::ActiveParameter.Value - 1);
+      }
+      case Core::KeyCode.Left:
+      {
+        if(ActiveParameter > 0)
+        {
+          ActiveParameter--;
+        }
+        else
+        {
+          ActiveParameter = NoOfParameter - 1;
+        }
+        UpdateActiveParameter();
+      }
+      case Core::KeyCode.Right:
+      {
+        if(ActiveParameter < NoOfParameter - 1)
+        {
+          ActiveParameter++;
+        }
+        else
+        {
+          ActiveParameter = 0;
+        }
+        UpdateActiveParameter();
+      }
+    }
+
+
+  }
+
+  $rect <598,320,798,360>
+  property int32 ActiveParameter;
+
+  $rect <598,360,798,400>
+  onset ActiveParameter
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure ActiveParameter == value )
+      return;
+
+    // Remember the property's new value.
+    pure ActiveParameter = value;
+
+    Application::Device.UpdateCurrentParameter( ActiveParameter );
+  }
+
+  $rect <600,160,800,200>
+  property int32 NoOfParameter;
+
+  $rect <600,200,800,240>
+  onset NoOfParameter
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure NoOfParameter == value )
+      return;
+
+    // Remember the property's new value.
+    pure NoOfParameter = value;
+
+
+    Application::Device.UpdateNoOfParameter( NoOfParameter )  ;
+
+    // TO DO:
+    // 
+    // Now you can handle the alternation of the property.
+  }
+
+  $rect <296,265,496,305>
+  object Core::Timer Timer;
+
+  $rect <279,331,479,371>
+  slot Slot
+  {
+    sender; /* the method is called from the sender object */
+  }
+
+  $rect <1200,390,1480,430>
+  method void UpdateActiveParameter()
+  {
+    Parameter::ActiveParameter.UpdateParameter( Parameter[ActiveParameter].Id, Parameter[ActiveParameter].Value, Parameter[ActiveParameter].Max, Parameter[ActiveParameter].Min, Parameter[ActiveParameter].unit_id, Parameter[ActiveParameter].type, Parameter[ActiveParameter].image, Parameter[ActiveParameter].text, Parameter[ActiveParameter].totalparams);
+
+  }
+
+  $rect <1200,430,1480,470>
+  method void IncDecActiveParam( arg int32 steps )
+  {
+    var float temp = 0.0;
+
+
+    switch (Parameter::ActiveParameter.unit_id)
+    {
+    //  case Parameter::UnitID.Units_DummyDyn:
+      case 24:
+      {
+         temp = steps * 0.1;
+      }
+    //  case Parameter::UnitID.Units_DummyLBL:
+      case 22:
+      {
+         temp = steps * 0.0333;
+      }
+      default:  temp = steps;
+
+
+    }
+    Parameter[ActiveParameter].UpdateValueBounds( Parameter[ActiveParameter].Value + temp);
+    Parameter::ActiveParameter.UpdateValueBounds( Parameter::ActiveParameter.Value + temp);
+  }
+}
+
+$rect <520,120,720,160>
+$output false
+autoobject Simulator::SimulatorClass Simulator;

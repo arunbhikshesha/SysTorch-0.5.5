@@ -1,0 +1,2482 @@
+﻿$version 11.00
+
+// This is the root component of the entire GUI application.
+$rect <20,-30,220,10>
+$output false
+class Application : Core::Root
+{
+  $rect <10,390,190,430>
+  inherited method Init()
+  {
+    KeyHandler.Enabled = true;
+
+    Application::Device.GUIInit();
+
+    SpashScreenTimer.Enabled = true;
+
+    /* start with ParamDialog */
+    //PresentDialog(ParamDialog, null, null, null, null, null, null, null, null, false);
+
+    //PresentDialog(ReceiveDialog, null, null, null, null, null, null, null, null, false);
+  }
+
+  $rect <10,320,210,360>
+  inherited property Bounds = <0,0,96,64>;
+
+  $rect <20,20,160,60>
+  object Views::Rectangle Background
+  {
+    preset Bounds = <0,0,96,64>;
+    preset ColorBL = #FFFFFFFF;
+    preset ColorBR = #FFFFFFFF;
+    preset ColorTR = #FFFFFFFF;
+    preset ColorTL = #FFFFFFFF;
+    preset Color = #000000FF;
+    preset AlphaBlended = false;
+  }
+
+  $rect <10,220,210,260>
+  object Core::KeyPressHandler KeyHandler
+  {
+    preset OnPress = OnKeyPress;
+    preset Enabled = true;
+  }
+
+  $rect <210,220,410,260>
+  slot OnKeyPress
+  {
+    //Handle Key events on Prototyper
+    $if $prototyper
+        Simulator::Simulator.SimulatorKeyEvent(KeyHandler.Code);
+    $else
+    //or if Simulator is active
+    if (Application::Device.Simulator)
+    {
+         Simulator::Simulator.SimulatorKeyEvent(KeyHandler.Code);
+    }
+    $endif
+
+    //otherwise Keys are handled by middleware
+  }
+
+  $rect <20,20,160,60>
+  object Application::ReceiveDialog ReceiveDialog
+  {
+    preset Bounds = <0,0,18,18>;
+  }
+
+  $rect <10,170,210,210>
+  object Core::PropertyObserver ShowQAObserver
+  {
+    preset OnEvent = onShowQA;
+    preset Outlet = ^Application::Device.ShowQA;
+  }
+
+  // This slot method is executed when the associated property observer 'PropertyObserver' \
+  // is notified.
+  $rect <210,170,410,210>
+  slot onShowQA
+  {
+    return;
+    /*
+    if (ReceiveDialog.IsActiveDialog(false))
+    {
+        DismissDialog(ReceiveDialog, null, null, null, null, null, false);
+    }
+
+    if (Application::Device.ShowQA)
+    {
+      if (ParamDialog.IsActiveDialog(false))
+      {
+          DismissDialog(ParamDialog, null, null, null, null, null, false);
+      }
+
+      if (!QADialog.IsActiveDialog(false))
+      {
+          PresentDialog(QADialog, null, null, null, null, null, null, null, null, false);
+      }
+    }
+    else
+    {
+      if (QADialog.IsActiveDialog(false))
+      {
+          DismissDialog(QADialog, null, null, null, null, null, false);
+      }
+
+      if (!ParamDialog.IsActiveDialog(false))
+      {
+          PresentDialog(ParamDialog, null, null, null, null, null, null, null, null, false);
+      }
+    }
+
+    PresentDialog(ReceiveDialog, null, null, null, null, null, null, null, null, false);
+
+    */
+  }
+
+  $rect <600,170,870,210>
+  var Simulator::SimulatorClass Simulator = Simulator::Simulator;
+
+  // Store of general Items
+  note group Note
+  {
+    attr Bounds = <590,120,890,320>;
+  }
+
+  $rect <20,20,160,60>
+  object Application::ParamDialog ParamDialog
+  {
+    preset Bounds = <0,0,96,64>;
+  }
+
+  $rect <20,20,160,60>
+  object Application::SplashScreen SplashScreen
+  {
+    preset Bounds = <0,0,96,64>;
+  }
+
+  $rect <240,-70,440,-30>
+  object Core::Timer SpashScreenTimer
+  {
+    preset OnTrigger = RemoveSplash;
+    preset Period = 1000;
+  }
+
+  $rect <270,-30,470,10>
+  slot RemoveSplash
+  {
+    SplashScreen.Visible = false;
+  }
+
+  $rect <620,250,820,290>
+  var Parameter::DeviceClass par_device_instance = Parameter::Device;
+}
+
+$rect <960,150,1160,190>
+$output false
+class ParamDialog : Core::Group
+{
+  $rect <150,-150,330,-110>
+  inherited method Init()
+  {
+    attachobserver OnUpdate , Parameter::ActiveParameter;
+    attachobserver OnChangeConfig , ^Application::Device.NoOfParameter;
+    attachobserver OnChangeConfig , ^Application::Device.CurrentParameter;
+
+
+    ParamToggle.Visible = false;
+    ParamValue.Visible = false;
+    ParamQA.Visible = false;
+
+    postsignal OnChangeConfig;
+  }
+
+  $rect <10,250,210,290>
+  inherited property Bounds = <0,0,96,64>;
+
+  $rect <10,170,220,210>
+  object Core::PropertyObserver ParamCounterObserver
+  {
+    preset OnEvent = onParamCounter;
+    preset Outlet = ^Application::Device.ParamCounter;
+  }
+
+  // This slot method is executed when the associated property observer 'PropertyObserver' \
+  // is notified.
+  $rect <218,170,418,210>
+  slot onParamCounter
+  {
+    return;
+    if (Application::Device.UpdateParamData())
+    {
+        /* check if this is a toggle parameter */
+        if (Application::Device.bParamIsToggle)
+        {
+            /* show image centered */
+            //Image.Alignment = Views::ImageAlignment[AlignHorzCenter, AlignVertCenter];
+
+            /* use function icons */
+            //Image.Bitmap = Res::IconFunction;
+
+            /* hide texts */
+            //ValueText.Visible = false;
+            //Text.Visible = false;
+        }
+        else
+        {
+            /* show image on left bottom */
+            //Image.Alignment = Views::ImageAlignment[AlignHorzLeft, AlignVertBottom];
+
+            /* use paramter icons */
+            //Image.Bitmap = Res::IconParameter;
+
+            if (Application::Device.bParamValueChanged)
+            {
+                //ValueText.String = Application::Device.GetParamValueString();
+            }
+
+            if (Application::Device.bParamTextChanged)
+            {
+                //Text.String = Application::Device.GetParamTextString();
+            }
+
+            /* show texts */
+           // ValueText.Visible = true;
+            //Text.Visible = true;
+        }
+
+        /* show correct image */
+        //Image.FrameNumber = Application::Device.ParamFrameNumber;
+    }
+  }
+
+  $rect <-280,0,-80,40>
+  var int32 ValueTextOff_Y = 34;
+
+  $rect <350,-150,550,-110>
+  var Parameter::Parameter Param = Parameter::ActiveParameter;
+
+  $rect <550,-80,750,-40>
+  slot OnUpdate
+  {
+    sender; /* the method is called from the sender object */
+
+    ParamToggle.Visible = false;
+    ParamValue.Visible = false;
+    ParamQA.Visible = false;
+    TestDialog.Visible = false;
+    ParamQA.Scrollbar.Maximum = Parameter::ActiveParameter.totalparams;
+
+    if(Parameter::ActiveParameter.Id == 0)
+    {
+      ParamQA.Visible = true;
+      ParamQA.Image.FrameNumber = 14;
+      ParamQA.Scrollbar.Selected = ParamValue.Scrollbar.Maximum;
+    }
+    else if((Parameter::ActiveParameter.type >= 100))
+    {
+        ParamQA.Visible = true;
+      if(Parameter::ActiveParameter.type == 100)
+      {
+      if(Parameter::ActiveParameter.image == 1 )
+      {
+         ParamQA.Image.FrameNumber = 5;
+      }
+      else
+      {
+       ParamQA.Image.FrameNumber = 4;
+      }
+           ParamQA.Scrollbar.Selected = Parameter::ActiveParameter.Id - 1;
+      }
+      else if(Parameter::ActiveParameter.type == 101)
+      {
+      if(Parameter::ActiveParameter.image == 1)
+      {
+         ParamQA.Image.FrameNumber = 9;
+      }
+      else
+      {
+       ParamQA.Image.FrameNumber = 8;
+      }
+              ParamQA.Scrollbar.Selected = Parameter::ActiveParameter.Id - 1;
+      }
+    }
+
+    else if((Parameter::ActiveParameter.Id == 0x54) && (Parameter::ActiveParameter.unit_id == 0x43))
+    {
+      TestDialog.Visible = true;
+    //below workaround is for Test Mode Screen Update
+    //if((Parameter::ActiveParameter.Id == 0x54) && (Parameter::ActiveParameter.unit_id == 0x43))
+    {
+    //CAN test/////////////
+    if(Parameter::ActiveParameter.type & 0x1)
+    {
+    TestDialog.Rectangle_CAN.Color = #1AA234FF;
+    TestDialog.Text_CAN.String = "CAN: OK";
+    }
+    else if(Parameter::ActiveParameter.type & 0x2)
+    {
+    TestDialog.Rectangle_CAN.Color = #FF0F0FFF;
+    TestDialog.Text_CAN.String = "CAN: F";
+    }
+    else
+    {
+    TestDialog.Rectangle_CAN.Color = #FF8525FF;
+    TestDialog.Text_CAN.String = "CAN: U";
+    }
+    //////////////////////////////////
+    //BKC test///////////
+    if(Parameter::ActiveParameter.type & 0x4)
+    {
+    TestDialog.Rectangle_BKC.Color = #1AA234FF;
+    TestDialog.Text_BKC.String = "BKC: OK";
+    }
+    else if(Parameter::ActiveParameter.type & 0x8)
+    {
+    TestDialog.Rectangle_BKC.Color = #FF0F0FFF;
+    TestDialog.Text_BKC.String = "BKC: F";
+    }
+    else
+    {
+    TestDialog.Rectangle_BKC.Color = #FF8525FF;
+    TestDialog.Text_BKC.String = "BKC: U";
+    }
+    /////////////////////////////////
+    //UP test///////////
+    if(Parameter::ActiveParameter.type & 0x10)
+    {
+    TestDialog.Rectangle_UP.Color = #1AA234FF;
+    TestDialog.Text_Up.String = "UP: OK";
+    }
+    else if(Parameter::ActiveParameter.type & 0x20)
+    {
+    TestDialog.Rectangle_UP.Color = #FF0F0FFF;
+    TestDialog.Text_Up.String = "UP: F";
+    }
+    else
+    {
+    TestDialog.Rectangle_UP.Color = #FF8525FF;
+    TestDialog.Text_Up.String = "UP: U";
+    }
+    /////////////////////////////////
+    //DOWN test///////////
+    if(Parameter::ActiveParameter.type & 0x40)
+    {
+    TestDialog.Rectangle_DOWN.Color = #1AA234FF;
+    TestDialog.Text_Down.String = "DOWN: OK";
+    }
+    else if(Parameter::ActiveParameter.type & 0x80)
+    {
+    TestDialog.Rectangle_DOWN.Color = #FF0F0FFF;
+    TestDialog.Text_Down.String = "DOWN: F";
+    }
+    else
+    {
+    TestDialog.Rectangle_DOWN.Color = #FF8525FF;
+    TestDialog.Text_Down.String = "DOWN: U";
+    }
+    /////////////////////////////////
+    //LEFT key test///////////
+    if(Parameter::ActiveParameter.image & 0x1)
+    {
+    TestDialog.Rectangle_LEFT.Color = #1AA234FF;
+    TestDialog.Text_Left.String = "LEFT: OK";
+    }
+    else if(Parameter::ActiveParameter.image & 0x2)
+    {
+    TestDialog.Rectangle_LEFT.Color = #FF0F0FFF;
+    TestDialog.Text_Left.String = "LEFT: F";
+    }
+    else
+    {
+    TestDialog.Rectangle_LEFT.Color = #FF8525FF;
+    TestDialog.Text_Left.String = "LEFT: U";
+    }
+    ///////////////////////////////////////////
+    //RIGHT key test///////////
+    if(Parameter::ActiveParameter.image & 0x4)
+    {
+    TestDialog.Rectangle_RIGHT.Color = #1AA234FF;
+    TestDialog.Text_Right.String = "RIGHT: OK";
+    }
+    else if(Parameter::ActiveParameter.image & 0x8)
+    {
+    TestDialog.Rectangle_RIGHT.Color = #FF0F0FFF;
+    TestDialog.Text_Right.String = "RIGHT: F";
+    }
+    else
+    {
+    TestDialog.Rectangle_RIGHT.Color = #FF8525FF;
+    TestDialog.Text_Right.String = "RIGHT: U";
+    }
+    ///////////////////////////////////////////
+    //Trigger key test///////////
+    if(Parameter::ActiveParameter.image & 0x10)
+    {
+    TestDialog.Rectangle_TRG.Color = #1AA234FF;
+    TestDialog.Text_Trigger.String = "TRG: OK";
+    }
+    else if(Parameter::ActiveParameter.image & 0x20)
+    {
+    TestDialog.Rectangle_TRG.Color = #FF0F0FFF;
+    TestDialog.Text_Trigger.String = "TRG: F";
+    }
+    else
+    {
+    TestDialog.Rectangle_TRG.Color = #FF8525FF;
+    TestDialog.Text_Trigger.String = "TRG: U";
+    }
+    ///////////////////////////////////////////
+    }
+
+    }
+    else
+    {
+      ParamValue.Visible = true;
+    }
+
+    return; // added as a workaround, later remove this
+    if(Param.Toggle)
+    {
+      ParamToggle.Visible = true;
+    //  ParamToggle.PicID = Param.GetToggleFrame();
+      ParamToggle.PicID = Parameter::ActiveParameter.GetToggleFrame();
+    }
+    else if (Param.QAIndicator == false)
+    {
+
+      ParamValue.Visible = true;
+    //  ParamValue.Param = Param;
+      ParamValue.Param = Parameter::ActiveParameter;
+    }
+    else
+    {
+      ParamQA.Visible = true;;
+    }
+
+
+
+
+  }
+
+  $rect <350,70,550,110>
+  slot OnChangeConfig
+  {
+    $if $prototyper
+    //Scrollbar.Maximum = Application::Device.NoOfParameter - 1;
+    //Scrollbar.Selected = Application::Device.CurrentParameter;
+    $endif
+
+    $if !$prototyper
+    TestDialog.Text_BKC.String = "Info";
+    $endif
+  }
+
+  $rect <20,20,160,60>
+  object Application::ParamToggle ParamToggle
+  {
+    preset Bounds = <0,0,96,64>;
+  }
+
+  $rect <20,20,160,60>
+  object Application::TestDialog TestDialog
+  {
+    preset Bounds = <0,0,96,64>;
+  }
+
+  $rect <20,20,160,60>
+  object Application::ParamValue ParamValue
+  {
+    preset Bounds = <0,0,96,64>;
+  }
+
+  $rect <20,20,160,60>
+  object Application::ParamQAIndicator ParamQA
+  {
+    preset Bounds = <0,0,96,64>;
+  }
+
+  // Link to Active Parameter
+  // Changes Trigger OnUpdate
+  note legend Note
+  {
+    attr Bounds = <550,-150,840,-80>;
+  }
+
+  // Config Changes are number of parameter or selcted parameter
+  note legend Note1
+  {
+    attr Bounds = <550,70,840,140>;
+  }
+}
+
+$rect <20,70,220,110>
+$output false
+class QADialog : Core::Group
+{
+  $rect <10,250,210,290>
+  inherited property Bounds = <0,0,96,64>;
+
+  $rect <10,360,210,400>
+  inherited method UpdateLayout()
+  {
+    // Always invoke the inherited method.
+    super( aSize );
+
+    /*
+
+      HINT:
+
+      This method exists for sophisticated layout calculation. Please note, that in 
+      most cases it is completely sufficient to use the views property 'Layout' to
+      determine how the view should behave when the component is resized.
+
+    */
+
+    /*
+
+      TO DO:
+
+      Put here the code to calculate new position and size of enclosed views. The
+      current (new) size of the component itself is passed in the parameter aSize.
+      For example:
+
+        SomeView.Bounds = rect( 10, 10, aSize.x - 20, aSize.y - 20 );
+
+    */
+  }
+
+  $rect <10,320,210,360>
+  inherited method UpdateViewState()
+  {
+    // Always invoke the inherited method.
+    super( aState );
+
+    /*
+
+      HINT 1:
+
+      This method is invoked automatically when the state set of the component has
+      been changed. The new state set can be found in the parameter aState.
+      Following are the important states:
+
+        Enabled   --> The component can react to user inputs.
+
+        Selected  --> The component is selected in context of its owner.
+
+        Focused   --> The component is selected in context of its owner and 
+                      the owner can react to keyboard events. In this manner the
+                      component is also able to react to keyboard events.
+
+        Modal     --> The component is modal. All events are redirected to this
+                      component.
+
+      To determine whether a state is currently active or not you have to test
+      the aState parameter. For example to test the 'Selected' state:
+
+        if ( aState.contains( Core::ViewState[ Selected ]))
+        {
+          ... yes, this component is currently selected.
+        }
+
+    */
+
+    /*
+
+      HINT 2:
+
+      Alternatively you can request this method invocation by executing explicitly
+      following code:
+
+
+        InvalidateViewState();
+
+    */
+      
+    /*
+
+      TO DO 1:
+
+      Put here the code to ensure that the visual aspect of the component does
+      reflect its current state. For example, depending on its 'Enabled' state
+      a component may appear with full colors or pale if it is disabled:
+
+        if ( aState.contains( Core::ViewState[ Enabled ]))
+        {
+          SomeBackgroundView.Opacity = 255;
+          SomeTextView.Color         = #000000FF;
+        }
+        else
+        {
+          SomeBackgroundView.Opacity = 128;
+          SomeTextView.Color         = #00000080;
+        }
+
+
+      TO DO 2:
+
+      You can evaluate here also the state of any other member in your component.
+      For example in a push-button component, the button should appear highlighted
+      as long as the user holds the finger within a touch area of the button:
+
+        if ( SomeTouchHandler.Down && SomeTouchHandler.Inside )
+          HighlightedBackground.Visible = true;
+        else
+          HighlightedBackground.Visible = false;
+
+      The touch handler itself only requests the update method to be called. Use
+      for this purpose 'InvalidateViewState()' method.
+
+
+      TO DO 3:
+
+      You can calculate here also the position/size of views accordingly to the
+      state of any other member in your component. For example in a slider you
+      can calculate the position of the slider knob from some properties like
+      'SliderValue' and 'SliderRange':
+
+        SliderKnob.Bounds.origin.x = ( SliderValue * Bounds.w ) / SliderRange;
+
+      Changing the 'SliderValue' or 'SliderRange' property should only request
+      the update method to be called. Use for this purpose 'InvalidateViewState()'
+      method.
+
+    */
+  }
+
+  $rect <20,20,160,60>
+  object Views::Rectangle Background
+  {
+    preset Bounds = <0,0,96,64>;
+    preset ColorBL = #FFFFFFFF;
+    preset ColorBR = #FFFFFFFF;
+    preset ColorTR = #FFFFFFFF;
+    preset ColorTL = #FFFFFFFF;
+    preset Color = #000000FF;
+    preset AlphaBlended = false;
+    preset Visible = true;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Image Image
+  {
+    preset Bounds = <0,0,96,64>;
+    preset Color = #FFFFFFFF;
+    preset FrameNumber = 0;
+    preset Bitmap = Res::IconFunction;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Rectangle Foreground
+  {
+    preset Bounds = <0,0,96,64>;
+    preset ColorBL = #FFFFFF40;
+    preset ColorBR = #FFFFFF40;
+    preset ColorTR = #FFFFFF80;
+    preset ColorTL = #FFFFFF80;
+    preset Visible = false;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Border Border
+  {
+    preset Bounds = <0,0,96,64>;
+    preset Width = 1;
+  }
+
+  $rect <20,20,160,60>
+  object WidgetSet::VerticalValueBar VerticalValueBar
+  {
+    preset Bounds = <78,1,98,63>;
+    preset AlphaBlended = true;
+    preset CurrentValue = 99;
+    preset Appearance = Application::VerticalValueBar;
+  }
+
+  $rect <10,170,210,210>
+  object Core::PropertyObserver QACounterObserver
+  {
+    preset OnEvent = onQACounter;
+    preset Outlet = ^Application::Device.QACounter;
+  }
+
+  // This slot method is executed when the associated property observer 'PropertyObserver' \
+  // is notified.
+  $rect <210,170,410,210>
+  slot onQACounter
+  {
+    $if 0
+    if (Application::Device.UpdateQAData())
+    {
+        Image.FrameNumber = Application::Device.QAFrameNumber;
+
+        if (Application::Device.bQAStatusOn)
+        {
+            /* status ON: show foregound to grey out background and image, hide white border */
+            Foreground.Visible = true;
+            Border.Visible = false;
+        }
+        else
+        {
+            /* status OFF: hide foregound, show white border */
+            Foreground.Visible = false;
+            Border.Visible = true;
+        }
+
+        if (Application::Device.bQAShowValueBar)
+        {
+            /* show value bar with current value */
+            VerticalValueBar.Visible = true;
+            VerticalValueBar.CurrentValue = (int32) (Application::Device.QAValue + 0.5);
+        }
+        else
+        {
+            /* hide value bar */
+            VerticalValueBar.Visible = false; 
+        }
+    }
+    $endif
+  }
+}
+
+// This autoobject provides the default customization for the 'vertical value bar' \
+// widget (WidgetSet::VerticalValueBar) in its small size variant.
+$rect <290,70,590,110>
+$output false
+autoobject WidgetSet::VerticalValueBarConfig VerticalValueBar
+{
+  preset SwingDuration = 0;
+  preset NeedleMarginAbove = 1;
+  preset NeedleMarginBelow = 1;
+  preset TrackAboveFrame = 0;
+  preset TrackAbove = Application::IconValueBarEmpty;
+  preset TrackBelowFrame = 0;
+  preset TrackBelow = Application::IconValueBarFilled;
+  preset WidgetMinSize = <20,30>;
+}
+
+$rect <600,70,800,110>
+$output false
+resource Resources::Bitmap IconValueBarEmpty
+{
+  attr bitmapfile FileName = Res\ProgressBkgd.png;
+  attr bitmapformat Format = Native;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+  attr bitmapdithering Dithering = Auto;
+  attr bitmapmode Mode = Default;
+}
+
+$rect <600,120,800,160>
+$output false
+resource Resources::Bitmap IconValueBarFilled
+{
+  attr bitmapfile FileName = Res\ProgressFilled.png;
+  attr bitmapformat Format = Native;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+  attr bitmapdithering Dithering = Auto;
+  attr bitmapmode Mode = Default;
+}
+
+$rect <20,280,220,320>
+inline Inline
+{
+  #include "string.h"
+  #include "gui.h"
+}
+
+$rect <20,240,220,280>
+$output false
+class DeviceClass : Templates::DeviceClass
+{
+  $rect <529,-37,729,3>
+  method bool UpdateQAData()
+  {
+    var bool result = false;
+
+    return(result);
+
+    $if $prototyper
+    result = true;
+    $endif
+
+    $if !$prototyper
+    var uint8 b_on = 0;
+    var uint8 b_show_value_bar = 0;
+    var uint8 frame_number = 0;
+    var float val = 0;
+
+    native (b_on, b_show_value_bar, frame_number, val, result)
+    {
+        result = gui_data_qa_update(&b_on, &b_show_value_bar, &frame_number, &val);
+    }
+
+    if (result)
+    {
+        bQAStatusOn = (b_on != 0);
+        bQAShowValueBar = (b_show_value_bar != 0);
+        QAFrameNumber = frame_number;
+        QAValue = val;
+    }
+    $endif
+
+    return result;
+  }
+
+  $rect <275,63,475,103>
+  method string GetParamTextString()
+  {
+    var string text;
+
+    return("");
+
+    $if $prototyper
+    if (!bParamIsToggle)
+    {
+        switch (ParamFrameNumber)
+        {
+            case 0:  text = "#";
+            case 1:  text = "A";
+            case 2:  text = "s";
+            case 3:  text = "Hz";
+            case 4:  text = "%";
+            case 5:  text = "mm";
+            case 6:  text = "A/s";
+            case 7:  text = "ms";
+            case 8:  text = "m/min";
+            case 9:  text = "V/s";
+            case 10: text = "l/min";
+            case 11: text = "W";
+            case 12: text = "kWh";
+            default: text = "°C";
+        }
+    }
+    else
+    {
+        text = "";
+    }
+    $endif
+
+    $if !$prototyper
+    native (text)
+    {
+        const char * p_text;
+
+        p_text = gui_param_text_string();
+
+        text = EwNewStringUtf8(p_text, strlen(p_text));
+    }
+    $endif
+
+    return text;
+
+
+  }
+
+  $rect <275,13,475,53>
+  method string GetParamValueString()
+  {
+    var string text;
+
+    return"";
+
+    $if $prototyper
+    if (!bParamIsToggle)
+    {
+        var float val = ParamFrameNumber;
+        text = string(val, 0, 1);
+    }
+    else
+    {
+        text = "";
+    }
+    $endif
+
+    $if !$prototyper
+    native (text)
+    {
+        char buf[20];
+        
+        gui_param_value_string(buf, sizeof (buf));
+
+        text = EwNewStringUtf8(buf, strlen(buf));
+    }
+    $endif
+
+    return text;
+                                                                   
+  }
+
+  $rect <275,-37,475,3>
+  method bool UpdateParamData()
+  {
+    var bool result = false;
+
+    return false;
+
+    $if $prototyper
+    result = true;
+    $endif
+
+    $if !$prototyper
+    var uint8 b_is_toggle;
+    var uint8 frame_number;
+    var uint8 b_value_changed;
+    var uint8 b_text_changed;
+
+    native (b_is_toggle, frame_number, b_value_changed, b_text_changed, result)
+    {
+        result = gui_data_param_update(&b_is_toggle, &frame_number, &b_value_changed, &b_text_changed);
+    }
+
+    if (result)
+    {
+        bParamIsToggle = b_is_toggle;
+        ParamFrameNumber = frame_number;
+        bParamValueChanged = b_value_changed;
+        bParamTextChanged = b_text_changed;
+    }
+    $endif
+
+    return result;
+  }
+
+  $rect <781,-37,981,3>
+  method void TestKey( arg Core::KeyCode key )
+  {
+    // The following code is used during prototyping only.
+
+    return;
+    $if $prototyper
+
+        switch (key)
+        {
+            case Core::KeyCode.Up:
+                UpdateParamCounter(ParamCounter + 1);
+             
+            case Core::KeyCode.Down:
+                UpdateQACounter(QACounter + 1);
+
+            case Core::KeyCode.Right:
+            {
+                if (bParamIsToggle && ParamFrameNumber < 9 ||
+                    ParamFrameNumber < 13)
+                {
+                    ParamFrameNumber++;
+                }            
+
+                bParamValueChanged = true;
+                bParamTextChanged = true;
+
+                UpdateParamCounter(ParamCounter + 1);
+            }
+
+            case Core::KeyCode.Left:
+            {
+                if (ParamFrameNumber > 0)
+                {
+                    ParamFrameNumber--;
+                }            
+
+                bParamValueChanged = true;
+                bParamTextChanged = true;
+
+                UpdateParamCounter(ParamCounter + 1);
+            }
+
+            case Core::KeyCode.F1:
+            {
+                bParamIsToggle = !bParamIsToggle;
+
+                if (bParamIsToggle && ParamFrameNumber > 9)
+                {
+                    ParamFrameNumber = 9;
+                }            
+
+                UpdateParamCounter(ParamCounter + 1);
+            }
+
+            case Core::KeyCode.Plus:
+            {
+                QAValue += 10;
+
+                if (QAValue > 100.0)
+                {
+                    QAValue = 100.0;
+                }
+
+                UpdateQACounter(QACounter + 1);
+            }
+            
+            case Core::KeyCode.Minus:
+            {
+                QAValue -= 10.0;
+
+                if (QAValue < 0.0)
+                {
+                    QAValue = 0.0;
+                }
+
+                UpdateQACounter(QACounter + 1);
+            }
+
+            case Core::KeyCode.F2:
+            {
+                if (QAFrameNumber < 13)
+                {
+                    QAFrameNumber++;
+                }            
+
+                UpdateQACounter(QACounter + 1);
+            }
+
+            case Core::KeyCode.F3:
+            {
+                if (QAFrameNumber > 0)
+                {
+                    QAFrameNumber--;
+                }            
+
+                UpdateQACounter(QACounter + 1);
+            }
+
+            case Core::KeyCode.F4:
+            {
+                bQAStatusOn = !bQAStatusOn;
+                UpdateQACounter(QACounter + 1);
+            }
+            
+            case Core::KeyCode.F5:
+            {
+                bQAShowValueBar = !bQAShowValueBar;
+                UpdateQACounter(QACounter + 1);
+            }
+            
+            default:
+                ;
+        }
+           
+    $endif
+
+    $if !$prototyper
+      key;
+    $endif
+
+  }
+
+  $rect <29,-38,229,2>
+  method void GUIInit()
+  {
+    $if !$prototyper
+    native (this)
+    {
+        gui_init(this);
+    }
+    $endif
+
+  }
+
+  $rect <530,12,730,52>
+  var bool bQAStatusOn = false;
+
+  $rect <530,62,730,102>
+  var float QAValue = 17;
+
+  $rect <530,112,730,152>
+  var bool bQAShowValueBar = false;
+
+  $rect <530,162,730,202>
+  var uint8 QAFrameNumber = 0;
+
+  $rect <280,112,480,152>
+  var bool bParamIsToggle = false;
+
+  $rect <280,162,480,202>
+  var uint8 ParamFrameNumber = 0;
+
+  $rect <280,212,480,252>
+  var bool bParamValueChanged = false;
+
+  $rect <280,262,480,302>
+  var bool bParamTextChanged = false;
+
+  $rect <230,630,430,670>
+  property uint32 ReceiveCounter = 0;
+
+  // This method is intended to be called by the device to notify the GUI application \
+  // about an alternation of its setting or state value.
+  $rect <30,630,230,670>
+  $output true
+  method void UpdateReceiveCounter( arg uint32 aNewValue )
+  {
+    // Only if the reported value does differ from the one stored currently in the property.
+
+    return;
+    if ( aNewValue != pure ReceiveCounter )
+    {
+      // Remember the new value in the internal memory of the property.
+      pure ReceiveCounter = aNewValue;
+
+      // Notify all associated property observers.
+      notifyobservers ^ReceiveCounter;
+    }
+  }
+
+  $rect <230,469,430,509>
+  property uint32 ParamCounter = 0;
+
+  // This method is intended to be called by the device to notify the GUI application \
+  // about an alternation of its setting or state value.
+  $rect <30,469,230,509>
+  $output true
+  method void UpdateParamCounter( arg uint32 aNewValue )
+  {
+    // Only if the reported value does differ from the one stored currently in the property.
+
+    return;
+    if ( aNewValue != pure ParamCounter )
+    {
+      // Remember the new value in the internal memory of the property.
+      pure ParamCounter = aNewValue;
+
+      // Notify all associated property observers.
+      notifyobservers ^ParamCounter;
+    }
+
+    // Parameter dialog shall be shown now
+    if (ShowQA == true)
+    {
+      ShowQA = false;
+
+      // Notify all associated property observers.
+      notifyobservers ^ShowQA;
+    }
+
+  }
+
+  $rect <230,570,430,610>
+  property uint32 QACounter = 0;
+
+  // This method is intended to be called by the device to notify the GUI application \
+  // about an alternation of its setting or state value.
+  $rect <30,570,230,610>
+  $output true
+  method void UpdateQACounter( arg uint32 aNewValue )
+  {
+    // Only if the reported value does differ from the one stored currently in the property.
+
+    return;
+    if ( aNewValue != pure QACounter )
+    {
+      // Remember the new value in the internal memory of the property.
+      pure QACounter = aNewValue;
+
+      // Notify all associated property observers.
+      notifyobservers ^QACounter;
+    }
+
+    // QA dialog shall be shown now
+    if (ShowQA == false)
+    {
+      ShowQA = true;
+
+      // Notify all associated property observers.
+      notifyobservers ^ShowQA;
+    }
+
+  }
+
+  $rect <230,520,430,560>
+  property bool ShowQA = false;
+
+  // UpdateParamCounter has to be called, if a parameter has to be shown instead \
+  // of a QA or if another parameter has to be shown or if data of the shown parameter \
+  // is changed.
+  // 
+  // The property ShowQA will be changed to false.
+  // 
+  // On change of the ParamCounter ParamDialog calls UpdateParamData to get actual \
+  // and consistent parameter data.
+  // 
+  // If UpdateParam is several times called before next EwProcess, the porperty Observer \
+  // will only be triggered once. If an event would be used instead of the property \
+  // and the event would be several times called before next EwProcess, the event \
+  // handler would be several times called. This is not necessary, so a property \
+  // is used instead of an event.
+  note legend Note
+  {
+    attr Bounds = <99,706,649,971>;
+  }
+
+  // UpdateQACounter has to be called, if a QA has to be shown instead of a parameter \
+  // or if another QA has to be shown or if data of the shown QA is changed.
+  // 
+  // The property ShowQA will be changed to true.
+  // 
+  // On change of the QACounter QADialog calls UpdateQAData to get actual and consistent \
+  // QA data.
+  note legend Note1
+  {
+    attr Bounds = <40,320,590,460>;
+  }
+
+  $rect <1330,140,1530,180>
+  $output true
+  property int32 NoOfParameter;
+
+  $rect <1120,140,1320,180>
+  onset NoOfParameter
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure NoOfParameter == value )
+      return;
+
+    // Remember the property's new value.
+    pure NoOfParameter = value;
+
+    // TO DO:
+    // 
+    // Now you can handle the alternation of the property.
+  }
+
+  $rect <1550,140,1790,180>
+  method void UpdateNoOfParameter( arg int32 value )
+  {
+    pure NoOfParameter = value;
+
+    notifyobservers ^NoOfParameter;
+  }
+
+  $rect <1330,180,1530,220>
+  $output true
+  property int32 CurrentParameter;
+
+  $rect <1120,180,1320,220>
+  onset CurrentParameter
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure CurrentParameter == value )
+      return;
+
+    // Remember the property's new value.
+    pure CurrentParameter = value;
+
+    // TO DO:
+    // 
+    // Now you can handle the alternation of the property.
+  }
+
+  $rect <1550,180,1790,220>
+  method void UpdateCurrentParameter( arg int32 value )
+  {
+    pure CurrentParameter = value;
+    notifyobservers ^CurrentParameter;
+  }
+
+  // Redesign New
+  note legend Note2
+  {
+    attr Bounds = <1130,-70,1800,130>;
+  }
+
+  $rect <290,-240,490,-200>
+  property bool Simulator = false;
+
+  $rect <290,-200,490,-160>
+  onset Simulator
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure Simulator == value )
+      return;
+
+    // Remember the property's new value.
+    pure Simulator = value;
+
+    // TO DO:
+    // 
+    // Now you can handle the alternation of the property.
+  }
+
+  // Simulation & Debug
+  note group Note3
+  {
+    attr Bounds = <270,-330,980,-100>;
+  }
+}
+
+$rect <219,240,420,280>
+autoobject Application::DeviceClass Device;
+
+$rect <20,120,220,160>
+$output false
+class ReceiveDialog : Core::Group
+{
+  $rect <10,230,210,270>
+  inherited property Bounds = <0,0,96,64>;
+
+  $rect <10,390,210,430>
+  inherited method UpdateLayout()
+  {
+    // Always invoke the inherited method.
+    super( aSize );
+
+    /*
+
+      HINT:
+
+      This method exists for sophisticated layout calculation. Please note, that in 
+      most cases it is completely sufficient to use the views property 'Layout' to
+      determine how the view should behave when the component is resized.
+
+    */
+
+    /*
+
+      TO DO:
+
+      Put here the code to calculate new position and size of enclosed views. The
+      current (new) size of the component itself is passed in the parameter aSize.
+      For example:
+
+        SomeView.Bounds = rect( 10, 10, aSize.x - 20, aSize.y - 20 );
+
+    */
+  }
+
+  $rect <10,350,210,390>
+  inherited method UpdateViewState()
+  {
+    // Always invoke the inherited method.
+    super( aState );
+
+    /*
+
+      HINT 1:
+
+      This method is invoked automatically when the state set of the component has
+      been changed. The new state set can be found in the parameter aState.
+      Following are the important states:
+
+        Enabled   --> The component can react to user inputs.
+
+        Selected  --> The component is selected in context of its owner.
+
+        Focused   --> The component is selected in context of its owner and 
+                      the owner can react to keyboard events. In this manner the
+                      component is also able to react to keyboard events.
+
+        Modal     --> The component is modal. All events are redirected to this
+                      component.
+
+      To determine whether a state is currently active or not you have to test
+      the aState parameter. For example to test the 'Selected' state:
+
+        if ( aState.contains( Core::ViewState[ Selected ]))
+        {
+          ... yes, this component is currently selected.
+        }
+
+    */
+
+    /*
+
+      HINT 2:
+
+      Alternatively you can request this method invocation by executing explicitly
+      following code:
+
+
+        InvalidateViewState();
+
+    */
+      
+    /*
+
+      TO DO 1:
+
+      Put here the code to ensure that the visual aspect of the component does
+      reflect its current state. For example, depending on its 'Enabled' state
+      a component may appear with full colors or pale if it is disabled:
+
+        if ( aState.contains( Core::ViewState[ Enabled ]))
+        {
+          SomeBackgroundView.Opacity = 255;
+          SomeTextView.Color         = #000000FF;
+        }
+        else
+        {
+          SomeBackgroundView.Opacity = 128;
+          SomeTextView.Color         = #00000080;
+        }
+
+
+      TO DO 2:
+
+      You can evaluate here also the state of any other member in your component.
+      For example in a push-button component, the button should appear highlighted
+      as long as the user holds the finger within a touch area of the button:
+
+        if ( SomeTouchHandler.Down && SomeTouchHandler.Inside )
+          HighlightedBackground.Visible = true;
+        else
+          HighlightedBackground.Visible = false;
+
+      The touch handler itself only requests the update method to be called. Use
+      for this purpose 'InvalidateViewState()' method.
+
+
+      TO DO 3:
+
+      You can calculate here also the position/size of views accordingly to the
+      state of any other member in your component. For example in a slider you
+      can calculate the position of the slider knob from some properties like
+      'SliderValue' and 'SliderRange':
+
+        SliderKnob.Bounds.origin.x = ( SliderValue * Bounds.w ) / SliderRange;
+
+      Changing the 'SliderValue' or 'SliderRange' property should only request
+      the update method to be called. Use for this purpose 'InvalidateViewState()'
+      method.
+
+    */
+  }
+
+  $rect <20,20,160,60>
+  object Views::Image Image
+  {
+    preset Bounds = <1,1,17,17>;
+    preset Color = #FFFFFFFF;
+    preset FrameNumber = 0;
+    preset Bitmap = Application::IconLoad;
+  }
+
+  $rect <10,170,240,210>
+  object Core::PropertyObserver ReceiveCounterObserver
+  {
+    preset OnEvent = onReceiveCounter;
+    preset Outlet = ^Application::Device.ReceiveCounter;
+  }
+
+  // This slot method is executed when the associated property observer 'PropertyObserver' \
+  // is notified.
+  $rect <240,170,440,210>
+  slot onReceiveCounter
+  {
+    /* One or more messages received: switch to next frame */
+    //Image.FrameNumber = (Image.FrameNumber + 1) % 4;
+    Image.FrameNumber = (Image.FrameNumber + 1) % 4;
+  }
+}
+
+$rect <600,170,800,210>
+$output false
+resource Resources::Bitmap IconLoad
+{
+  attr bitmapfile FileName = .\Res\Icon_Load_A_16x16.png;
+  attr bitmapformat Format = Native;
+  attr framesize FrameSize = <16,16>;
+  attr framedelay FrameDelay;
+  attr bitmapdithering Dithering = Auto;
+  attr bitmapmode Mode = Default;
+}
+
+$rect <960,-30,1160,10>
+$output false
+class ValueBar : Core::Group
+{
+  // Sizes
+  note group Note2
+  {
+    attr Bounds = <-600,-190,-100,350>;
+  }
+
+  $rect <320,-140,500,-100>
+  inherited method Init()
+  {
+    DrawBars();
+    DrawCenter();
+
+    Animate();
+
+    DrawHelpline();
+
+
+
+  }
+
+  $rect <320,70,520,110>
+  property int32 ValueProz = -50;
+
+  $rect <320,110,520,150>
+  onset ValueProz
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure ValueProz == value )
+      return;
+
+    // Remember the property's new value.
+    pure ValueProz = value;
+
+    Animate();
+  }
+
+  $rect <530,70,730,110>
+  property Data::ValueBarType Type = Data::ValueBarType.PositiveNegative;
+
+  $rect <530,110,730,150>
+  onset Type
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure Type == value )
+      return;
+
+    // Remember the property's new value.
+    pure Type = value;
+    DrawBars();
+    Animate();
+  }
+
+  $rect <-590,-70,-390,-30>
+  var int32 SizeBar_Y = 2;
+
+  $rect <-590,-150,-390,-110>
+  var int32 OffsetBar_Y = 5;
+
+  $rect <-577,-350,-377,-310>
+  var color ColorEmpty = Res::Color_InactiveGrey;
+
+  $rect <-577,-310,-377,-270>
+  var color ColorFill = Res::Color_RED;
+
+  $rect <530,0,730,40>
+  method void Animate()
+  {
+    var float temp = 0;
+
+      temp = (float)ValueProz.abs / 100.0;
+      temp = temp * EmtyBarPos.Bounds.w;
+
+      DrawCenter();
+
+    if(Type == Data::ValueBarType.Positive)//Only Pos
+    {
+
+      FilledBar.Bounds.w = temp; 
+    }
+    else{
+      if (ValueProz > 0)
+      {
+        FilledBar.Bounds = EmtyBarPos.Bounds;
+        FilledBar.Bounds.w = temp * 2; 
+      }
+      else
+      {
+        FilledBar.Bounds = EmtyBarNeg.Bounds;
+        FilledBar.Bounds.x1 = FilledBar.Bounds.x2 - (temp * 2) ;
+
+      }
+    }
+
+  }
+
+  $rect <-590,0,-390,40>
+  var int32 SizeWidget_Y = 10;
+
+  $rect <10,10,210,50>
+  object Views::Rectangle EmtyBarPos
+  {
+    preset Bounds = <0,0,100,100>;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Rectangle EmtyBarNeg
+  {
+    preset Bounds = <8,4,35,11>;
+  }
+
+  $rect <10,10,210,50>
+  object Views::Rectangle FilledBar
+  {
+    preset Bounds = <0,0,100,100>;
+  }
+
+  // The method Init() is invoked automatically after the component has been created. \
+  // This method can be overridden and filled with logic containing additional initialization \
+  // statements.
+  $rect <320,-90,500,-50>
+  method void DrawBars()
+  {
+    this.Bounds.w = 96;
+    this.Bounds.h = SizeWidget_Y;
+
+
+    if(Type == Data::ValueBarType.Positive)//Only Pos
+    {
+      EmtyBarPos.Bounds.origin.x = 0 + OffsetX;
+
+
+      EmtyBarPos.Bounds.w = SizeWidget_X;
+      EmtyBarPos.Bounds.h = SizeBar_Y;
+
+      EmtyBarPos.Bounds.origin.y = OffsetBar_Y;
+
+      FilledBar.Bounds = EmtyBarPos.Bounds;
+      EmtyBarNeg.Visible = false;
+      EmtyBarNeg.Bounds.h = 0;
+      EmtyBarNeg.Bounds.w = 0;
+
+    }
+    else 
+    {
+      EmtyBarPos.Bounds.origin.x = (Bounds.w / 2) + OffsetFromCenter;
+      EmtyBarPos.Bounds.x2 = Bounds.w - OffsetX;
+
+      EmtyBarNeg.Bounds.origin.x = OffsetX;
+      EmtyBarNeg.Bounds.x2 = (Bounds.w / 2) - OffsetFromCenter;
+
+      EmtyBarPos.Bounds.origin.y = OffsetBar_Y;
+      EmtyBarNeg.Bounds.origin.y = OffsetBar_Y;
+
+      EmtyBarPos.Bounds.h = SizeBar_Y;
+      EmtyBarNeg.Bounds.h = SizeBar_Y;
+
+      //EmtyBarPos.Bounds.w =  Bounds.w  - EmtyBarPos.Bounds.origin.x - OffsetX;
+      //EmtyBarNeg.Bounds.w =  (Bounds.w / 2) - OffsetFromCenter ;
+
+      FilledBar.Bounds = EmtyBarPos.Bounds;
+
+      EmtyBarNeg.Visible = true;
+    }
+
+    FilledBar.Color = ColorFill;
+    EmtyBarPos.Color = ColorEmpty;
+    EmtyBarNeg.Color = ColorEmpty;
+
+
+
+
+
+
+
+
+
+
+
+
+
+  }
+
+  $rect <-590,40,-390,80>
+  var int32 SizeWidget_X = 90;
+
+  $rect <-350,110,-150,150>
+  var int32 OffsetFromCenter = 3;
+
+  $rect <-590,110,-390,150>
+  var int32 OffsetX = 3;
+
+  // Color
+  note group Color
+  {
+    attr Bounds = <-600,-390,-300,-190>;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Line Line
+  {
+    preset Point2 = <182,-63>;
+    preset Point1 = <182,-163>;
+    preset Width = 2;
+  }
+
+  $rect <320,-240,520,-200>
+  method void DrawHelpline()
+  {
+    if(HelpLines)
+    {
+      Line.Visible = true;
+      Line.Point1.x = this.Bounds.w / 2;
+      Line.Point1.y = 0;
+      Line.Point2.x = this.Bounds.w / 2;
+      Line.Point2.y = this.Bounds.h;
+    }
+    else
+    {
+    Line.Visible = false;
+    }
+
+  }
+
+  $rect <320,-280,520,-240>
+  var bool HelpLines = false;
+
+  // Distance in Pos & Neg from bar to Middle 
+  // Distance from bars is x2
+  note legend Note
+  {
+    attr Bounds = <-350,150,-140,240>;
+  }
+
+  // Distance from Bounds to Bar
+  // on both sides
+  note legend Note1
+  {
+    attr Bounds = <-590,150,-380,210>;
+  }
+
+  // CenterSymbol
+  note group Note3
+  {
+    attr Bounds = <-600,350,-100,540>;
+  }
+
+  $rect <-570,390,-370,430>
+  var point SizeRect = <4,6>;
+
+  $rect <20,20,160,60>
+  object Views::Rectangle CenterRect
+  {
+    preset Bounds = <0,0,0,0>;
+  }
+
+  // The method Init() is invoked automatically after the component has been created. \
+  // This method can be overridden and filled with logic containing additional initialization \
+  // statements.
+  $rect <-100,350,80,390>
+  method void DrawCenter()
+  {
+    if(Type == Data::ValueBarType.Positive)//Only Pos
+    {
+      CenterRect.Visible = false;
+
+    }
+    else 
+    {
+       CenterRect.Visible = true;
+       CenterRect.Bounds.size = SizeRect;
+       CenterRect.Bounds.origin.x = this.Bounds.w/2 - SizeRect.x/2;
+       CenterRect.Bounds.origin.y = OffsetBar_Y + SizeBar_Y/2 - SizeRect.y/2;
+
+       if( ValueProz== 0)
+       {
+        CenterRect.Color = ColorFill;
+       }
+       else
+       {
+        CenterRect.Color = ColorEmpty;
+       }
+
+    }
+  }
+
+  // x & y must be even 
+  note legend Note4
+  {
+    attr Bounds = <-370,390,-220,460>;
+  }
+
+  $reorder Note2 101
+}
+
+$rect <960,10,1160,50>
+$output false
+class TextLine : Core::Group
+{
+  $rect <320,-140,500,-100>
+  inherited method Init()
+  {
+    this.Bounds.w = SizeWidget_X;
+    this.Bounds.h = SizeWidget_Y;
+
+    ParamImage.Bounds.origin.x = IconOffsetX;
+    ParamImage.Bounds.origin.y = Bounds.h - IconOffsetY;
+
+
+    ParamImage.FrameNumber = IconId;
+
+
+    UnitText.Bounds.h = UnitText.Font.Ascent + UnitText.Font.Descent;
+    UnitText.Bounds.origin.y = Bounds.h - UnitTextBaseLineOffset - UnitText.Font.Ascent;
+    UnitText.Bounds.origin.x = Bounds.w - UnitText.Bounds.w - UnitTextOffX;
+
+
+    UnitText.Bounds.origin.y = Bounds.h - UnitTextBaseLineOffset - UnitText.Font.Ascent;
+
+    //info text x zentrieren
+    InfoText.Bounds = this.Bounds;
+    //info text auf baseline anpassen
+    InfoText.Bounds.h = InfoText.Font.Ascent + InfoText.Font.Descent;
+    InfoText.Bounds.origin.y = Bounds.h - UnitTextBaseLineOffset - InfoText.Font.Ascent;
+
+
+    Animate();
+  }
+
+  $rect <530,70,730,110>
+  property Data::TextLineType Type = Data::TextLineType.Icon_Unit;
+
+  $rect <530,110,730,150>
+  onset Type
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure Type == value )
+      return;
+
+    // Remember the property's new value.
+    pure Type = value;
+
+    Animate();
+  }
+
+  $rect <-390,-150,-190,-110>
+  var color ColorText = #505050FF;
+
+  $rect <-390,-110,-190,-70>
+  var color ColorIcon = #C8333BFF;
+
+  $rect <-640,-150,-440,-110>
+  var int32 SizeWidget_Y = 25;
+
+  $rect <-640,-110,-440,-70>
+  var int32 SizeWidget_X = 90;
+
+  $rect <20,20,160,60>
+  object Views::Image ParamImage
+  {
+    preset Bounds = <368,48,384,64>;
+    preset Bitmap = Res::Icon_Parameter_16x16_V3;
+  }
+
+  $rect <-390,-50,-190,-10>
+  var int32 IconOffsetX = 14;
+
+  $rect <-390,-10,-190,30>
+  var int32 IconOffsetY = 22;
+
+  // Icon Offset from origin
+  // Bemaßung von bot left
+  // 
+  //  
+  note legend Note
+  {
+    attr Bounds = <-570,-50,-390,30>;
+  }
+
+  $rect <110,70,310,110>
+  property uint32 IconId = 1;
+
+  $rect <110,110,310,150>
+  onset IconId
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure IconId == value )
+      return;
+
+    // Remember the property's new value.
+    pure IconId = value;
+
+    ParamImage.FrameNumber = IconId;
+
+    Animate();
+  }
+
+  $rect <110,170,310,210>
+  property string Unit_Text = "Ä";
+
+  $rect <110,210,310,250>
+  onset Unit_Text
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure Unit_Text == value )
+      return;
+
+    // Remember the property's new value.
+    pure Unit_Text = value;
+
+    Animate();
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text UnitText
+  {
+    preset Layout = Core::Layout[AlignToRight, AlignToTop];
+    preset Bounds = <107,-11,195,4>;
+    preset Alignment = Views::TextAlignment[AlignHorzRight, AlignVertCenter];
+    preset String = "%%";
+    preset Font = Res::Font_2;
+  }
+
+  $rect <-390,60,-190,100>
+  var int32 UnitTextBaseLineOffset = 9;
+
+  $rect <-390,100,-190,140>
+  var int32 UnitTextOffX = 5;
+
+  // Icon Offset from bot right
+  note legend Note1
+  {
+    attr Bounds = <-570,60,-390,140>;
+  }
+
+  // The method Init() is invoked automatically after the component has been created. \
+  // This method can be overridden and filled with logic containing additional initialization \
+  // statements.
+  $rect <320,-80,500,-40>
+  method void Animate()
+  {
+    if (IconId == 0)
+    {
+      InfoText.Visible = true;
+      UnitText.Visible = false;
+      ParamImage.Visible = false;
+      InfoText.String = Unit_Text;
+    }
+    else
+    {
+      InfoText.Visible = false;
+      UnitText.Visible = true;
+      ParamImage.Visible = true;
+      UnitText.String = Unit_Text;
+    }
+
+    if(IconId == 0)
+    {
+       
+    } 
+
+    UnitText.String = Unit_Text;
+
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text InfoText
+  {
+    preset Layout = Core::Layout[AlignToLeft, AlignToTop];
+    preset Bounds = <90,-46,180,-31>;
+    preset Alignment = Views::TextAlignment[AlignHorzCenter, AlignVertCenter];
+    preset String = "Dyn";
+    preset Font = Res::Font_2;
+  }
+}
+
+$rect <960,50,1160,90>
+$output false
+class Scrollbar : Core::Group
+{
+  $rect <320,-140,500,-100>
+  inherited method Init()
+  {
+    this.Bounds.w = SizeWidget_X;
+    this.Bounds.h = SizeWidget_Y;
+
+    Line.Color = ColorLine;
+    Dot.Color = ColorDot;
+
+
+    Animate();
+  }
+
+  $rect <-390,-140,-190,-100>
+  var int32 SizeWidget_Y = 3;
+
+  $rect <-390,-100,-190,-60>
+  var int32 SizeWidget_X = 96;
+
+  $rect <110,70,310,110>
+  property uint32 Selected = 10;
+
+  $rect <110,110,310,150>
+  onset Selected
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure Selected == value )
+      return;
+
+    // Remember the property's new value.
+    pure Selected = value;
+
+    Animate();
+  }
+
+  $rect <330,70,530,110>
+  property uint32 Maximum = 10;
+
+  $rect <330,110,530,150>
+  onset Maximum
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure Maximum == value )
+      return;
+
+    // Remember the property's new value.
+    pure Maximum = value;
+
+    Animate();
+  }
+
+  // The method Init() is invoked automatically after the component has been created. \
+  // This method can be overridden and filled with logic containing additional initialization \
+  // statements.
+  $rect <320,-80,500,-40>
+  method void Animate()
+  {
+    var float AcriveArea = 0;
+    var float temp = 0;
+    AcriveArea = this.Bounds.w - (EndDistance * 2)   ;
+
+    temp = float(Selected) / float(Maximum);
+    temp = temp * AcriveArea;
+
+    Dot.Bounds.x = temp + EndDistance - (Dot.Bounds.w / 2);
+  }
+
+  $rect <20,20,160,60>
+  object Views::Image Line
+  {
+    preset Bounds = <0,0,96,3>;
+    preset Bitmap = Res::Scrollbar_Line_96x1px;
+  }
+
+  $rect <-190,-140,10,-100>
+  var color ColorLine = #808080FF;
+
+  $rect <-190,-100,10,-60>
+  var color ColorDot = #FFFFFFFF;
+
+  $rect <20,20,160,60>
+  object Views::Image Dot
+  {
+    preset Bounds = <78,0,85,3>;
+    preset Bitmap = Res::Scrollbar_Dot_18x3px;
+  }
+
+  $rect <-390,-20,-190,20>
+  var uint32 EndDistance = 15;
+}
+
+$rect <987,299,1307,339>
+$output false
+class ParamValue : Application::ParamBase
+{
+  $rect <320,0,500,40>
+  inherited method Init()
+  {
+    this.Bounds = Data::gScreenSize;
+
+    ArrangeText();
+
+    attachobserver OnUpdate_debug , Parameter::ActiveParameter;
+    attachobserver OnChangeConfig , ^Application::Device.NoOfParameter;
+    attachobserver OnChangeConfig , ^Application::Device.CurrentParameter;
+
+    attachobserver OnChangeConfig , Parameter::ActiveParameter;
+
+    //SGE weg trigger observer
+    Param.Id = 3;
+
+
+
+
+    postsignal OnChangeConfig;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Rectangle Background
+  {
+    preset Bounds = <0,0,96,64>;
+    preset ColorBL = #FFFFFFFF;
+    preset ColorBR = #FFFFFFFF;
+    preset ColorTR = #FFFFFFFF;
+    preset ColorTL = #FFFFFFFF;
+    preset Color = #000000FF;
+    preset AlphaBlended = false;
+  }
+
+  $rect <-280,0,-80,40>
+  var int32 ValueTextOff_Y = 33;
+
+  $rect <520,0,720,40>
+  var Parameter::Parameter Param = Parameter::ActiveParameter;
+
+  $rect <20,20,160,60>
+  object Views::Text ValueText
+  {
+    preset Bounds = <0,0,96,33>;
+    preset String = "+0";
+    preset Font = Res::Font_1;
+    preset Color = #FFFFFFFF;
+  }
+
+  $rect <20,20,160,60>
+  object Application::ValueBar ValueBar
+  {
+    preset Bounds = <0,32,96,42>;
+    preset Type = Data::ValueBarType.Positive;
+  }
+
+  $rect <20,20,160,60>
+  object Application::TextLine TextLine
+  {
+    preset Bounds = <0,40,96,60>;
+  }
+
+  $rect <740,0,940,40>
+  slot OnUpdate_debug
+  {
+    sender; /* the method is called from the sender object */
+
+    ValueText.String = Parameter::ActiveParameter.GetValueFormatted(); //Param.GetValueFormatted();
+    ValueBar.ValueProz = Parameter::ActiveParameter.GetValuePozent();//Param.GetValuePozent();
+
+
+
+  }
+
+  $rect <740,70,940,110>
+  slot OnChangeConfig
+  {
+    $if $prototyper
+    TextLine.IconId = Param.image;
+    TextLine.Unit_Text = Param.GetUnitStr();
+
+
+    if(Param.Relative)
+    {
+       ValueBar.Type = Data::ValueBarType.PositiveNegative;
+    }
+    else
+    {
+       ValueBar.Type = Data::ValueBarType.Positive;
+    }
+    $endif
+
+    $if !$prototyper
+    TextLine.IconId = Parameter::ActiveParameter.image;
+    Scrollbar.Maximum = Parameter::ActiveParameter.totalparams;
+    if(Parameter::ActiveParameter.unit_id == 7)
+    {
+    TextLine.Unit_Text = "m/min";
+    TextLine.IconId = 1;
+    TextLine.Type =   Data::TextLineType.Icon_Unit;
+    ValueBar.Type = Data::ValueBarType.Positive;
+    //Scrollbar.Selected = 0;
+    }
+    if(Parameter::ActiveParameter.unit_id == 22)
+    {
+    TextLine.Unit_Text = "%%";
+    TextLine.IconId = 2;
+    TextLine.Type =   Data::TextLineType.Icon_Unit;
+    ValueBar.Type = Data::ValueBarType.PositiveNegative;
+    //Scrollbar.Selected = 1;
+    }
+    if(Parameter::ActiveParameter.unit_id == 24)
+    {
+    TextLine.Unit_Text = "Dyn";
+    TextLine.IconId = 0;
+    TextLine.Type =  Data::TextLineType.OnlyText;
+    ValueBar.Type = Data::ValueBarType.PositiveNegative;
+    //Scrollbar.Selected = 2;
+    }
+    if(Parameter::ActiveParameter.unit_id == 2)
+    {
+    TextLine.Unit_Text = "S";
+    TextLine.IconId = 5;
+    TextLine.Type =   Data::TextLineType.Icon_Unit;
+    ValueBar.Type = Data::ValueBarType.Positive;
+    //Scrollbar.Selected = 3;
+    }
+    if(Parameter::ActiveParameter.Id)
+    {
+    Scrollbar.Selected = (Parameter::ActiveParameter.Id - 1);
+    }
+    else
+    {
+    Scrollbar.Selected = Scrollbar.Maximum;
+    }
+    $endif
+  }
+
+  $rect <310,100,510,140>
+  slot OnFontChange
+  {
+    ArrangeText();
+  }
+
+  $rect <310,50,510,90>
+  method void ArrangeText()
+  {
+    ValueText.Font = Res::Font_1;
+    ValueText.Bounds.h = ValueText.Font.Ascent + ValueText.Font.Descent;
+    ValueText.Bounds.origin.y = ValueTextOff_Y - ValueText.Font.Ascent   ;
+  }
+
+  $rect <20,20,160,60>
+  object Application::Scrollbar Scrollbar
+  {
+    preset Bounds = <0,60,96,63>;
+  }
+}
+
+$rect <987,339,1307,379>
+$output false
+class ParamToggle : Application::ParamBase
+{
+  $rect <120,0,300,40>
+  inherited method Init()
+  {
+    Animate();
+  }
+
+  $rect <20,20,160,60>
+  object Views::Rectangle Background
+  {
+    preset Bounds = <0,0,96,64>;
+    preset ColorBL = #FFFFFFFF;
+    preset ColorBR = #FFFFFFFF;
+    preset ColorTR = #FFFFFFFF;
+    preset ColorTL = #FFFFFFFF;
+    preset Color = #000000FF;
+    preset AlphaBlended = false;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Image Image
+  {
+    preset Bounds = <0,0,96,60>;
+    preset FrameNumber = 3;
+    preset Bitmap = Res::Icon_Function_A_96x40;
+  }
+
+  $rect <310,0,510,40>
+  property int32 PicID;
+
+  $rect <310,40,510,80>
+  onset PicID
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure PicID == value )
+      return;
+
+    // Remember the property's new value.
+    pure PicID = value;
+
+    Animate();
+  }
+
+  $rect <310,110,510,150>
+  method void Animate()
+  {
+    Image.FrameNumber = PicID;
+
+  }
+
+  $reorder Background 5
+}
+
+$rect <987,259,1307,299>
+$output false
+class ParamBase : Core::Group
+{
+  $rect <320,0,500,40>
+  inherited method Init()
+  {
+    this.Bounds = Data::gScreenSize;
+
+  }
+}
+
+$rect <987,379,1307,419>
+$output false
+class ParamQAIndicator : Application::ParamBase
+{
+  $rect <120,0,300,40>
+  inherited method Init()
+  {
+    Image.FrameNumber = 14;
+
+  }
+
+  $rect <20,20,160,60>
+  object Views::Rectangle Background
+  {
+    preset Bounds = <0,0,96,64>;
+    preset ColorBL = #FFFFFFFF;
+    preset ColorBR = #FFFFFFFF;
+    preset ColorTR = #FFFFFFFF;
+    preset ColorTL = #FFFFFFFF;
+    preset Color = #000000FF;
+    preset AlphaBlended = false;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Image Image
+  {
+    preset Bounds = <0,0,96,60>;
+    preset Bitmap = Res::Icon_Function_A_96x40;
+  }
+
+  $rect <20,20,160,60>
+  object Application::Scrollbar Scrollbar
+  {
+    preset Bounds = <0,61,96,64>;
+  }
+
+  $reorder Background 5
+}
+
+$rect <960,110,1160,150>
+$output false
+class SplashScreen : Core::Group
+{
+  $rect <160,0,340,40>
+  inherited method Init()
+  {
+    this.Bounds = Data::gScreenSize;
+    Image.Color = TextColor;
+    Rectangle.Color = BackColor;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Rectangle Rectangle
+  {
+    preset Bounds = <-2,0,96,64>;
+  }
+
+  $rect <29,-115,229,-75>
+  var color TextColor = #FFFFFFFF;
+
+  $rect <30,-70,230,-30>
+  var color BackColor = #C40000FF;
+
+  $rect <20,20,160,60>
+  object Views::Image Image
+  {
+    preset Bounds = <0,0,96,64>;
+    preset Bitmap = Res::SplashScreen;
+  }
+}
+
+$rect <965,193,1165,233>
+$output false
+class TestDialog : Core::Group
+{
+  $rect <160,0,340,40>
+  inherited method Init()
+  {
+    this.Bounds = Data::gScreenSize;
+
+  }
+
+  $rect <29,-115,229,-75>
+  var color TextColor = #FFFFFFFF;
+
+  $rect <30,-70,230,-30>
+  var color BackColor = #C40000FF;
+
+  $rect <20,20,160,60>
+  object Views::Rectangle Base_rectangle
+  {
+    preset Bounds = <0,0,96,64>;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Rectangle Rectangle_CAN
+  {
+    preset Bounds = <0,0,46,17>;
+    preset Color = #FF8525FF;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Rectangle Rectangle_BKC
+  {
+    preset Bounds = <46,0,96,17>;
+    preset Color = #FF8525FF;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Rectangle Rectangle_UP
+  {
+    preset Bounds = <0,17,47,32>;
+    preset Color = #FF8525FF;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Rectangle Rectangle_DOWN
+  {
+    preset Bounds = <47,17,96,32>;
+    preset Color = #FF8525FF;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Rectangle Rectangle_LEFT
+  {
+    preset Bounds = <0,32,47,48>;
+    preset Color = #FF8525FF;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Rectangle Rectangle_RIGHT
+  {
+    preset Bounds = <47,32,96,48>;
+    preset Color = #FF8525FF;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Rectangle Rectangle_TRG
+  {
+    preset Bounds = <0,48,47,64>;
+    preset Color = #FF8525FF;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text Text_CAN
+  {
+    preset Bounds = <0,2,48,17>;
+    preset Alignment = Views::TextAlignment[AlignHorzLeft, AlignVertCenter];
+    preset String = "CAN: U";
+    preset Font = Resources::DefaultFont;
+    preset Color = #000000FF;
+    preset Opacity = 255;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text Text_BKC
+  {
+    preset Bounds = <48,2,94,17>;
+    preset Alignment = Views::TextAlignment[AlignHorzLeft, AlignVertCenter];
+    preset String = "BKC: U";
+    preset Font = Resources::DefaultFont;
+    preset Color = #000000FF;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text Text_Left
+  {
+    preset Bounds = <0,33,48,48>;
+    preset Alignment = Views::TextAlignment[AlignHorzLeft, AlignVertCenter];
+    preset String = "LEFT: U";
+    preset Font = Resources::DefaultFont;
+    preset Color = #000000FF;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text Text_Right
+  {
+    preset Bounds = <47,34,95,49>;
+    preset Alignment = Views::TextAlignment[AlignHorzLeft, AlignVertCenter];
+    preset String = "RIGHT: U";
+    preset Font = Resources::DefaultFont;
+    preset Color = #000000FF;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text Text_Up
+  {
+    preset Bounds = <0,18,48,33>;
+    preset Alignment = Views::TextAlignment[AlignHorzLeft, AlignVertCenter];
+    preset String = "UP: U";
+    preset Font = Resources::DefaultFont;
+    preset Color = #000000FF;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text Text_Down
+  {
+    preset Bounds = <47,18,95,33>;
+    preset Alignment = Views::TextAlignment[AlignHorzLeft, AlignVertCenter];
+    preset String = "DOWN: U";
+    preset Font = Resources::DefaultFont;
+    preset Color = #000000FF;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text Text_Trigger
+  {
+    preset Bounds = <0,48,48,63>;
+    preset Alignment = Views::TextAlignment[AlignHorzLeft, AlignVertCenter];
+    preset String = "TRG: U";
+    preset Font = Resources::DefaultFont;
+    preset Color = #000000FF;
+  }
+}

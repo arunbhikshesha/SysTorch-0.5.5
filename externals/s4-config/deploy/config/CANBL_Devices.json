@@ -1,0 +1,90 @@
+
+{
+	"CANBL_Device": [
+		{
+			"id": 1,
+			"type": "BL",
+			"artno": "999.999.9",
+			"end": "bin",
+			"tag": "b001",
+			"name": "Bootloader of DRV08"
+		},
+		{
+			"id": 2,
+			"type": "FW",
+			"blid": "1",
+			"artno": "999.999.9",
+			"end": "sfb",
+			"tag": "f001",
+			"name": "Primary Firmware"
+		},
+		{
+			"id": 3,
+			"type": "BL",
+			"artno": "999.999.9",
+			"end": "bin",
+			"tag": "b002",
+			"name": "Bootloader of DMR06"
+		},
+		{
+			"id": 4,
+			"type": "FW",
+			"blid": "3",
+			"artno": "999.999.9",
+			"end": "sfb",
+			"tag": "f002",
+			"name": "Digital Motor Regulator Firmware"
+		},
+		{
+			"id": 5,
+			"type": "BL",
+			"artno": "999.999.9",
+			"end": "bin",
+			"tag": "b003",
+			"name": "Bootloader of WPK01"
+		},
+		{
+			"id": 6,
+			"type": "FW",
+			"blid": "5",
+			"artno": "999.999.9",
+			"end": "sfb",
+			"tag": "f003",
+			"name": "Water Cooler Firmware"
+		},
+		{
+			"id": 7,
+			"type": "BL",
+			"artno": "999.999.9",
+			"end": "bin",
+			"tag": "b004",
+			"name": "Bootloader of TC22 "
+		},
+		{
+			"id": 8,
+			"type": "FW",
+			"blid": "7",
+			"artno": "999.999.9",
+			"end": "sfb",
+			"tag": "f004",
+			"name": "SystemTorch Firmware"
+		},
+		{
+			"id": 9,
+			"type": "BL",
+			"artno": "999.999.9",
+			"end": "bin",
+			"tag": "b005",
+			"name": "Bootloader of WPK02"
+		},
+		{
+			"id": 10,
+			"type": "FW",
+			"blid": "9",
+			"artno": "999.999.9",
+			"end": "sfb",
+			"tag": "f005",
+			"name": "WPKFujitsuSTM Firmware"
+		}
+	]
+}

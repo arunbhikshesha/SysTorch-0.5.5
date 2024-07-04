@@ -1,0 +1,11 @@
+BasedOnStyle: LLVM
+IndentWidth: 4
+ColumnLimit: 120
+IndentPPDirectives: BeforeHash
+SortIncludes: false
+AllowShortFunctionsOnASingleLine: Inline
+AlignConsecutiveMacros: true
+AlignEscapedNewlines : Left
+---
+Language: Cpp
+SortUsingDeclarations: false

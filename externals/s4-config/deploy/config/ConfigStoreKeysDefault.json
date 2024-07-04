@@ -1,0 +1,73 @@
+{
+  "WeldCircuitComp": {
+    "Ct0": {
+      "R_mOhm": 10.0,
+      "L_uH": 1.0
+    },
+    "Ct1": {
+      "R_mOhm": 10.0,
+      "L_uH": 1.0
+    },
+    "Ct2": {
+      "R_mOhm": 10.0,
+      "L_uH": 1.0
+    },
+    "Ct3": {
+      "R_mOhm": 10.0,
+      "L_uH": 1.0
+    }
+  },
+  "MainConsts": {
+    "t_GasTest": 30.0,
+    "t_GasPurge": 1.0,
+    "t_WeldIdleTimeMIG": 5.0,
+    "t_WeldIdleTimeTIG": 1.0,
+    "Factor_SlopeTimeOut": 2.0,
+    "t_TorchCoolingMin": 45,
+    "Flow_TorchCoolingMin_l_min": 0.3,
+    "t_TorchCoolingErrWait": 15
+  },
+  "Fan": {
+    "PWM_MinIdle": 30,
+    "PWM_MinWeld": 40,
+    "T_ThresholdLower": 55,
+    "T_ThresholdUpper": 70,
+    "Rpm_Min": 100,
+    "t_RpmMinErrWait": 10
+  },
+  "TempLimits": {
+    "Prim": {
+      "T_MaxM1": 75.0,
+      "T_MaxM2": 75.0,
+      "T_MaxM3": 75.0,
+      "T_MaxGR": 75.0,
+      "DT_Hyst": 15.0,
+      "DT_MaxM1M2": 8.0
+    },
+    "AC01": {
+      "T_MaxM1": 97.0,
+      "T_MaxM2": 97.0,
+      "DT_Hyst": 15.0
+    }
+  },
+  "PrimConsts": {
+    "Booster": {
+      "PWM1": 0.0,
+      "PWM2": 0.0
+    },
+    "Control": {
+      "PWM_Max": 0.0,
+      "ParamNum": 1,
+      "U": {
+        "KP": 4.0,
+        "KI": 0.25,
+        "OutMax": 20.0
+      },
+      "I": {
+        "KP": 1.0,
+        "KI": 1.0,
+        "OutMax": 90.0
+      }
+    }
+  }
+}

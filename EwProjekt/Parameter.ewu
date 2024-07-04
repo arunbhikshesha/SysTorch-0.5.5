@@ -1,0 +1,676 @@
+﻿$version 11.00
+
+$rect <560,520,760,560>
+inline Inline
+{
+  #include "data_handler_parameter.h"
+}
+
+$rect <700,420,900,460>
+$output false
+class Parameter
+{
+  $rect <520,-80,720,-40>
+  inherited method Init()
+  {
+    notifyobservers this;
+
+    //native(this)
+  }
+
+  $rect <510,120,710,160>
+  property float Value = 12.5;
+
+  $rect <508,78,708,118>
+  property uint8 Id = 1;
+
+  $rect <510,160,710,200>
+  property float Min = 0.5;
+
+  $rect <510,200,710,240>
+  property float Max = 25;
+
+  $rect <280,120,480,160>
+  method string GetValueFormatted()
+  {
+    /* The template just returns the given argument... */
+    var string temp;
+    $if $prototyper
+    switch (unit_id)
+    {
+      case Parameter::UnitID.Units_DummyDyn:
+      {
+         temp = string((Value - 1) * 10,0,0);
+      }
+      case Parameter::UnitID.Units_DummyLBL:
+      {
+         temp = string((Value - 1) * 30,0,0);
+      }
+      default:       temp = string(Value,0,1);
+    }
+    $endif
+
+    $if !$prototyper
+    switch (unit_id)
+    {
+      case 22:
+      
+         temp = string(Value ,0,0);
+      case 24:
+         temp = string(Value ,0,0);
+      default:  temp = string(Value,0,1); //return with one decimal
+    }
+    $endif
+      if(temp == "-0")
+      {
+      return "0";
+      }
+      else 
+      {
+      return temp; //return with one decimal
+      }
+
+  }
+
+  $rect <70,120,270,160>
+  method int32 GetValuePozent()
+  {
+    var float temp ;
+    var float area ;
+
+    area =  (Max - Min);
+    if(area == 0.0)
+    {
+      return 0;
+    }
+
+    if(Relative)
+    {
+      area =  (Value / area); 
+      area =  area * 100 - 50;   
+      temp =  area ;
+    }
+    else
+    {
+      area =  (Value / area); 
+      area =  area * 100;   
+      temp =  area ;
+    }
+
+
+    return (uint32) temp ;
+
+  }
+
+  $rect <510,260,710,300>
+  property uint8 unit_id = 25;
+
+  $rect <510,300,710,340>
+  property uint8 type = 25;
+
+  $rect <510,340,710,380>
+  property uint8 image = 25;
+
+  $rect <510,380,710,420>
+  property uint8 text = 25;
+
+  $rect <980,80,1180,120>
+  method void UpdateValue( arg int32 aValue )
+  {
+    pure Value = aValue;
+
+
+    /*
+    if(unit_id == Parameter::UnitID.Units_DummyDyn) //LBL und DYN umrechnen für anzeige
+    {
+      pure Value = (aValue - 1) * 10;
+    }
+    else if(unit_id == Parameter::UnitID.Units_DummyLBL) //LBL und DYN umrechnen für anzeige
+    {
+      pure Value = (aValue - 1) * 30;
+    }
+    */
+
+    notifyobservers this;
+  }
+
+  // Calls From MW
+  note group Note
+  {
+    attr Bounds = <950,40,1460,230>;
+  }
+
+  // Data
+  note group Note1
+  {
+    attr Bounds = <500,40,950,500>;
+  }
+
+  // No Setting from GUI Possible
+  note legend Note2
+  {
+    attr Bounds = <840,80,940,420>;
+  }
+
+  $rect <980,120,1179,160>
+  $output true
+  method void UpdateParameter( arg uint32 aID, arg float aValue, arg float aMax, arg float aMin, arg uint8 aUnit, arg uint8 atype, arg uint8 aimage, arg uint8 atext, arg uint8 atotalparams )
+  {
+    pure Id = aID;
+    pure Value = aValue;
+    pure Max = aMax;
+    pure Min = aMin;
+    pure unit_id = aUnit;
+    pure type = atype;
+    pure image = aimage;
+    pure text = atext;
+    pure totalparams = atotalparams;
+
+    if(unit_id == 24) //LBL und DYN umrechnen für anzeige
+    //if(unit_id == Parameter::UnitID.Units_DummyDyn) //LBL und DYN umrechnen für anzeige
+    {
+      pure Value = (aValue - 1) * 10;
+      pure Max = 10;
+      pure Min = -10;
+    }
+    else if(unit_id == 22) //LBL und DYN umrechnen für anzeige
+    //if(unit_id == Parameter::UnitID.Units_DummyLBL) //LBL und DYN umrechnen für anzeige
+    {
+      pure Value = (aValue - 1) * 30;
+      pure Max = 30;
+      pure Min = -30;
+    }
+    else if(unit_id == 7){
+      //default for Wirespeed update of min max is not working
+      pure Max = 22;
+      pure Min = 2;
+    }
+
+    CalcAdvanced();
+
+    notifyobservers this;
+  }
+
+  $rect <1220,80,1420,120>
+  method void UpdateValueBounds( arg float aValue )
+  {
+    if (aValue > Max)
+    {
+       aValue = Max;
+    }
+
+    if (aValue < Min)
+    {
+       aValue = Min;
+    }
+
+    pure Value = aValue;
+
+    notifyobservers this;
+  }
+
+  // Funktion um Min und max zu prüfen 
+  // Wird nur von Simulator verwendet
+  // Function to check min and max
+  // Only used by Simulator
+  note legend Note3
+  {
+    attr Bounds = <1430,80,1730,190>;
+  }
+
+  // Infos from SoftwareSpec I:\FE\01_Produkte\Brenner\V2518 MIGMGAG Brenner 2020\01_Entwicklung\Software \
+  // Spezifikation
+  note legend Note4
+  {
+    attr Bounds = <60,200,480,260>;
+  }
+
+  // unit_id unit id as in System object V4
+  note legend Note5
+  {
+    attr Bounds = <60,260,480,290>;
+  }
+
+  // Bit coded info 
+  // Bit4 Toggle Param
+  // Bit3 Relative (+- Anzeige)
+  // Bit 0..2 Anzahl Nachkommastellen 
+  note legend Note6
+  {
+    attr Bounds = <60,320,480,420>;
+  }
+
+  $rect <970,300,1170,340>
+  property bool Toggle;
+
+  $rect <970,341,1170,381>
+  property bool Relative;
+
+  // Advanced Data
+  note group Note7
+  {
+    attr Bounds = <950,230,1460,460>;
+  }
+
+  $rect <970,260,1170,300>
+  method void CalcAdvanced()
+  {
+    pure Toggle =   (type & 0x10);
+    pure Relative = (type & 0x08);
+    pure DecimalPoint = (type & 0x03);
+    pure QAIndicator = (type & 0x80);
+
+
+  }
+
+  $rect <970,380,1170,420>
+  property int32 DecimalPoint;
+
+  // Calculated from Type
+  note legend Note8
+  {
+    attr Bounds = <1170,300,1380,420>;
+  }
+
+  // Utillity Functions
+  note group Note9
+  {
+    attr Bounds = <1460,229,1949,460>;
+  }
+
+  $rect <1480,290,1680,330>
+  method string GetUnitStr()
+  {
+    if (Metric)
+    {
+      switch (unit_id)
+      {
+        case 0: return "?";
+        case 1: return "A";
+        case 2: return "s";
+        case 3: return "Hz";
+        case 4: return "mm";
+        case 5: return "A/s";
+        case 6: return "ms";
+        case 7: return "m/min";
+        case 8: return "V";
+        case 9: return "V/s";
+        case 10: return "l/min";
+        case 11: return "m";
+        case 12: return "W";
+        case 13: return "J";
+        case 14: return "kWh";
+        case 15: return "h";
+        case 16: return "°C";
+        case 17: return "cm/min";
+        case 18: return "";
+        case 19: return "";
+        case 20: return "";
+        case 24: return "Dyn";  //"Faktor Steps -10/+10"    TODO S4-Config
+        case 22: return "%%";  //"Faktor Steps -30/+30"    TODO S4-Config
+        case 23: return "";
+        default: return string(unit_id) + "_?" ;
+      }
+    }
+    return "IMP?";
+  }
+
+  $rect <1690,290,1890,330>
+  var bool Metric = true;
+
+  $rect <1220,120,1420,160>
+  $output true
+  method void UpdateParameterSim( arg uint32 aID, arg float aValue, arg float aMax, arg float aMin, arg uint8 aUnit, arg uint8 atype, arg uint8 aimage, arg uint8 atext )
+  {
+    pure Id = aID;
+    pure Value = aValue;
+    pure Max = aMax;
+    pure Min = aMin;
+    pure unit_id = aUnit;
+    pure type = atype;
+    pure image = aimage;
+    pure text = atext;
+
+    //ohne umrechnungen für sim um beim laden nicht doppelt umzurechnen
+
+    CalcAdvanced();
+
+    notifyobservers this;
+  }
+
+  $rect <1480,330,1680,370>
+  method uint32 GetToggleFrame()
+  {
+    if(Value > 0.5)
+    {
+      return image + 1;
+    } 
+    return image;
+  }
+
+  $rect <970,420,1170,460>
+  property bool QAIndicator;
+
+  $rect <510,422,710,462>
+  property uint8 totalparams = 25;
+}
+
+$rect <940,420,1140,460>
+$output false
+autoobject Parameter::Parameter ActiveParameter
+{
+  preset unit_id = 0;
+  preset type = 0;
+  preset image = 1;
+  preset text = 2;
+}
+
+$rect <710,166,910,206>
+$output false
+enum UnitID
+{
+  $rect <0,0,200,40>
+  item Units_UNDEFINED = 0;
+
+  $rect <0,40,200,80>
+  item Units_A = 1;
+
+  $rect <0,80,200,120>
+  item Units_s = 2;
+
+  $rect <0,120,200,160>
+  item Units_Hz = 3;
+
+  $rect <0,160,200,200>
+  item Units_mm = 4;
+
+  $rect <0,200,200,240>
+  item Units_Aps = 5;
+
+  $rect <0,240,200,280>
+  item Units_ms = 6;
+
+  $rect <0,280,200,320>
+  item Units_mpmin = 7;
+
+  $rect <0,320,200,360>
+  item Units_V = 8;
+
+  $rect <0,360,200,400>
+  item Units_Vps = 9;
+
+  $rect <0,400,200,440>
+  item Units_lpmin = 10;
+
+  $rect <0,440,200,480>
+  item Units_m = 11;
+
+  $rect <0,480,200,520>
+  item Units_W = 12;
+
+  $rect <0,520,200,560>
+  item Units_J = 13;
+
+  $rect <0,560,200,600>
+  item Units_kWh = 14;
+
+  $rect <0,600,200,640>
+  item Units_h = 15;
+
+  $rect <0,640,200,680>
+  item Units_C = 16;
+
+  $rect <0,680,200,720>
+  item Units_cmpmin = 17;
+
+  $rect <0,720,200,760>
+  item Units_Res1 = 18;
+
+  $rect <0,760,200,800>
+  item Units_Res2 = 19;
+
+  $rect <0,800,200,840>
+  item Units_Res3 = 20;
+
+  $rect <0,840,200,880>
+  item Units_DummyLBL = 22;
+
+  $rect <0,880,200,920>
+  item Units_DummyDyn = 24;
+}
+
+$rect <710,220,910,260>
+$output false
+set Type
+{
+  $rect <10,10,210,50>
+  item TypeBit_Res0 = 0x01;
+
+  $rect <10,50,210,90>
+  item TypeBit_Res1 = 0x02;
+
+  $rect <10,90,210,130>
+  item TypeBit_Res2 = 0x04;
+
+  $rect <10,130,210,170>
+  item TypeBit_Relative = 0x08;
+
+  $rect <10,190,210,230>
+  item TypeBit_Toggle = 0x10;
+
+  $rect <10,230,210,270>
+  item TypeBit_Res5 = 0x20;
+
+  $rect <10,270,210,310>
+  item TypeBit_Res6 = 0x40;
+
+  $rect <10,310,210,350>
+  item TypeBit_QAInd = 0x80;
+
+  // Set for a uint8 Value
+  note legend Se
+  {
+    attr Bounds = <-300,10,0,210>;
+  }
+
+  // Relative = Positive and negative Symetric 
+  note legend Se1
+  {
+    attr Bounds = <230,130,410,190>;
+  }
+}
+
+$rect <560,480,760,520>
+$output false
+class DeviceClass : Templates::DeviceClass
+{
+  $rect <30,80,230,120>
+  inherited method Done()
+  {
+    // The following section is intended to perform de-initialization-related operations
+    // in the underlying device or middleware. Consequently, the section is taken in
+    // account only when generating code (not during prototyping).
+    $if !$prototyper
+      var object thisObject = this;
+
+      /*
+         TO DO:
+
+         The following native statement is intended to enclose code to communicate with
+         your device API. The variable 'thisObject' contains a pointer to the actually
+         de-initialized Parameter::DeviceClass object. Use the 'thisObject' pointer to
+         e.g. de-register the object from the middleware if you have registered it
+         beforehand.
+         
+      */
+
+      native ( thisObject )
+      {
+        /*
+           TO DO:
+
+           Depending on your application case you call functions of the underlying
+           middleware (or access the device directly) in order to perform the necessary
+           de-initialization steps. For example, you invoke some 'C' function:
+
+             YourDevice_DeInitialize();
+
+           IMPORTANT:
+           ----------
+
+           The variable 'thisObject' represents the actually de-initialized instance of the
+           Parameter::DeviceClass. If you have stored this object at the initialization
+           time (in the 'Init' method) in some global C variable or registered it by the
+           middleware, it is important to perform now the opposite operation. Set the
+           global variable to NULL or de-register 'thisObject' object from the middleware.
+           
+        */
+      }
+    $endif
+  }
+
+  $rect <30,40,230,80>
+  inherited method Init()
+  {
+    // The following section is intended to perform initialization-related operations
+    // in the underlying device or middleware. Consequently, the section is taken in
+    // account only when generating code (not during prototyping).
+    $if !$prototyper
+      var object thisObject = this;
+                                     
+      /*
+         TO DO:
+
+         The following native statement is intended to enclose code to communicate with
+         your device API. The variable 'thisObject' contains a pointer to the actually
+         initialized Parameter::DeviceClass object. Use the 'thisObject' pointer to
+         e.g. register the object by the middleware as receiver of events, etc.
+         
+      */
+
+      native ( thisObject )
+      {
+      param_init(thisObject);
+        /*
+           TO DO:
+
+           Depending on your application case you call functions of the underlying
+           middleware (or access the device directly) in order to perform the necessary
+           initialization steps. For example, you invoke some 'C' function:
+
+             YourDevice_Initialize();
+
+           The variable 'thisObject' represents the actually initialized instance of the
+           Parameter::DeviceClass. You can store this variable e.g. in the middleware
+           and use it whenever the middleware needs to notify the GUI application about
+           some state alternation or events. In this manner, the middleware will be able
+           to invoke methods of the interface device object.
+
+           For example, you can store 'thisObject' in some global C variable:
+
+             // Declaration of the global C variable
+             XObject theDeviceObject;
+
+             // Store the instance in the global variable
+             theDeviceObject = thisObject;
+
+           Later use the global variable e.g. to provide the GUI application with events:
+
+             ApplicationDeviceClass__TriggerSomeEvent( theDeviceObject );
+
+           IMPORTANT:
+           ----------
+
+           If you store 'thisObject' for later use, don't forget to implement the opposite
+           operation in the method 'Done'. Concrete, 'Done' should set the global variable
+           again to the value NULL.
+
+        */
+      }
+    $endif
+  }
+
+  // Device classes are assembled from 'Commands', 'Properties' and 'System Events'. \
+  // For this purpose use the following prepared templates from the Gallery folder \
+  // 'Device':
+  // 
+  // Command - method to trigger actions in the underlying device or query data from \
+  // the device.
+  // 
+  // Property - variable to represent or modify a setting or state value existing \
+  // within the underlying device.
+  // 
+  // System Event - represents an event or notifications the underlying device may \
+  // report.
+  // 
+  // For more details please visit: https://doc.embedded-wizard.de/device-class-and-device-driver
+  note legend Note4
+  {
+    attr Bounds = <10,230,1100,400>;
+  }
+
+  // The method 'Init' is executed just in the moment when new instance of 'Parameter::DeviceClass' \
+  // is created. It is suitable to:
+  // - initialize the hardware represented by the interface.
+  // - register the instance by the middleware to receive updates and events.
+  // - open files, network connections or other system resources needed by the interface.
+  // 
+  // The method 'Done' is executed just in the moment when an instance of 'Parameter::DeviceClass' \
+  // is disposed. It is suitable to:
+  // - de-initialize the underlying hardware.
+  // - de-register the instance from the underlying middleware.
+  // - close files, network connections and other no longer needed system resources.
+  // 
+  // If your application case doesn't need the initialization or de-initialization, \
+  // feel free to delete the methods 'Init' or/and 'Done'.
+  note legend Note3
+  {
+    attr Bounds = <320,0,1100,220>;
+  }
+
+  note arrow Note2
+  {
+    attr Point1 = <250,50>;
+    attr Point2 = <320,50>;
+  }
+
+  // Constructor and Destructor
+  note group Note1
+  {
+    attr Bounds = <10,0,250,140>;
+  }
+
+  $rect <1198,160,1399,200>
+  $output true
+  var Parameter::Parameter active_par = Parameter::ActiveParameter;
+
+  $rect <1198,-30,1398,10>
+  $output true
+  method void update_par_from_dev( arg uint8 aNewID, arg float aNewValue, arg float aNewMax, arg float aNewMin, arg uint8 aNewUnitID, arg uint8 aNewType, arg uint8 aNewImage, arg uint8 aNewText, arg uint8 aNewTotalParams )
+  {
+    active_par.UpdateParameter(aNewID, aNewValue, aNewMax, aNewMin, aNewUnitID, aNewType, aNewImage, aNewText, aNewTotalParams);
+
+  }
+}
+
+$rect <760,480,960,520>
+autoobject Parameter::DeviceClass Device;
+
+// The class 'Parameter::DeviceClass' implements the interface between the GUI application \
+// and the device. Within the class you can react to system events sent by the device, \
+// exchange data with the device or send commands to the device. You are completely \
+// free in the design of this interface.
+// 
+// The object 'Device' represents the instance of the device interface. It exists \
+// for your convenience. As an autoobject it is globally available for all GUI components \
+// within your project.
+// 
+// The inline code member allows you to include external header files or add type \
+// definitions needed by the implementation of 'Parameter::DeviceClass'.
+// 
+// More details inside the members.
+// See also: https://doc.embedded-wizard.de/device-class-and-device-driver
+note legend Note
+{
+  attr Bounds = <970,480,1470,750>;
+}

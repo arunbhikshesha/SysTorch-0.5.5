@@ -1,0 +1,79 @@
+syntax = "proto3";
+
+option go_package = "s4backend/proto/platform";
+
+package wlan;
+
+message StartWlanRequest{ }
+message StartWlanResponse {
+  string Status               = 1; // Status returns "success"
+}
+
+message StopWlanRequest{ }
+message StopWlanResponse {
+  string Status               = 1; // Status returns "success"
+}
+
+message GetCurrentWlanStatusRequest{ }
+message GetCurrentWlanStatusResponse {
+  // System is connected to this wlan
+  bool Connected              = 1;
+
+  // RSSI signal strength in dBm (0dBm = 1mW)
+  // > -50     => best signal
+  // -50...-70 => good signal
+  // -70...-80 => average signal
+  // -80...-90 => poor signal
+  // < -90     => no signal
+  int32 Strength              = 2;
+
+  // States of the wpa supplicant
+  WPA_STATE wpa_state         = 3;
+
+  enum WPA_STATE {
+    DISCONNECTED        = 0;    // This state indicates that client is not associated,
+                                // but is likely to start looking for an access point
+    INTERFACE_DISABLED  = 1;    // wireless-interfaces disabled
+    INACTIVE            = 2;    // Inactive state
+    SCANNING            = 3;    // Scanning for a network
+    AUTHENTICATING      = 4;    // Trying to authenticate with a BSS/SSID
+    ASSOCIATING         = 5;    // Trying to associate with a BSS/SSID
+    ASSOCIATED          = 6;    // Association completed
+    FOUR_WAY_HANDSHAKE  = 7;    // WPA 4-Way Key Handshake in progress
+    GROUP_HANDSHAKE     = 8;    // WPA Group Key Handshake in progress
+    COMPLETED           = 9;    // All authentication completed
+  }
+
+  string Ssid                 = 4; // Wlan name
+}
+
+message GetAvailableWlansRequest{ }
+message GetAvailableWlansResponse {
+  repeated SsidListItem Wlans = 1; // List with wlan networks nearby with ssid and signal strength
+}
+message SsidListItem {
+  string Ssid                 = 1; // Wlan name
+  int32 Strength             = 2; // RSSI signal strength in dBm
+}
+
+message ConnectWlanRequest {
+  string Ssid                 = 1; // Wlan name
+  string passphrase           = 2; // Wlan password
+}
+message ConnectWlanResponse {
+  string Status               = 1; // Returns "success" message
+}
+
+
+service WlanManagerService {
+  // Start wpa_supplicant@wlan service with systemctl
+  rpc StartWlan(StartWlanRequest) returns (StartWlanResponse) {}
+  // Stop wpa_supplicant@wlan service with systemctl
+  rpc StopWlan(StopWlanRequest) returns (StopWlanResponse) {}
+  // Get the current wlan status, check if connected (wpa_status = COMPLETED)
+  rpc GetCurrentWlanStatus(GetCurrentWlanStatusRequest) returns (GetCurrentWlanStatusResponse) {}
+  // Get all available wlan networks, ssid and signal strength
+  rpc GetAvailableWlans(GetAvailableWlansRequest) returns (GetAvailableWlansResponse) {}
+  // Set ssid and password in wpa_supplicant config
+  rpc ConnectWlan(ConnectWlanRequest) returns (ConnectWlanResponse) {}
+}
